@@ -7,9 +7,12 @@ public class UnknownTokenException extends Exception {
     super("Unknown token 0x" + toHexString(token));
   }
 
+  /**
+   * Converts a byte into a hex string.
+   */
   private static String toHexString(byte b) {
     String str = Integer.toHexString(b);
-
+    // Keep only the two rightmost digits
     return str.substring(str.length() - 2);
   }
 }
