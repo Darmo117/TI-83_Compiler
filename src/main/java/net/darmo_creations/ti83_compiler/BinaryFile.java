@@ -6,13 +6,18 @@ import java.io.IOException;
 
 import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
 
+/**
+ * This class represents a .8xp program file.
+ *
+ * @author Damien Vergnet
+ */
 public class BinaryFile {
   private String path;
   private String name;
   private byte[] data;
 
   public static final String FORMAT = "8xp";
-  public static final String FILE_TYPE = "**TI83F*\u001a\n\0";
+  public static final String HEADER = "**TI83F*\u001a\n\0";
   public static final String COMMENT = "Created by Java TI-Compiler";
 
   public BinaryFile(String path, String name, byte[] data) {
@@ -30,7 +35,7 @@ public class BinaryFile {
   }
 
   public String getAbsolutePath() {
-    return getPath() + File.separator + getName() + "." + FORMAT;
+    return this.path + File.separator + this.name + "." + FORMAT;
   }
 
   public String getName() {
@@ -41,13 +46,12 @@ public class BinaryFile {
     if (!name.matches("[A-Zθ][A-Zθ0-9]{0,7}")) {
       throw new IllegalArgumentException("invalid program name");
     }
-
     this.name = name;
   }
 
   /**
    * Changes the program's data.<br />
-   * <b>NOTE: the tokens are not checked!</b>
+   * <b>NOTE: tokens' validity is not checked!</b>
    * 
    * @param data the program's data
    */
@@ -65,7 +69,7 @@ public class BinaryFile {
     int l;
 
     // File type
-    ArraysUtil.stringCopy(FILE_TYPE, header, 0, 11);
+    ArraysUtil.stringCopy(HEADER, header, 0, 11);
     // Comment
     ArraysUtil.stringCopy(COMMENT, header, 11, 42);
     // Comment delimiter
@@ -111,7 +115,7 @@ public class BinaryFile {
     content[content.length - 2] = (byte) (l & 0x00FF);
     content[content.length - 1] = (byte) ((l & 0xFF00) >> 8);
 
-    try (FileOutputStream fos = new FileOutputStream(new File(this.path + File.separator + this.name + "." + FORMAT))) {
+    try (FileOutputStream fos = new FileOutputStream(new File(getAbsolutePath()))) {
       fos.write(content);
     }
   }
