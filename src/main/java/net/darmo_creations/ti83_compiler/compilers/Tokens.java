@@ -5,14 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Tokens {
-  /**
-   * A map containing the regexes for the special characters codes.
-   */
+/**
+ * This class lists all tokens in several languages.
+ *
+ * @author Damien Vergnet
+ */
+public final class Tokens {
+  /** A map containing the regexes for the special characters codes. */
   public static final Map<String, String> TAGS_REGEXES;
-  /**
-   * A list containing all tokens.
-   */
+  /** A list containing all tokens. */
   public static final List<Token> TOKENS;
 
   static {
@@ -865,4 +866,6 @@ public class Tokens {
 
     return null;
   }
+
+  private Tokens() {}
 }
