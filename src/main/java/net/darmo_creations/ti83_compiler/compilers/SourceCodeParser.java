@@ -6,7 +6,14 @@ import java.util.List;
 import net.darmo_creations.ti83_compiler.exceptions.UnknownInstructionException;
 
 public class SourceCodeParser {
-  public static byte[] parse(String[] srcCode) throws UnknownInstructionException {
+  /**
+   * Parses the given source code then returns the corresponding tokens.
+   * 
+   * @param srcCode the source code
+   * @return the tokens
+   * @throws UnknownInstructionException
+   */
+  public byte[] parse(String[] srcCode) throws UnknownInstructionException {
     List<Byte> bytes = new ArrayList<Byte>();
     byte[] data;
 
@@ -73,13 +80,19 @@ public class SourceCodeParser {
     return data;
   }
 
-  private static void trim(String[] srcCode) {
+  /**
+   * Trims the whitespace at the left of the line.
+   */
+  private void trim(String[] srcCode) {
     for (int i = 0; i < srcCode.length; i++) {
       srcCode[i] = srcCode[i].replaceFirst("^\\s+", "");
     }
   }
 
-  private static void replaceTags(String[] srcCode) {
+  /**
+   * Replaces all entity tags (&##;) by the corresponding characters.
+   */
+  private void replaceTags(String[] srcCode) {
     for (int i = 0; i < srcCode.length; i++) {
       for (String regex : Tokens.TAGS_REGEXES.keySet()) {
         srcCode[i] = srcCode[i].replaceAll("&(" + regex + ");", Tokens.TAGS_REGEXES.get(regex));
@@ -87,6 +100,4 @@ public class SourceCodeParser {
     }
 
   }
-
-  private SourceCodeParser() {}
 }

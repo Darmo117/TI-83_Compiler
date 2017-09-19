@@ -10,7 +10,16 @@ import net.darmo_creations.ti83_compiler.exceptions.FileFormatException;
 import net.darmo_creations.ti83_compiler.exceptions.UnknownTokenException;
 
 public class Decompiler {
-  public static void decompile(String path, String lang) throws FileFormatException, UnknownTokenException, IOException {
+  /**
+   * Decompiles the given file.
+   * 
+   * @param path the path to the file
+   * @param lang the target language
+   * @throws FileFormatException
+   * @throws UnknownTokenException
+   * @throws IOException
+   */
+  public void decompile(String path, String lang) throws FileFormatException, UnknownTokenException, IOException {
     File f;
     String progName;
     String[] lines;
@@ -50,6 +59,4 @@ public class Decompiler {
     System.out.println("Decompiling successful.");
     System.out.println("File saved at " + source.getAbsolutePath());
   }
-
-  private Decompiler() {}
 }

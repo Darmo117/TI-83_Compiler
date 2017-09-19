@@ -12,7 +12,14 @@ import net.darmo_creations.ti83_compiler.exceptions.FileFormatException;
 import net.darmo_creations.ti83_compiler.exceptions.UnknownInstructionException;
 
 public class Compiler {
-  public static void compile(String path) throws IOException, FileFormatException {
+  /**
+   * Compiles the given file.
+   * 
+   * @param path the path to the file
+   * @throws IOException
+   * @throws FileFormatException
+   */
+  public void compile(String path) throws IOException, FileFormatException {
     File f;
     String progName;
     String[] srcCode;
@@ -29,7 +36,7 @@ public class Compiler {
     byte[] data;
 
     try {
-      data = SourceCodeParser.parse(srcCode);
+      data = new SourceCodeParser().parse(srcCode);
     }
     catch (UnknownInstructionException ex) {
       String offset = "\n";
@@ -54,7 +61,10 @@ public class Compiler {
     System.out.println("File saved at " + bf.getAbsolutePath());
   }
 
-  private static String[] getSourceCode(File file) throws IOException {
+  /**
+   * Returns the content of the given file.
+   */
+  private String[] getSourceCode(File file) throws IOException {
     try {
       List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
 
@@ -64,6 +74,4 @@ public class Compiler {
       throw new IOException("Could not open file.", ex);
     }
   }
-
-  private Compiler() {}
 }

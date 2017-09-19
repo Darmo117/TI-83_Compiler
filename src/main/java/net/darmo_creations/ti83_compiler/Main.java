@@ -20,7 +20,7 @@ public class Main {
         case 0:
           throw new IllegalArgumentException("No file specified.");
         case 1:
-          Compiler.compile(args[0]);
+          new Compiler().compile(args[0]);
           break;
         case 3:
           String lang;
@@ -32,7 +32,7 @@ public class Main {
             throw new IllegalArgumentException("Unknown option " + args[1] + ".");
           }
 
-          Decompiler.decompile(args[0], lang);
+          new Decompiler().decompile(args[0], lang);
           break;
         default:
           throw new IllegalArgumentException("Malformed command.");
