@@ -35,7 +35,7 @@ public class Decompiler {
     }
 
     try {
-      lines = BinaryFileParser.parse(Files.readAllBytes(Paths.get(f.getAbsolutePath())), lang);
+      lines = new BinaryFileParser().parse(Files.readAllBytes(Paths.get(f.getAbsolutePath())), lang);
     }
     catch (IOException ex) {
       throw new IOException("Could not open file.", ex);

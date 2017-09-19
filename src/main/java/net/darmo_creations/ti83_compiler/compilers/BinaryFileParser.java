@@ -9,16 +9,23 @@ import net.darmo_creations.ti83_compiler.exceptions.FileFormatException;
 import net.darmo_creations.ti83_compiler.exceptions.UnknownTokenException;
 import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
 
+/**
+ * This class parses a .8xp file into a source code text file.
+ *
+ * @author Damien Vergnet
+ */
 public class BinaryFileParser {
-  private static final byte[] HEADER;
+  private static final int INDENT_SIZE = 4;
 
-  static {
-    HEADER = new byte[11];
-    ArraysUtil.stringCopy(BinaryFile.FILE_TYPE, HEADER, 0, 11);
+  private final byte[] header;
+
+  public BinaryFileParser() {
+    this.header = new byte[11];
+    ArraysUtil.stringCopy(BinaryFile.HEADER, this.header, 0, 11);
   }
 
   /**
-   * Parses a 8XP file then returns the corresponding source code. The first line is the program's
+   * Parses a .8xp file then returns the corresponding source code. The first line is the program's
    * name.
    * 
    * @param content the content to parse
@@ -27,7 +34,7 @@ public class BinaryFileParser {
    * @throws UnknownTokenException if the parser stumbles upon an unknown token
    * @throws FileFormatException if the file is corrupted
    */
-  public static String[] parse(byte[] content, String lang) throws UnknownTokenException, FileFormatException {
+  public String[] parse(byte[] content, String lang) throws UnknownTokenException, FileFormatException {
     List<String> lines = new ArrayList<String>();
     StringBuffer curLine = new StringBuffer();
     String indentManager = "";
@@ -61,7 +68,7 @@ public class BinaryFileParser {
       // Checksum.
       if (!checkSum(content)) {
         System.err.println("WARNING: invalid checksum, the file may be corrupted.");
-        System.err.println("We will attempt to open it.");
+        System.err.println("We will still attempt to open it.");
         System.err.println();
       }
 
@@ -158,15 +165,21 @@ public class BinaryFileParser {
     }
   }
 
-  private static boolean checkHeader(final byte[] bytes) {
+  /**
+   * Checks the header's validity.
+   */
+  private boolean checkHeader(final byte[] bytes) {
     byte[] header = new byte[11];
 
     System.arraycopy(bytes, 0, header, 0, 11);
 
-    return Arrays.equals(header, HEADER);
+    return Arrays.equals(header, this.header);
   }
 
-  private static String getName(byte[] bytes) {
+  /**
+   * Returns the program's name.
+   */
+  private String getName(byte[] bytes) {
     String name = "";
 
     for (int i = 0x3C; i < 0x3C + 8 && bytes[i] != 0; i++) {
@@ -176,7 +189,10 @@ public class BinaryFileParser {
     return name;
   }
 
-  private static boolean checkSum(byte[] bytes) {
+  /**
+   * Performs the checksum.
+   */
+  private boolean checkSum(byte[] bytes) {
     int sum = 0;
 
     for (int i = 0x37; i < bytes.length - 2; i++) {
@@ -186,24 +202,30 @@ public class BinaryFileParser {
     return (sum & 0xFFFF) == toInt(bytes[bytes.length - 2], bytes[bytes.length - 1]);
   }
 
-  private static int toInt(byte lsb, byte msb) {
+  /**
+   * Converts two bytes to an int.
+   */
+  private int toInt(byte lsb, byte msb) {
     int msb_i = (msb < 0) ? msb + 256 : msb;
     int lsb_i = (lsb < 0) ? lsb + 256 : lsb;
 
     return (msb_i << 8) | lsb_i;
   }
 
-  private static String addIndent(String indent) {
-    return "    " + indent;
+  /**
+   * Adds an indent level.
+   */
+  private String addIndent(String indent) {
+    // TODO check
+    return String.format("%" + INDENT_SIZE + "s", "") + indent;
   }
 
-  private static String removeIndent(String indent) {
-    if (indent.length() < 4) {
+  /**
+   * Removes an indent level.
+   */
+  private String removeIndent(String indent) {
+    if (indent.length() < 4)
       return "";
-    }
-
     return indent.substring(0, indent.length() - 4);
   }
-
-  private BinaryFileParser() {}
 }
