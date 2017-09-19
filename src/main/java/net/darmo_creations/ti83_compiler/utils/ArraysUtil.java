@@ -1,14 +1,22 @@
 package net.darmo_creations.ti83_compiler.utils;
 
-public class ArraysUtil {
+public final class ArraysUtil {
+  /**
+   * Prints an array recursively.
+   * 
+   * @param array the array
+   */
   public static void print_r(Object[] array) {
     print_r(array, 0);
   }
 
-  private static void print_r(Object[] array, int lvl) {
+  /**
+   * Prints an array recursively.
+   */
+  private static void print_r(Object[] array, int recursionLevel) {
     String indent = "";
 
-    for (int i = 0; i < lvl * 4; i++) {
+    for (int i = 0; i < recursionLevel * 4; i++) {
       indent += " ";
     }
 
@@ -23,7 +31,7 @@ public class ArraysUtil {
 
       System.out.print(indent + "    [" + i + "] => ");
       if (o instanceof Object[]) {
-        print_r((Object[]) o, lvl + 1);
+        print_r((Object[]) o, recursionLevel + 1);
       }
       else {
         if (o == null) {
@@ -39,6 +47,14 @@ public class ArraysUtil {
     System.out.println(indent + "}");
   }
 
+  /**
+   * Copies a string to a byte array.
+   * 
+   * @param ascii the ascii string
+   * @param array the destination array
+   * @param start array's start index
+   * @param maxLength output max length
+   */
   public static void stringCopy(String ascii, byte[] array, int start, int maxLength) {
     maxLength = Math.abs(maxLength);
     if (start < 0 || start >= array.length) {
@@ -53,10 +69,16 @@ public class ArraysUtil {
     }
   }
 
+  /**
+   * Copies an array into another.
+   * 
+   * @param array1 source array
+   * @param array2 destination array
+   * @param start start index in the destination array
+   */
   public static void arrayCopy(byte[] array1, byte[] array2, int start) {
-    if (start < 0 || start > array2.length) {
+    if (start < 0 || start > array2.length)
       throw new ArrayIndexOutOfBoundsException(start);
-    }
 
     for (int i = 0; i < array1.length && i + start < array2.length; i++) {
       array2[i + start] = array1[i];
