@@ -14,7 +14,7 @@ import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
  *
  * @author Damien Vergnet
  */
-public class BinaryFileParser {
+class BinaryFileParser {
   private static final int INDENT_SIZE = 4;
 
   private final byte[] header;

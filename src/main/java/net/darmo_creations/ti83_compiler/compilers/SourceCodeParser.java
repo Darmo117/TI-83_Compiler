@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.darmo_creations.ti83_compiler.exceptions.UnknownInstructionException;
 
-public class SourceCodeParser {
+class SourceCodeParser {
   /**
    * Parses the given source code then returns the corresponding tokens.
    * 
