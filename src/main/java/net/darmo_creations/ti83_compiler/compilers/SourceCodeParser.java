@@ -19,9 +19,9 @@ class SourceCodeParser {
 
     trim(srcCode);
     // Used to show the parse errors.
-    final String[] ERR_SRC = new String[srcCode.length];
+    final String[] errorSource = new String[srcCode.length];
 
-    System.arraycopy(srcCode, 0, ERR_SRC, 0, srcCode.length);
+    System.arraycopy(srcCode, 0, errorSource, 0, srcCode.length);
 
     replaceTags(srcCode);
 
@@ -29,7 +29,7 @@ class SourceCodeParser {
     for (int i = 0; i < srcCode.length; i++) {
       String line = srcCode[i];
       // Used to show the parse errors.
-      final String ERR_LINE = ERR_SRC[i];
+      final String errorLine = errorSource[i];
       ind = 0;
 
       while (line.length() > 0) {
@@ -63,7 +63,7 @@ class SourceCodeParser {
 
         // There is one unknown instruction, abort.
         if (!changed) {
-          throw new UnknownInstructionException(ERR_LINE, i + 1, ind + 1);
+          throw new UnknownInstructionException(errorLine, i + 1, ind + 1);
         }
       }
 
