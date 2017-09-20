@@ -2,52 +2,6 @@ package net.darmo_creations.ti83_compiler.utils;
 
 public final class ArraysUtil {
   /**
-   * Prints an array recursively.
-   * 
-   * @param array the array
-   */
-  public static void print_r(Object[] array) {
-    print_r(array, 0);
-  }
-
-  /**
-   * Prints an array recursively.
-   */
-  private static void print_r(Object[] array, int recursionLevel) {
-    String indent = "";
-
-    for (int i = 0; i < recursionLevel * 4; i++) {
-      indent += " ";
-    }
-
-    if (array == null) {
-      System.out.println(indent + "null");
-      return;
-    }
-
-    System.out.println(array.getClass().getSimpleName() + " {");
-    for (int i = 0; i < array.length; i++) {
-      Object o = array[i];
-
-      System.out.print(indent + "    [" + i + "] => ");
-      if (o instanceof Object[]) {
-        print_r((Object[]) o, recursionLevel + 1);
-      }
-      else {
-        if (o == null) {
-          System.out.println("null");
-        }
-        else {
-          String className = o.getClass().getSimpleName();
-
-          System.out.println(className + ": " + (className.equals("String") ? "\"" + o + "\"" : o));
-        }
-      }
-    }
-    System.out.println(indent + "}");
-  }
-
-  /**
    * Copies a string to a byte array.
    * 
    * @param ascii the ascii string
