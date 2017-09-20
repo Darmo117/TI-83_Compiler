@@ -26,7 +26,7 @@ public class Compiler {
 
     f = new File(path);
 
-    if (!f.getName().substring(f.getName().indexOf('.') + 1).toUpperCase().matches("TI83|TI83EN|TI83FR")) {
+    if (!f.getName().substring(f.getName().indexOf('.') + 1).toUpperCase().matches("TI83(EN|FR)?")) {
       throw new FileFormatException("Unsupported file format.");
     }
 
