@@ -20,8 +20,8 @@ task createZip(type: Zip) {
   from '/'
   include 'LICENSE'
   from 'build/libs/'
-  include 'TI83_Compiler-' + version + '.jar'
-  archiveName 'TI83_Compiler-' + version + '.zip'
+  include 'TI-83_Compiler-' + version + '.jar'
+  archiveName 'TI-83_Compiler-' + version + '.zip'
   destinationDir(file('/'))
 }
 
