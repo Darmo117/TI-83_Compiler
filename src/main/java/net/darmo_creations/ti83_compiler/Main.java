@@ -20,7 +20,8 @@ public class Main {
         case 0:
           throw new IllegalArgumentException("No file specified.");
         case 1:
-          new Compiler().compile(args[0]);
+        case 2:
+          new Compiler().compile(args[0], args.length > 1 && "-O".equals(args[1]));
           break;
         case 3:
           String lang;
@@ -41,6 +42,7 @@ public class Main {
     catch (Exception ex) {
       Throwable cause = ex.getCause();
 
+      ex.printStackTrace();
       System.err.println(ex.getClass().getSimpleName() + ": " + ex.getMessage());
       if (cause != null) {
         System.err.println(

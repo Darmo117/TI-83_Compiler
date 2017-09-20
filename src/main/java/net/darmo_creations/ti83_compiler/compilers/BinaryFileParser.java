@@ -98,7 +98,7 @@ class BinaryFileParser {
         }
 
         for (Token token : Tokens.TOKENS) {
-          byte[] bytes = token.getToken();
+          byte[] bytes = token.getBytes();
           boolean matches = true;
           int j;
 
@@ -111,18 +111,18 @@ class BinaryFileParser {
 
           if (matches && (token.getLanguage() == null || token.getLanguage().equals(lang))) {
             // Repeat, While or For detected, indent the next line.
-            if (Arrays.equals(Tokens.getToken("Repeat ").getToken(), token.getToken()) //
-                || Arrays.equals(Tokens.getToken("While ").getToken(), token.getToken()) //
-                || Arrays.equals(Tokens.getToken("For(").getToken(), token.getToken())) {
+            if (Arrays.equals(Tokens.getToken("Repeat ").getBytes(), token.getBytes()) //
+                || Arrays.equals(Tokens.getToken("While ").getBytes(), token.getBytes()) //
+                || Arrays.equals(Tokens.getToken("For(").getBytes(), token.getBytes())) {
               indentNextLine = true;
             }
             // If detected.
-            if (Arrays.equals(Tokens.getToken("If ").getToken(), token.getToken())) {
+            if (Arrays.equals(Tokens.getToken("If ").getBytes(), token.getBytes())) {
               if_ = true;
             }
             // Then detected. If it is in the same line as an If, indent the next line;
             // else, remove current indent then indent next line.
-            if (Arrays.equals(Tokens.getToken("Then").getToken(), token.getToken())) {
+            if (Arrays.equals(Tokens.getToken("Then").getBytes(), token.getBytes())) {
               if (newLine) {
                 indentManager = removeIndent(indentManager);
                 newLine = false;
@@ -131,12 +131,12 @@ class BinaryFileParser {
               indentNextLine = true;
             }
             // Else detected. Remove current indent then indent next line.
-            if (Arrays.equals(Tokens.getToken("Else").getToken(), token.getToken())) {
+            if (Arrays.equals(Tokens.getToken("Else").getBytes(), token.getBytes())) {
               indentManager = removeIndent(indentManager);
               indentNextLine = true;
             }
             // End detected. Remove current indent.
-            if (Arrays.equals(Tokens.getToken("End").getToken(), token.getToken())) {
+            if (Arrays.equals(Tokens.getToken("End").getBytes(), token.getBytes())) {
               indentManager = removeIndent(indentManager);
               indentNextLine = false;
             }

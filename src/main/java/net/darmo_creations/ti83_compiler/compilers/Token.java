@@ -41,7 +41,7 @@ public class Token {
     return this.language;
   }
 
-  public byte[] getToken() {
+  public byte[] getBytes() {
     return this.token;
   }
 }

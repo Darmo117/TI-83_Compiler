@@ -16,10 +16,11 @@ public class Compiler {
    * Compiles the given file.
    * 
    * @param path the path to the file
+   * @param optimise if true, the compiled program will be optimised
    * @throws IOException
    * @throws FileFormatException
    */
-  public void compile(String path) throws IOException, FileFormatException {
+  public void compile(String path, boolean optimise) throws IOException, FileFormatException {
     File f;
     String progName;
     String[] srcCode;
@@ -36,7 +37,7 @@ public class Compiler {
     byte[] data;
 
     try {
-      data = new SourceCodeParser().parse(srcCode);
+      data = new SourceCodeParser().parse(srcCode, optimise);
     }
     catch (UnknownInstructionException ex) {
       String offset = "\n";
