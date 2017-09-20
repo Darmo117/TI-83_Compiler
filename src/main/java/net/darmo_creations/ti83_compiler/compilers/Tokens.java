@@ -867,5 +867,15 @@ public final class Tokens {
     return null;
   }
 
+  /**
+   * Tells if a token is a digit.
+   * 
+   * @param token the token
+   * @return true if the token is a digit
+   */
+  public static boolean isDigit(String token) {
+    return token.matches("\\d");
+  }
+
   private Tokens() {}
 }

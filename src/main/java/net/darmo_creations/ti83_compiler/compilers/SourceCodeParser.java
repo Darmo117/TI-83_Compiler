@@ -55,7 +55,8 @@ class SourceCodeParser {
           if (line.substring(index, index + instr.length()).equals(instr)) {
             String next = getNextToken(line, index + instr.length());
             boolean ignoreInstr = optimise && ((instr.equals(")") || instr.equals("\"")) && (next.equals("->") || next.equals("\n"))
-                || !inString && instr.equals(")") && next.equals(":"));
+                || !inString && instr.equals(")") && next.equals(":")
+                || !inString && instr.equals("*") && (!Tokens.isDigit(lastToken) || !Tokens.isDigit(next)));
 
             if (!ignoreInstr) {
               for (byte b : token.getBytes()) {
@@ -64,7 +65,7 @@ class SourceCodeParser {
             }
 
             if (instr.equals("\""))
-              inString = true;
+              inString = !inString;
             found = true;
             lastToken = instr;
             index += instr.length();
