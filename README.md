@@ -1,4 +1,4 @@
-# TI-83_Compiler
+# TI-83 Compiler
 A compiler/decompiler for TI-83 programs.
 
 ## Features
