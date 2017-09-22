@@ -2,6 +2,7 @@ package net.darmo_creations.ti83_compiler.compilers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
@@ -73,6 +74,9 @@ public class Compiler {
     }
     catch (NullPointerException | InvalidPathException | SecurityException ex) {
       throw new IOException("Could not open file.", ex);
+    }
+    catch (MalformedInputException ex) {
+      throw new IOException("Unsupported encoding! Source files must be encoded in UTF-8.");
     }
   }
 }
