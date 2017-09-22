@@ -61,6 +61,8 @@ public class Main {
       out.println("\tlock program editing from calculator");
       out.println("  -u <lang>");
       out.println("\tuncompile the program into the given language (e.g.: en, fr...)");
+      out.println("-h");
+      out.println("\tshow usage");
     }
   }
 }
