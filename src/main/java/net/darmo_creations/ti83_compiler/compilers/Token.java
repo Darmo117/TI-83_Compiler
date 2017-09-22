@@ -1,5 +1,7 @@
 package net.darmo_creations.ti83_compiler.compilers;
 
+import java.util.Arrays;
+
 /**
  * This class represents an instruction token.
  *
@@ -43,6 +45,21 @@ public class Token implements Comparable<Token> {
 
   public byte[] getBytes() {
     return this.token;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(this.token);
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Token)
+      return Arrays.equals(this.token, ((Token) o).token);
+    return false;
   }
 
   @Override

@@ -15,8 +15,8 @@ class SourceCodeParser {
    * @throws UnknownInstructionException
    */
   public byte[] parse(String[] srcCode, boolean optimise) throws UnknownInstructionException {
-    List<Byte> bytes = new ArrayList<Byte>();
-    byte[] data;
+    List<Token> tokens = new ArrayList<>();
+    List<Byte> bytes = new ArrayList<>();
 
     trim(srcCode);
     // Used to show the parse errors.
@@ -26,15 +26,11 @@ class SourceCodeParser {
 
     replaceTags(srcCode);
 
-    int index;
     for (int i = 0; i < srcCode.length; i++) {
       String line = srcCode[i];
-      // Used for optimisation
-      String lastToken = "";
-      boolean inString = false;
       // Used to show the parse errors.
       final String errorLine = errorSource[i];
-      index = 0;
+      int index = 0;
 
       while (index < line.length()) {
         boolean found = false;
@@ -53,21 +49,9 @@ class SourceCodeParser {
           }
 
           if (line.substring(index, index + instr.length()).equals(instr)) {
-            String next = getNextToken(line, index + instr.length());
-            boolean ignoreInstr = optimise && ((instr.equals(")") || instr.equals("\"")) && (next.equals("->") || next.equals("\n"))
-                || !inString && instr.equals(")") && next.equals(":")
-                || !inString && instr.equals("*") && (!Tokens.isDigit(lastToken) || !Tokens.isDigit(next)));
+            tokens.add(token);
 
-            if (!ignoreInstr) {
-              for (byte b : token.getBytes()) {
-                bytes.add(b);
-              }
-            }
-
-            if (instr.equals("\""))
-              inString = !inString;
             found = true;
-            lastToken = instr;
             index += instr.length();
             break;
           }
@@ -79,29 +63,53 @@ class SourceCodeParser {
         }
       }
 
-      // New line token.
-      bytes.add((byte) 0x3F);
-      inString = false;
+      tokens.add(Tokens.LINE_END);
     }
 
-    data = new byte[bytes.size()];
+    if (optimise) {
+      boolean inString = false;
+      Token closedParenthesis = Tokens.getToken(")").get();
+      Token quote = Tokens.getToken("\"").get();
+      Token arrow = Tokens.getToken("->").get();
+      Token columns = Tokens.getToken(":").get();
+      Token star = Tokens.getToken("*").get();
+
+      for (int i = 0; i < tokens.size(); i++) {
+        Token previous = i > 0 ? tokens.get(i - 1) : null;
+        Token token = tokens.get(i);
+        Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
+        // #f:0
+        boolean ignoreToken =
+            (token.equals(closedParenthesis) || token.equals(quote)) && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
+            || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
+            || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
+        // #f:1
+
+        if (ignoreToken) {
+          tokens.remove(i);
+          i--;
+        }
+
+        if (token.equals(quote))
+          inString = !inString;
+        if (token.equals(Tokens.LINE_END))
+          inString = false;
+      }
+    }
+
+    for (Token token : tokens) {
+      for (byte b : token.getBytes()) {
+        bytes.add(b);
+      }
+    }
+
+    byte[] data = new byte[bytes.size()];
 
     for (int i = 0; i < bytes.size(); i++) {
       data[i] = bytes.get(i);
     }
 
     return data;
-  }
-
-  private String getNextToken(String line, int index) {
-    if (index >= line.length() - 1)
-      return "\n";
-    for (Token token : Tokens.TOKENS) {
-      String instr = token.getInstruction();
-      if (line.substring(index).length() >= instr.length() && line.substring(index, index + instr.length()).equals(instr))
-        return instr;
-    }
-    return "";
   }
 
   /**
