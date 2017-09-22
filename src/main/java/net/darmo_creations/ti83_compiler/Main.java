@@ -40,14 +40,7 @@ public class Main {
       }
     }
     catch (Exception ex) {
-      Throwable cause = ex.getCause();
-
-      ex.printStackTrace();
-      System.err.println(ex.getClass().getSimpleName() + ": " + ex.getMessage());
-      if (cause != null) {
-        System.err.println(
-            "Caused by: " + cause.getClass().getSimpleName() + (cause.getMessage() != null ? ": " + cause.getMessage() : ""));
-      }
+      System.err.println(ex.getMessage());
     }
   }
 }
