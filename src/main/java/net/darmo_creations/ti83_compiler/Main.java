@@ -48,19 +48,19 @@ public class Main {
   }
 
   private static void printUsage(boolean error) {
-    PrintStream out = error ? System.err : System.out;
-
-    out.println("Usage: -f <file> {[-OL]|-u <lang>}");
-    out.println("       -h");
-    out.println();
-    out.println("Options:");
-    out.println("  -f <file>");
-    out.println("\tpath to the file to compile/uncompile");
-    out.println("  -O");
-    out.println("\toptimise compiled program");
-    out.println("  -L");
-    out.println("\tlock program editing from calculator");
-    out.println("  -u <lang>");
-    out.println("\tuncompile the program into the given language (e.g.: en, fr...)");
+    try (PrintStream out = error ? System.err : System.out) {
+      out.println("Usage: -f <file> {[-OL]|-u <lang>}");
+      out.println("       -h");
+      out.println();
+      out.println("Options:");
+      out.println("  -f <file>");
+      out.println("\tpath to the file to compile/uncompile");
+      out.println("  -O");
+      out.println("\toptimise compiled program");
+      out.println("  -L");
+      out.println("\tlock program editing from calculator");
+      out.println("  -u <lang>");
+      out.println("\tuncompile the program into the given language (e.g.: en, fr...)");
+    }
   }
 }
