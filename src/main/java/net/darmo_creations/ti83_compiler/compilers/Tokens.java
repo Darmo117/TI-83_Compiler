@@ -31,8 +31,7 @@ public final class Tokens {
     TAGS_REGEXES.put("delta", "δ");
     TAGS_REGEXES.put("epsilon", "ε");
     TAGS_REGEXES.put("lambda", "λ");
-    // Note: the second µ is the Greek small letter Mu, the first one is the micro sign.
-    TAGS_REGEXES.put("µ|mu", "μ");
+    TAGS_REGEXES.put("mu", "μ");
     TAGS_REGEXES.put("rho|rhô", "ρ");
     TAGS_REGEXES.put("Sigma", "Σ");
     TAGS_REGEXES.put("phi", "φ");
@@ -701,6 +700,9 @@ public final class Tokens {
     TOKENS.add(new Token("δ", new byte[]{(byte) 0xBB, (byte) 0xA3}));
     TOKENS.add(new Token("ε", new byte[]{(byte) 0xBB, (byte) 0xA4}));
     TOKENS.add(new Token("λ", new byte[]{(byte) 0xBB, (byte) 0xA5}));
+    // Micro sign
+    TOKENS.add(new Token("µ", new byte[]{(byte) 0xBB, (byte) 0xA6}));
+    // Mu greek letter
     TOKENS.add(new Token("μ", new byte[]{(byte) 0xBB, (byte) 0xA6}));
     TOKENS.add(new Token("ρ", new byte[]{(byte) 0xBB, (byte) 0xA8}));
     TOKENS.add(new Token("Σ", new byte[]{(byte) 0xBB, (byte) 0xA9}));
