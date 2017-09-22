@@ -28,6 +28,11 @@ class SourceCodeParser {
 
     for (int i = 0; i < srcCode.length; i++) {
       String line = srcCode[i];
+
+      line = line.replaceAll("\\^\\(_?-1\\)", "⁻¹");
+      line = line.replaceAll("\\^\\(2\\)", "²");
+      line = line.replaceAll("\\^\\(3\\)", "³");
+
       // Used to show the parse errors.
       final String errorLine = errorSource[i];
       int index = 0;
@@ -69,6 +74,7 @@ class SourceCodeParser {
     if (optimise) {
       boolean inString = false;
       Token closedParenthesis = Tokens.getToken(")").get();
+      Token closedCBrackets = Tokens.getToken("}").get();
       Token quote = Tokens.getToken("\"").get();
       Token arrow = Tokens.getToken("->").get();
       Token columns = Tokens.getToken(":").get();
@@ -80,7 +86,7 @@ class SourceCodeParser {
         Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
         // #f:0
         boolean ignoreToken =
-            (token.equals(closedParenthesis) || token.equals(quote)) && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
+            (token.equals(closedParenthesis) || token.equals(closedCBrackets) || token.equals(quote)) && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
             || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
             || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
         // #f:1
