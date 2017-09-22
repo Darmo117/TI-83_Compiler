@@ -13,6 +13,14 @@ task fatJar(type: Jar) {
     attributes 'Main-Class': 'net.darmo_creations.ti83_compiler.Main',
                'Class-Path': '.'
   }
+  // Packs all dependencies into the jar.
+  from {
+    configurations.compile.collect {
+      it.isDirectory() ? it : zipTree(it)
+    }
+  }
+  with jar
+  // end
 }
 
 // Creates the distributable jar
