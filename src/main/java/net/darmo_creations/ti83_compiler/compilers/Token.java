@@ -5,7 +5,7 @@ package net.darmo_creations.ti83_compiler.compilers;
  *
  * @author Damien Vergnet
  */
-public class Token {
+public class Token implements Comparable<Token> {
   private String instruction;
   private String language;
   private byte[] token;
@@ -43,5 +43,10 @@ public class Token {
 
   public byte[] getBytes() {
     return this.token;
+  }
+
+  @Override
+  public int compareTo(Token t) {
+    return getInstruction().compareTo(t.getInstruction());
   }
 }

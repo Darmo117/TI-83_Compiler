@@ -1,9 +1,11 @@
 package net.darmo_creations.ti83_compiler.compilers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * This class lists all tokens in several languages.
@@ -40,14 +42,14 @@ public final class Tokens {
     TAGS_REGEXES.put("tau", "τ");
     TAGS_REGEXES.put("point|dot", "·");
 
-    TOKENS = new LinkedList<Token>();
+    TOKENS = new ArrayList<Token>();
     TOKENS.add(new Token(">DMS", new byte[]{0x01}));
     TOKENS.add(new Token(">Dec", new byte[]{0x02}));
     TOKENS.add(new Token(">Frac", new byte[]{0x03}));
     TOKENS.add(new Token("->", new byte[]{0x04}));
     TOKENS.add(new Token("BoxPlot", "en", new byte[]{0x05}));
     TOKENS.add(new Token("Carré", "fr", new byte[]{0x05}));
-    // 0x06: see 0x5CXX
+    TOKENS.add(new Token("[", new byte[]{0x06}));
     TOKENS.add(new Token("]", new byte[]{0x07}));
     TOKENS.add(new Token("{", new byte[]{0x08}));
     TOKENS.add(new Token("}", new byte[]{0x09}));
@@ -98,16 +100,18 @@ public final class Tokens {
     TOKENS.add(new Token("xfMin(", "fr", new byte[]{0x27}));
     TOKENS.add(new Token("fMax(", "en", new byte[]{0x28}));
     TOKENS.add(new Token("xfMax(", "fr", new byte[]{0x28}));
-    // 0x29: bottom
+    TOKENS.add(new Token(" ", new byte[]{0x29}));
     TOKENS.add(new Token("\"", new byte[]{0x2A}));
     TOKENS.add(new Token(",", new byte[]{0x2B}));
     TOKENS.add(new Token("&i;", new byte[]{0x2C}));
-    // 0x2D: see 0x6F
+    TOKENS.add(new Token("!", new byte[]{0x2D}));
     TOKENS.add(new Token("CubicReg", "en", new byte[]{0x2E}));
     TOKENS.add(new Token("RegCubique", "fr", new byte[]{0x2E}));
     TOKENS.add(new Token("QuartReg", "en", new byte[]{0x2F}));
     TOKENS.add(new Token("RegQuatre", "fr", new byte[]{0x2F}));
-    // 0x30 - 0x39: bottom
+    for (int i = 0; i < 10; i++) {
+      TOKENS.add(new Token("" + i, new byte[]{(byte) (0x30 + i)}));
+    }
     TOKENS.add(new Token(".", new byte[]{0x3A}));
     TOKENS.add(new Token("ᴇ", new byte[]{0x3B}));
     TOKENS.add(new Token(" or ", "en", new byte[]{0x3C}));
@@ -117,11 +121,13 @@ public final class Tokens {
     TOKENS.add(new Token(":", new byte[]{0x3E}));
     TOKENS.add(new Token(" and ", "en", new byte[]{0x40}));
     TOKENS.add(new Token(" et ", "fr", new byte[]{0x40}));
-    // 0x41 - 0x5B: bottom
+    for (int i = 0; i < 26; i++) {
+      TOKENS.add(new Token("" + (char) ('A' + i), new byte[]{(byte) (0x41 + i)}));
+    }
+    TOKENS.add(new Token("θ", new byte[]{0x5B}));
     for (int i = 0; i < 10; i++) {
       TOKENS.add(new Token("[" + (char) ('A' + i) + "]", new byte[]{0x5C, (byte) i}));
     }
-    TOKENS.add(new Token("[", new byte[]{0x06}));
     for (int i = 0; i < 9; i++) {
       TOKENS.add(new Token("L" + (i + 1), new byte[]{0x5D, (byte) i}));
     }
@@ -143,7 +149,9 @@ public final class Tokens {
     for (int i = 0; i < 6; i++) {
       TOKENS.add(new Token("r" + (i + 1), new byte[]{0x5E, (byte) (0x40 + i)}));
     }
-    // 0x5E80 - 0x5E82: bottom
+    TOKENS.add(new Token("_u", new byte[]{0x5E, (byte) 0x80}));
+    TOKENS.add(new Token("_v", new byte[]{0x5E, (byte) 0x81}));
+    TOKENS.add(new Token("_w", new byte[]{0x5E, (byte) 0x82}));
     TOKENS.add(new Token("prgm", new byte[]{0x5F}));
     for (int i = 0; i < 9; i++) {
       TOKENS.add(new Token("Pic" + (i + 1), "en", new byte[]{0x60, (byte) (0x00 + i)}));
@@ -159,13 +167,12 @@ public final class Tokens {
     TOKENS.add(new Token("BDG0", "fr", new byte[]{0x61, 0x09}));
     TOKENS.add(new Token("RegEq", "en", new byte[]{0x62, 0x01}));
     TOKENS.add(new Token("EqReg", "fr", new byte[]{0x62, 0x01}));
-    // 0x6202: bottom
+    TOKENS.add(new Token("_n", new byte[]{0x62, 0x02}));
     TOKENS.add(new Token("&xmean;", "en", new byte[]{0x62, 0x03}));
     TOKENS.add(new Token("&xmoy;", "fr", new byte[]{0x62, 0x03}));
-    TOKENS.add(new Token("Σxy", new byte[]{0x62, 0x11}));
     TOKENS.add(new Token("Σx²", new byte[]{0x62, 0x05}));
     TOKENS.add(new Token("Σx", new byte[]{0x62, 0x04}));
-    // 0x6206: see 0x6231
+    TOKENS.add(new Token("Sx", new byte[]{0x62, 0x06}));
     TOKENS.add(new Token("σx", new byte[]{0x62, 0x07}));
     TOKENS.add(new Token("minX", new byte[]{0x62, 0x08}));
     TOKENS.add(new Token("maxX", new byte[]{0x62, 0x09}));
@@ -177,18 +184,24 @@ public final class Tokens {
     TOKENS.add(new Token("Σy", new byte[]{0x62, 0x0D}));
     TOKENS.add(new Token("Sy", new byte[]{0x62, 0x0F}));
     TOKENS.add(new Token("σy", new byte[]{0x62, 0x10}));
-    // 0x6211: 0x6203
-    // 0x6212: bottom
-    // 0x6213: 0xF8
+    TOKENS.add(new Token("Σxy", new byte[]{0x62, 0x11}));
+    TOKENS.add(new Token("_r", new byte[]{0x62, 0x12}));
+    TOKENS.add(new Token("Med", new byte[]{0x62, 0x13}));
     TOKENS.add(new Token("Q1", new byte[]{0x62, 0x14}));
     TOKENS.add(new Token("Q3", new byte[]{0x62, 0x15}));
-    // 0x6216 - 0x621A: bottom
+    for (int i = 0; i < 5; i++) {
+      TOKENS.add(new Token("_" + (char) ('a' + i), new byte[]{0x62, (byte) (0x16 + i)}));
+    }
     for (int i = 0; i < 3; i++) {
       TOKENS.add(new Token("x" + (i + 1), new byte[]{0x62, (byte) (0x1B + i)}));
       TOKENS.add(new Token("y" + (i + 1), new byte[]{0x62, (byte) (0x1E + i)}));
     }
     TOKENS.add(new Token("&n;", new byte[]{0x62, 0x21}));
-    // 0x6222 - 0x6226: bottom
+    TOKENS.add(new Token("_p", new byte[]{0x62, 0x22}));
+    TOKENS.add(new Token("_z", new byte[]{0x62, 0x23}));
+    TOKENS.add(new Token("_t", new byte[]{0x62, 0x24}));
+    TOKENS.add(new Token("χ²", new byte[]{0x62, 0x25}));
+    TOKENS.add(new Token("Ϝ", new byte[]{0x62, 0x26}));
     TOKENS.add(new Token("df", new byte[]{0x62, 0x27}));
     TOKENS.add(new Token("&pcirc;", new byte[]{0x62, 0x28}));
     TOKENS.add(new Token("&pcirc1;", new byte[]{0x62, 0x29}));
@@ -202,12 +215,11 @@ public final class Tokens {
     TOKENS.add(new Token("Sx2", new byte[]{0x62, 0x2F}));
     TOKENS.add(new Token("n2", new byte[]{0x62, 0x30}));
     TOKENS.add(new Token("Sxp", new byte[]{0x62, 0x31}));
-    TOKENS.add(new Token("Sx", new byte[]{0x62, 0x06}));
     TOKENS.add(new Token("lower", "en", new byte[]{0x62, 0x32}));
     TOKENS.add(new Token("inf", "fr", new byte[]{0x62, 0x32}));
     TOKENS.add(new Token("upper", "en", new byte[]{0x62, 0x33}));
     TOKENS.add(new Token("sup", "fr", new byte[]{0x62, 0x33}));
-    // 0x6234: bottom
+    TOKENS.add(new Token("_s", new byte[]{0x62, 0x34}));
     TOKENS.add(new Token("r²", new byte[]{0x62, 0x35}));
     TOKENS.add(new Token("R²", new byte[]{0x62, 0x36}));
     TOKENS.add(new Token("ZXscl", "en", new byte[]{0x63, 0x00}));
@@ -295,24 +307,27 @@ public final class Tokens {
     TOKENS.add(new Token("Float", "en", new byte[]{0x69}));
     TOKENS.add(new Token("Flottant", "fr", new byte[]{0x69}));
     TOKENS.add(new Token("=", new byte[]{0x6A}));
-    // 0x6C: bottom
+    TOKENS.add(new Token(">", new byte[]{0x6C}));
     TOKENS.add(new Token("<=", new byte[]{0x6D}));
     TOKENS.add(new Token("<", new byte[]{0x6B}));
     TOKENS.add(new Token(">=", new byte[]{0x6E}));
     TOKENS.add(new Token("!=", new byte[]{0x6F}));
-    TOKENS.add(new Token("!", new byte[]{0x2D}));
     TOKENS.add(new Token("+", new byte[]{0x70}));
     TOKENS.add(new Token("-", new byte[]{0x71}));
-    // 0x72: see 0xD2
+    TOKENS.add(new Token("Ans", "en", new byte[]{0x72}));
+    TOKENS.add(new Token("Rep", new byte[]{0x72}));
     TOKENS.add(new Token("Fix ", "en", new byte[]{0x73}));
     TOKENS.add(new Token("Fixe ", "fr", new byte[]{0x73}));
-    // 0x74: see 0xA6
+    TOKENS.add(new Token("Horiz", new byte[]{0x74}));
     TOKENS.add(new Token("Full", "en", new byte[]{0x75}));
     TOKENS.add(new Token("PleinEcr", "fr", new byte[]{0x75}));
-    // 0x76: see 0x97
+    TOKENS.add(new Token("Func", "en", new byte[]{0x76}));
+    TOKENS.add(new Token("Fonct", "fr", new byte[]{0x76}));
     TOKENS.add(new Token("Param", new byte[]{0x77}));
-    // 0x78: see 0xBB30
-    // 0x79: see 0x7E00
+    TOKENS.add(new Token("Polar", "en", new byte[]{0x78}));
+    TOKENS.add(new Token("Polaire", "fr", new byte[]{0x78}));
+    TOKENS.add(new Token("Seq", "en", new byte[]{0x79}));
+    TOKENS.add(new Token("Suite", "fr", new byte[]{0x79}));
     TOKENS.add(new Token("IndpntAuto", "en", new byte[]{0x7A}));
     TOKENS.add(new Token("ValeursAuto", "fr", new byte[]{0x7A}));
     TOKENS.add(new Token("IndpntAsk", "en", new byte[]{0x7B}));
@@ -323,8 +338,6 @@ public final class Tokens {
     TOKENS.add(new Token("CalculsDem", "fr", new byte[]{0x7D}));
     TOKENS.add(new Token("Sequential", "en", new byte[]{0x7E, 0x00}));
     TOKENS.add(new Token("Séquentiel", "fr", new byte[]{0x7E, 0x00}));
-    TOKENS.add(new Token("Seq", "en", new byte[]{0x79}));
-    TOKENS.add(new Token("Suite", "fr", new byte[]{0x79}));
     TOKENS.add(new Token("Simul", new byte[]{0x7E, 0x01}));
     TOKENS.add(new Token("PolarGC", "en", new byte[]{0x7E, 0x02}));
     TOKENS.add(new Token("CoordPol", "fr", new byte[]{0x7E, 0x02}));
@@ -400,8 +413,6 @@ public final class Tokens {
     TOKENS.add(new Token("FonctAff ", "fr", new byte[]{(byte) 0x96}));
     TOKENS.add(new Token("FnOff ", "en", new byte[]{(byte) 0x97}));
     TOKENS.add(new Token("FonctNAff ", "fr", new byte[]{(byte) 0x97}));
-    TOKENS.add(new Token("Func", "en", new byte[]{0x76}));
-    TOKENS.add(new Token("Fonct", "fr", new byte[]{0x76}));
     TOKENS.add(new Token("StorePic ", "en", new byte[]{(byte) 0x98}));
     TOKENS.add(new Token("SauveImage ", "fr", new byte[]{(byte) 0x98}));
     TOKENS.add(new Token("RecallPic ", "en", new byte[]{(byte) 0x99}));
@@ -430,7 +441,6 @@ public final class Tokens {
     TOKENS.add(new Token("Cercle(", "fr", new byte[]{(byte) 0xA5}));
     TOKENS.add(new Token("Horizontal ", "en", new byte[]{(byte) 0xA6}));
     TOKENS.add(new Token("Horizontale ", "fr", new byte[]{(byte) 0xA6}));
-    TOKENS.add(new Token("Horiz", new byte[]{0x74}));
     TOKENS.add(new Token("Tangent(", "en", new byte[]{(byte) 0xA7}));
     TOKENS.add(new Token("Tangente(", "fr", new byte[]{(byte) 0xA7}));
     TOKENS.add(new Token("DrawInv ", "en", new byte[]{(byte) 0xA8}));
@@ -559,8 +569,6 @@ public final class Tokens {
     TOKENS.add(new Token(">Rect", new byte[]{(byte) 0xBB, 0x2F}));
     TOKENS.add(new Token(">Polar", "en", new byte[]{(byte) 0xBB, 0x30}));
     TOKENS.add(new Token(">Polaire", "fr", new byte[]{(byte) 0xBB, 0x30}));
-    TOKENS.add(new Token("Polar", "en", new byte[]{0x78}));
-    TOKENS.add(new Token("Polaire", "fr", new byte[]{0x78}));
     TOKENS.add(new Token("&exp;", new byte[]{(byte) 0xBB, 0x31}));
     TOKENS.add(new Token("SinReg ", "en", new byte[]{(byte) 0xBB, 0x32}));
     TOKENS.add(new Token("RegSin ", "fr", new byte[]{(byte) 0xBB, 0x32}));
@@ -708,7 +716,13 @@ public final class Tokens {
     TOKENS.add(new Token("Σ", new byte[]{(byte) 0xBB, (byte) 0xA9}));
     TOKENS.add(new Token("φ", new byte[]{(byte) 0xBB, (byte) 0xAB}));
     TOKENS.add(new Token("Ω", new byte[]{(byte) 0xBB, (byte) 0xAC}));
-    // 0xBBB0 - 0xBBCA: bottom
+    // Two loops because there's a gap between 'k' and 'l' codes.
+    for (int i = 0; i < 11; i++) {
+      TOKENS.add(new Token("" + (char) ('a' + i), new byte[]{(byte) 0xBB, (byte) (0xB0 + i)}));
+    }
+    for (int i = 0; i < 15; i++) {
+      TOKENS.add(new Token("" + (char) ('l' + i), new byte[]{(byte) 0xBB, (byte) (0xBC + i)}));
+    }
     TOKENS.add(new Token("σ", new byte[]{(byte) 0xBB, (byte) 0xCB}));
     TOKENS.add(new Token("τ", new byte[]{(byte) 0xBB, (byte) 0xCC}));
     TOKENS.add(new Token("Í", new byte[]{(byte) 0xBB, (byte) 0xCD}));
@@ -745,8 +759,6 @@ public final class Tokens {
     TOKENS.add(new Token("Else", new byte[]{(byte) 0xD0}));
     TOKENS.add(new Token("While ", new byte[]{(byte) 0xD1}));
     TOKENS.add(new Token("Repeat ", new byte[]{(byte) 0xD2}));
-    TOKENS.add(new Token("Ans", "en", new byte[]{0x72}));
-    TOKENS.add(new Token("Rep", new byte[]{0x72}));
     TOKENS.add(new Token("For(", new byte[]{(byte) 0xD3}));
     TOKENS.add(new Token("End", new byte[]{(byte) 0xD4}));
     TOKENS.add(new Token("Return", new byte[]{(byte) 0xD5}));
@@ -804,7 +816,6 @@ public final class Tokens {
     TOKENS.add(new Token("PwrReg ", "en", new byte[]{(byte) 0xF7}));
     TOKENS.add(new Token("RegPuiss", "fr", new byte[]{(byte) 0xF7}));
     TOKENS.add(new Token("Med-Med", new byte[]{(byte) 0xF8}));
-    TOKENS.add(new Token("Med", new byte[]{0x62, 0x13}));
     TOKENS.add(new Token("QuadReg ", "en", new byte[]{(byte) 0xF9}));
     TOKENS.add(new Token("RegQuad", "fr", new byte[]{(byte) 0xF9}));
     TOKENS.add(new Token("ClrList ", "en", new byte[]{(byte) 0xFA}));
@@ -820,53 +831,22 @@ public final class Tokens {
     TOKENS.add(new Token("LinReg(ax+b) ", "en", new byte[]{(byte) 0xFF}));
     TOKENS.add(new Token("RegLin(ax+b) ", "fr", new byte[]{(byte) 0xFF}));
 
-    // bottom
-
-    TOKENS.add(new Token(" ", new byte[]{0x29}));
-    for (int i = 0; i < 10; i++) {
-      TOKENS.add(new Token("" + i, new byte[]{(byte) (0x30 + i)}));
-    }
-    for (int i = 0; i < 26; i++) {
-      TOKENS.add(new Token("" + (char) ('A' + i), new byte[]{(byte) (0x41 + i)}));
-    }
-    TOKENS.add(new Token("θ", new byte[]{0x5B}));
-    TOKENS.add(new Token("u", new byte[]{0x5E, (byte) 0x80}));
-    TOKENS.add(new Token("v", new byte[]{0x5E, (byte) 0x81}));
-    TOKENS.add(new Token("w", new byte[]{0x5E, (byte) 0x82}));
-    TOKENS.add(new Token("n", new byte[]{0x62, 0x02}));
-    TOKENS.add(new Token("r", new byte[]{0x62, 0x12}));
-    for (int i = 0; i < 5; i++) {
-      TOKENS.add(new Token("" + (char) ('a' + i), new byte[]{0x62, (byte) (0x16 + i)}));
-    }
-    TOKENS.add(new Token("p", new byte[]{0x62, 0x22}));
-    TOKENS.add(new Token("z", new byte[]{0x62, 0x23}));
-    TOKENS.add(new Token("t", new byte[]{0x62, 0x24}));
-    TOKENS.add(new Token("χ²", new byte[]{0x62, 0x25}));
-    TOKENS.add(new Token("Ϝ", new byte[]{0x62, 0x26}));
-    TOKENS.add(new Token("s", new byte[]{0x62, 0x34}));
-    TOKENS.add(new Token(">", new byte[]{0x6C}));
-    for (int i = 0; i < 11; i++) {
-      TOKENS.add(new Token("" + (char) ('a' + i), new byte[]{(byte) 0xBB, (byte) (0xB0 + i)}));
-    }
-    for (int i = 0; i < 15; i++) {
-      TOKENS.add(new Token("" + (char) ('l' + i), new byte[]{(byte) 0xBB, (byte) (0xBC + i)}));
-    }
+    Collections.sort(TOKENS, (t1, t2) -> t2.compareTo(t1));
   }
 
   /**
    * Return the token corresponding to the given instruction.
    * 
    * @param instr the instruction
-   * @return the token or {@code null} if none were found
+   * @return the bytes or an empty array if none were found
    */
-  public static Token getToken(String instr) {
-    for (Token token : TOKENS) {
-      if (token.getInstruction().equals(instr)) {
-        return token;
-      }
-    }
+  public static byte[] getToken(String instr) {
+    Optional<Token> opt = TOKENS.stream().filter(t -> t.getInstruction().equals(instr)).findFirst();
 
-    return null;
+    if (opt.isPresent()) {
+      return opt.get().getBytes();
+    }
+    return new byte[]{};
   }
 
   /**
