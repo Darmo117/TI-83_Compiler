@@ -21,7 +21,7 @@ public class Compiler {
    * @throws IOException
    * @throws FileFormatException
    */
-  public void compile(String path, boolean optimise) throws IOException, FileFormatException {
+  public void compile(String path, boolean optimise, boolean editable) throws IOException, FileFormatException {
     File f;
     String progName;
     String[] srcCode;
@@ -50,7 +50,7 @@ public class Compiler {
       throw new RuntimeException("Unknown token at line " + ex.getErrorOffset() + ":\n" + ex.getMessage() + offset + "^", ex);
     }
 
-    BinaryFile bf = new BinaryFile(f.getParent(), progName, data);
+    BinaryFile bf = new BinaryFile(f.getParent(), progName, data, editable);
 
     try {
       bf.writeFile();

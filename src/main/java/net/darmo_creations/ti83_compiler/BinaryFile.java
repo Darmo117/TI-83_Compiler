@@ -15,12 +15,13 @@ public class BinaryFile {
   private String path;
   private String name;
   private byte[] data;
+  private boolean editable;
 
   public static final String FORMAT = "8xp";
   public static final String HEADER = "**TI83F*\u001a\n\0";
   public static final String COMMENT = "Created by Java TI-Compiler";
 
-  public BinaryFile(String path, String name, byte[] data) {
+  public BinaryFile(String path, String name, byte[] data, boolean editable) {
     this.path = path;
     setName(name);
     setData(data);
@@ -40,6 +41,14 @@ public class BinaryFile {
 
   public String getName() {
     return this.name;
+  }
+
+  public boolean isEditable() {
+    return this.editable;
+  }
+
+  public void setEditable(boolean editable) {
+    this.editable = editable;
   }
 
   public void setName(String name) {
@@ -86,7 +95,7 @@ public class BinaryFile {
     header[57] = (byte) (l & 0x00FF);
     header[58] = (byte) ((l & 0xFF00) >> 8);
     // Protection
-    header[59] = 0x05;
+    header[59] = (byte) (isEditable() ? 0x05 : 0x06);
     // Program name
     ArraysUtil.stringCopy(this.name, header, 60, 8);
     // More things
