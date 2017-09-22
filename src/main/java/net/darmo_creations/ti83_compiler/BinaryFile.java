@@ -25,6 +25,7 @@ public class BinaryFile {
     this.path = path;
     setName(name);
     setData(data);
+    setEditable(editable);
   }
 
   public String getPath() {
