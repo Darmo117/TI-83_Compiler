@@ -51,7 +51,6 @@ public class Main {
     try (PrintStream out = error ? System.err : System.out) {
       out.println("Usage: -f <file> {[-OL]|-u <lang>}");
       out.println("       -h");
-      out.println();
       out.println("Options:");
       out.println("  -f <file>");
       out.println("\tpath to the file to compile/uncompile");
@@ -61,7 +60,7 @@ public class Main {
       out.println("\tlock program editing from calculator");
       out.println("  -u <lang>");
       out.println("\tuncompile the program into the given language (e.g.: en, fr...)");
-      out.println("-h");
+      out.println("  -h");
       out.println("\tshow usage");
     }
   }
