@@ -32,6 +32,7 @@ class SourceCodeParser {
       line = line.replaceAll("\\^\\(_?-1\\)", "⁻¹");
       line = line.replaceAll("\\^\\(2\\)", "²");
       line = line.replaceAll("\\^\\(3\\)", "³");
+      line = line.replaceAll("(?:list|liste)([A-Zθ]{1,8})", "ʟ$1");
 
       // Used to show the parse errors.
       final String errorLine = errorSource[i];
@@ -80,7 +81,7 @@ class SourceCodeParser {
       Token columns = Tokens.getToken(":").get();
       Token star = Tokens.getToken("*").get();
 
-      boolean changed = false;
+      boolean changed;
       do {
         changed = false;
 
