@@ -21,7 +21,7 @@ A compiler/decompiler for TI-83 programs.
 `java -jar TI-83_compiler.jar -f <file> -u <lang>`
 
 + `-f <file>` path to the program file
-+ `-u <lang>` target language for decompiled sources
++ `-u <lang>` target language (`en`, `fr`) for decompiled sources
 
 ### Help
 `java -jar TI-83_compiler.jar -h`
