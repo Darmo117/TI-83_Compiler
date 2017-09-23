@@ -119,9 +119,8 @@ class SourceCodeParser {
         Token previous = i > 0 ? tokens.get(i - 1) : null;
         Token token = tokens.get(i);
         Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
-        // FIXME empty strings are removed completely
         // #f:0
-        boolean ignoreToken = (token.equals(quote) || !inString &&  (token.equals(closedParenthesis) || token.equals(closedCBrackets)))
+        boolean ignoreToken = (inString && token.equals(quote) || !inString && (token.equals(closedParenthesis) || token.equals(closedCBrackets)))
             && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
             || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
             || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
