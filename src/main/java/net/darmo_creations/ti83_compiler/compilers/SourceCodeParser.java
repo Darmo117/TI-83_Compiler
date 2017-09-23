@@ -80,27 +80,33 @@ class SourceCodeParser {
       Token columns = Tokens.getToken(":").get();
       Token star = Tokens.getToken("*").get();
 
-      for (int i = 0; i < tokens.size(); i++) {
-        Token previous = i > 0 ? tokens.get(i - 1) : null;
-        Token token = tokens.get(i);
-        Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
-        // #f:0
-        boolean ignoreToken =
-            (token.equals(closedParenthesis) || token.equals(closedCBrackets) || token.equals(quote)) && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
-            || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
-            || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
-        // #f:1
+      boolean changed = false;
+      do {
+        changed = false;
 
-        if (ignoreToken) {
-          tokens.remove(i);
-          i--;
+        for (int i = 0; i < tokens.size(); i++) {
+          Token previous = i > 0 ? tokens.get(i - 1) : null;
+          Token token = tokens.get(i);
+          Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
+          // #f:0
+          boolean ignoreToken = (token.equals(quote) || !inString &&  (token.equals(closedParenthesis) || token.equals(closedCBrackets)))
+              && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
+              || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
+              || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
+          // #f:1
+
+          if (ignoreToken) {
+            changed = true;
+            tokens.remove(i);
+            i--;
+          }
+
+          if (token.equals(quote))
+            inString = !inString;
+          if (token.equals(Tokens.LINE_END) || token.equals(arrow))
+            inString = false;
         }
-
-        if (token.equals(quote))
-          inString = !inString;
-        if (token.equals(Tokens.LINE_END))
-          inString = false;
-      }
+      } while (changed);
     }
 
     for (Token token : tokens) {
