@@ -15,16 +15,40 @@ class SourceCodeParser {
    * @throws UnknownInstructionException
    */
   public byte[] parse(String[] srcCode, boolean optimise) throws UnknownInstructionException {
-    List<Token> tokens = new ArrayList<>();
-    List<Byte> bytes = new ArrayList<>();
-
     trim(srcCode);
     // Used to show the parse errors.
     final String[] errorSource = new String[srcCode.length];
-
     System.arraycopy(srcCode, 0, errorSource, 0, srcCode.length);
 
     replaceTags(srcCode);
+
+    List<Token> tokens = extractTokens(srcCode, errorSource);
+
+    if (optimise)
+      optimise(tokens);
+
+    List<Byte> bytes = new ArrayList<>();
+
+    for (Token token : tokens) {
+      for (byte b : token.getBytes()) {
+        bytes.add(b);
+      }
+    }
+
+    byte[] data = new byte[bytes.size()];
+
+    for (int i = 0; i < bytes.size(); i++) {
+      data[i] = bytes.get(i);
+    }
+
+    return data;
+  }
+
+  /**
+   * Extracts tokens from the source code.
+   */
+  private List<Token> extractTokens(String[] srcCode, String[] errorSource) throws UnknownInstructionException {
+    List<Token> tokens = new ArrayList<>();
 
     for (int i = 0; i < srcCode.length; i++) {
       String line = srcCode[i];
@@ -72,57 +96,49 @@ class SourceCodeParser {
       tokens.add(Tokens.LINE_END);
     }
 
-    if (optimise) {
-      boolean inString = false;
-      Token closedParenthesis = Tokens.getToken(")").get();
-      Token closedCBrackets = Tokens.getToken("}").get();
-      Token quote = Tokens.getToken("\"").get();
-      Token arrow = Tokens.getToken("->").get();
-      Token columns = Tokens.getToken(":").get();
-      Token star = Tokens.getToken("*").get();
+    return tokens;
+  }
 
-      boolean changed;
-      do {
-        changed = false;
+  /**
+   * Optimises the program.
+   */
+  private void optimise(List<Token> tokens) {
+    boolean inString = false;
+    Token closedParenthesis = Tokens.getToken(")").get();
+    Token closedCBrackets = Tokens.getToken("}").get();
+    Token quote = Tokens.getToken("\"").get();
+    Token arrow = Tokens.getToken("->").get();
+    Token columns = Tokens.getToken(":").get();
+    Token star = Tokens.getToken("*").get();
 
-        for (int i = 0; i < tokens.size(); i++) {
-          Token previous = i > 0 ? tokens.get(i - 1) : null;
-          Token token = tokens.get(i);
-          Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
-          // #f:0
-          boolean ignoreToken = (token.equals(quote) || !inString &&  (token.equals(closedParenthesis) || token.equals(closedCBrackets)))
-              && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
-              || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
-              || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
-          // #f:1
+    boolean changed;
+    do {
+      changed = false;
 
-          if (ignoreToken) {
-            changed = true;
-            tokens.remove(i);
-            i--;
-          }
+      for (int i = 0; i < tokens.size(); i++) {
+        Token previous = i > 0 ? tokens.get(i - 1) : null;
+        Token token = tokens.get(i);
+        Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
+        // FIXME empty strings are removed completely
+        // #f:0
+        boolean ignoreToken = (token.equals(quote) || !inString &&  (token.equals(closedParenthesis) || token.equals(closedCBrackets)))
+            && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
+            || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
+            || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
+        // #f:1
 
-          if (token.equals(quote))
-            inString = !inString;
-          if (token.equals(Tokens.LINE_END) || token.equals(arrow))
-            inString = false;
+        if (ignoreToken) {
+          changed = true;
+          tokens.remove(i);
+          i--;
         }
-      } while (changed);
-    }
 
-    for (Token token : tokens) {
-      for (byte b : token.getBytes()) {
-        bytes.add(b);
+        if (token.equals(quote))
+          inString = !inString;
+        if (token.equals(Tokens.LINE_END) || token.equals(arrow))
+          inString = false;
       }
-    }
-
-    byte[] data = new byte[bytes.size()];
-
-    for (int i = 0; i < bytes.size(); i++) {
-      data[i] = bytes.get(i);
-    }
-
-    return data;
+    } while (changed);
   }
 
   /**
