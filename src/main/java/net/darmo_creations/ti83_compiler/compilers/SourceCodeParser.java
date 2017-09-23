@@ -32,7 +32,7 @@ class SourceCodeParser {
       line = line.replaceAll("\\^\\(_?-1\\)", "⁻¹");
       line = line.replaceAll("\\^\\(2\\)", "²");
       line = line.replaceAll("\\^\\(3\\)", "³");
-      line = line.replaceAll("(?:list|liste)([A-Zθ]{1,8})", "ʟ$1");
+      line = line.replaceAll("(?:list|liste)([A-Zθ]+)", "ʟ$1");
 
       // Used to show the parse errors.
       final String errorLine = errorSource[i];
