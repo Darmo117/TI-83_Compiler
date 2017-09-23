@@ -28,7 +28,7 @@ public final class Tokens {
     map.put("list|liste", "ʟ");
     map.put("expon|expos", "ᴇ");
     map.put("theta|thêta", "θ");
-    map.put("F", "Ϝ");
+    map.put("digamma|F", "Ϝ");
     map.put("pi", "π");
     map.put("alpha", "α");
     map.put("beta|bêta", "β");
