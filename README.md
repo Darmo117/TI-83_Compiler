@@ -3,17 +3,31 @@ A compiler/decompiler for TI-83 programs.
 
 ## Features
 - Compile programs to .8xp files
-- Optimise option to remove useless instructions without changing program's behavior
 - Uncompile .8xp files
+- Optimise option to remove useless characters without changing program's behavior
+- Lock program editing from calculators
 
 ## Usage
+### Compiling
 *Source files' extension must be one of the following: .ti83, .ti83en, .ti83fr*
 
-To compile, run `java -jar TI-83_compiler.jar <path_to_file> [-O]` where `<path_to_file>` is the path to the source file.
-To enable optimisation, add `-O` option at the end of the command.
 
-To uncompile a program file, run `java -jar TI-83_compiler.jar <path_to_file> -u <language>` where `<path_to_file>` is the
-path to the source file and `<language>` is the desired instructions' language (either `en` for English or `fr` for French).
++ `-f <file>` path to the source file
++ `-O` enable program optimisation: useless characters will be removed to speed up program execution
++ `-L` disables program editing from a calculator
+
+### Decompiling
+*Program files' extension must be .8xp*
+`java -jar TI-83_compiler.jar -f <file> -u <lang>`
+
++ `-f <file>` path to the program file
++ `-u <lang>` target language for decompiled sources
+
+### Help
+`java -jar TI-83_compiler.jar -h`
+
+This option will show command usage and syntax.
+
 
 ## Documentation
 Will come soon!
