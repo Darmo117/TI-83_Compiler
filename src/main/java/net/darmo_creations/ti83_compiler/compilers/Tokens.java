@@ -2,7 +2,6 @@ package net.darmo_creations.ti83_compiler.compilers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +21,7 @@ public final class Tokens {
   public static final Token LINE_END = new Token("\n", (byte) 0x3F);
 
   static {
-    Map<String, String> map = new HashMap<>();
-    map = new LinkedHashMap<String, String>();
+    Map<String, String> map = new LinkedHashMap<>();
     map.put("exp", "e_");
     map.put("list|liste", "ʟ");
     map.put("expon|expos", "ᴇ");
