@@ -10,6 +10,7 @@ A compiler/decompiler for TI-83 programs.
 ## Usage
 ### Compiling
 *Source files' extension must be one of the following: .ti83, .ti83en, .ti83fr*
+
 `java -jar TI-83_compiler.jar -f <file> [-O|-L]`
 
 + `-f <file>` path to the source file
@@ -18,6 +19,7 @@ A compiler/decompiler for TI-83 programs.
 
 ### Decompiling
 *Program files' extension must be .8xp*
+
 `java -jar TI-83_compiler.jar -f <file> -u <lang>`
 
 + `-f <file>` path to the program file
