@@ -22,7 +22,6 @@ public final class Tokens {
 
   static {
     Map<String, String> map = new LinkedHashMap<>();
-    map.put("exp", "e_");
     map.put("list|liste", "ʟ");
     map.put("expon|expos", "ᴇ");
     map.put("theta|thêta", "θ");
@@ -37,9 +36,9 @@ public final class Tokens {
     map.put("mu", "μ");
     map.put("rho|rhô", "ρ");
     map.put("Sigma", "Σ");
+    map.put("sigma", "σ");
     map.put("phi", "φ");
     map.put("Omega|Oméga", "Ω");
-    map.put("sigma", "σ");
     map.put("tau", "τ");
     map.put("point|dot", "·");
     TAGS_REGEXES = Collections.unmodifiableMap(map);
@@ -130,10 +129,9 @@ public final class Tokens {
     for (int i = 0; i < 10; i++) {
       tokens.add(new Token("[" + (char) ('A' + i) + "]", (byte) 0x5C, (byte) i));
     }
-    for (int i = 0; i < 9; i++) {
-      tokens.add(new Token("L" + (i + 1), (byte) 0x5D, (byte) i));
+    for (int i = 0; i < 6; i++) {
+      tokens.add(new Token("L" + (i + 1), (byte) 0x5D, (byte) (0x00 + i)));
     }
-    tokens.add(new Token("L0", (byte) 0x5D, (byte) 0x09));
     for (int i = 0; i < 9; i++) {
       tokens.add(new Token("Y" + (i + 1), (byte) 0x5E, (byte) (0x10 + i)));
     }
@@ -309,15 +307,15 @@ public final class Tokens {
     tokens.add(new Token("Float", "en", (byte) 0x69));
     tokens.add(new Token("Flottant", "fr", (byte) 0x69));
     tokens.add(new Token("=", (byte) 0x6A));
+    tokens.add(new Token("<", (byte) 0x6B));
     tokens.add(new Token(">", (byte) 0x6C));
     tokens.add(new Token("<=", (byte) 0x6D));
-    tokens.add(new Token("<", (byte) 0x6B));
     tokens.add(new Token(">=", (byte) 0x6E));
     tokens.add(new Token("!=", (byte) 0x6F));
     tokens.add(new Token("+", (byte) 0x70));
     tokens.add(new Token("-", (byte) 0x71));
     tokens.add(new Token("Ans", "en", (byte) 0x72));
-    tokens.add(new Token("Rep", (byte) 0x72));
+    tokens.add(new Token("Rep", "fr", (byte) 0x72));
     tokens.add(new Token("Fix ", "en", (byte) 0x73));
     tokens.add(new Token("Fixe ", "fr", (byte) 0x73));
     tokens.add(new Token("Horiz", (byte) 0x74));
@@ -436,7 +434,7 @@ public final class Tokens {
     tokens.add(new Token("Pxl-Aff(", "fr", (byte) 0xA1));
     tokens.add(new Token("Pxl-Off(", "en", (byte) 0xA2));
     tokens.add(new Token("Pxl-NAff(", "fr", (byte) 0xA2));
-    tokens.add(new Token("Pxl-Change(", "en", (byte) 0xA3));
+    tokens.add(new Token("Pxl-Change(", (byte) 0xA3));
     tokens.add(new Token("Shade(", "en", (byte) 0xA4));
     tokens.add(new Token("Ombre(", "fr", (byte) 0xA4));
     tokens.add(new Token("Circle(", "en", (byte) 0xA5));
@@ -835,7 +833,7 @@ public final class Tokens {
 
     Collections.sort(tokens, (t1, t2) -> t2.compareTo(t1));
 
-    TOKENS = Collections.unmodifiableList(tokens);
+    TOKENS = tokens;
   }
 
   /**
