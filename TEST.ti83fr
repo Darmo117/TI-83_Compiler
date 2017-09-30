@@ -9,8 +9,8 @@ Gauss-Jordan(
 EffToutListes
 DiagnosticOff
 Clear Entries
- Combinaison 
- Arrangement 
+: Combinaison 
+: Arrangement 
 studentFRép(
 sous-Chaîne(
 poissonFRép(
@@ -239,7 +239,7 @@ AffGraph
 &pcirc1;
 &exposr;
 &exponr;
- ouExcl 
+: ouExcl 
 χ²FRép(
 ΔListe(
 w(nMin)
@@ -494,10 +494,10 @@ Capt(
 >Frac
 >Eff(
 *row(
- xor 
- nPr 
- nCr 
- and 
+: xor 
+: nPr 
+: nCr 
+: and 
 θpas
 θmin
 θmax
@@ -619,9 +619,9 @@ Asm(
 >Dec
 >DMS
 10^(
- ou 
- or 
- et 
+: ou 
+: or 
+: et 
 Σy²
 Σx²
 Σxy
@@ -666,7 +666,7 @@ P/Y
 Med
 Ing
 If 
-G_T
+G-T
 Eng
 End
 Dot
@@ -897,4 +897,4 @@ A
 '
 "
 !
- 
+: 

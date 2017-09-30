@@ -114,16 +114,16 @@ public class SourceCodeParserTest {
 
   @Test
   public void testInstr0x95fr() throws UnknownInstructionException {
-    this.token[0] = " Combinaison ";
+    this.token[0] = ": Combinaison ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x95, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x95, (byte) 0x3F}, bytes);
   }
 
   @Test
   public void testInstr0x94fr() throws UnknownInstructionException {
-    this.token[0] = " Arrangement ";
+    this.token[0] = ": Arrangement ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x94, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x94, (byte) 0x3F}, bytes);
   }
 
   @Test
@@ -1724,9 +1724,9 @@ public class SourceCodeParserTest {
 
   @Test
   public void testInstr0x3Dfr() throws UnknownInstructionException {
-    this.token[0] = " ouExcl ";
+    this.token[0] = ": ouExcl ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x3D, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x3D, (byte) 0x3F}, bytes);
   }
 
   @Test
@@ -3509,30 +3509,30 @@ public class SourceCodeParserTest {
 
   @Test
   public void testInstr0x3Den() throws UnknownInstructionException {
-    this.token[0] = " xor ";
+    this.token[0] = ": xor ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x3D, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x3D, (byte) 0x3F}, bytes);
   }
 
   @Test
   public void testInstr0x94en() throws UnknownInstructionException {
-    this.token[0] = " nPr ";
+    this.token[0] = ": nPr ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x94, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x94, (byte) 0x3F}, bytes);
   }
 
   @Test
   public void testInstr0x95en() throws UnknownInstructionException {
-    this.token[0] = " nCr ";
+    this.token[0] = ": nCr ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x95, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x95, (byte) 0x3F}, bytes);
   }
 
   @Test
   public void testInstr0x40en() throws UnknownInstructionException {
-    this.token[0] = " and ";
+    this.token[0] = ": and ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x40, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x40, (byte) 0x3F}, bytes);
   }
 
   @Test
@@ -4384,23 +4384,23 @@ public class SourceCodeParserTest {
 
   @Test
   public void testInstr0x3Cfr() throws UnknownInstructionException {
-    this.token[0] = " ou ";
+    this.token[0] = ": ou ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x3C, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x3C, (byte) 0x3F}, bytes);
   }
 
   @Test
   public void testInstr0x3Cen() throws UnknownInstructionException {
-    this.token[0] = " or ";
+    this.token[0] = ": or ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x3C, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x3C, (byte) 0x3F}, bytes);
   }
 
   @Test
   public void testInstr0x40fr() throws UnknownInstructionException {
-    this.token[0] = " et ";
+    this.token[0] = ": et ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x40, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x40, (byte) 0x3F}, bytes);
   }
 
   @Test
@@ -4713,7 +4713,7 @@ public class SourceCodeParserTest {
 
   @Test
   public void testInstr0xBB64() throws UnknownInstructionException {
-    this.token[0] = "G_T";
+    this.token[0] = "G-T";
     byte[] bytes = parser.parse(this.token, false);
     assertArrayEquals(new byte[]{(byte) 0xBB, (byte) 0x64, (byte) 0x3F}, bytes);
   }
@@ -6330,8 +6330,8 @@ public class SourceCodeParserTest {
 
   @Test
   public void testInstr0x29() throws UnknownInstructionException {
-    this.token[0] = " ";
+    this.token[0] = ": ";
     byte[] bytes = parser.parse(this.token, false);
-    assertArrayEquals(new byte[]{(byte) 0x29, (byte) 0x3F}, bytes);
+    assertArrayEquals(new byte[]{(byte) 0x3E, (byte) 0x29, (byte) 0x3F}, bytes);
   }
 }

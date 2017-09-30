@@ -644,7 +644,7 @@ public final class Tokens {
     tokens.add(new Token("GraphBoitMoust", "fr", (byte) 0xBB, (byte) 0x5A));
     tokens.add(new Token("NormProbPlot", "en", (byte) 0xBB, (byte) 0x5B));
     tokens.add(new Token("GraphProbNorm", "fr", (byte) 0xBB, (byte) 0x5B));
-    tokens.add(new Token("G_T", (byte) 0xBB, (byte) 0x64));
+    tokens.add(new Token("G-T", (byte) 0xBB, (byte) 0x64));
     tokens.add(new Token("ZoomFit", "en", (byte) 0xBB, (byte) 0x65));
     tokens.add(new Token("ZMinMax", "fr", (byte) 0xBB, (byte) 0x65));
     tokens.add(new Token("DiagnosticOn", "en", (byte) 0xBB, (byte) 0x66));

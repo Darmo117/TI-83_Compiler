@@ -17,16 +17,20 @@ public class GenerateTestCases {
         String lang = t.getLanguage() != null ? t.getLanguage() : "";
         String instr = t.getInstruction();
 
+        ps.format("\n\n  @Test\n  public void testInstr0x%s%s() throws UnknownInstructionException {\n", bytes, lang);
         if (instr.equals("\""))
           instr = "\\\"";
-
-        ps.format("\n\n  @Test\n  public void testInstr0x%s%s() throws UnknownInstructionException {\n", bytes, lang);
-        ps.format("    token[0] = \"%s\";\n", instr);
-        ps.format("    byte[] bytes = parser.parse(token, false);\n");
         bytes = new StringJoiner(", (byte) 0x", "(byte) 0x", "");
+        if (instr.startsWith(" ")) {
+          instr = ":" + instr;
+          bytes.add(getByte((byte) 0x3E));
+        }
         for (byte b : t.getBytes())
           bytes.add(getByte(b));
         bytes.add(getByte(Tokens.LINE_END.getBytes()[0]));
+
+        ps.format("    token[0] = \"%s\";\n", instr);
+        ps.format("    byte[] bytes = parser.parse(token, false);\n");
         ps.format("    assertArrayEquals(new byte[]{%s}, bytes);\n", bytes);
         ps.format("  }");
       });
