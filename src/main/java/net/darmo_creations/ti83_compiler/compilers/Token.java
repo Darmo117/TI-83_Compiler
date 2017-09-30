@@ -64,6 +64,16 @@ public class Token implements Comparable<Token> {
 
   @Override
   public int compareTo(Token t) {
+    int l1 = getInstruction().length();
+    int l2 = t.getInstruction().length();
+
+    if (l1 != l2)
+      return l1 - l2;
     return getInstruction().compareTo(t.getInstruction());
+  }
+
+  @Override
+  public String toString() {
+    return this.instruction;
   }
 }
