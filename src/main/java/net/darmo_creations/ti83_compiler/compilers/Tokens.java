@@ -24,22 +24,23 @@ public final class Tokens {
     Map<String, String> map = new LinkedHashMap<>();
     map.put("list|liste", "ʟ");
     map.put("expon|expos", "ᴇ");
-    map.put("theta|thêta", "θ");
-    map.put("digamma|F", "Ϝ");
-    map.put("pi", "π");
     map.put("alpha", "α");
     map.put("beta|bêta", "β");
     map.put("Delta", "Δ");
     map.put("delta", "δ");
     map.put("epsilon", "ε");
+    map.put("theta|thêta", "θ");
     map.put("lambda", "λ");
     map.put("mu", "μ");
+    map.put("pi", "π");
     map.put("rho|rhô", "ρ");
     map.put("Sigma", "Σ");
     map.put("sigma", "σ");
-    map.put("phi", "φ");
-    map.put("Omega|Oméga", "Ω");
     map.put("tau", "τ");
+    map.put("phi", "φ");
+    map.put("chi", "χ");
+    map.put("Omega|Oméga", "Ω");
+    map.put("digamma|F", "Ϝ");
     map.put("point|dot", "·");
     TAGS_REGEXES = Collections.unmodifiableMap(map);
 
