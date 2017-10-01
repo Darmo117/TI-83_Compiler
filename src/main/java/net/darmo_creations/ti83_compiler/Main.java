@@ -31,12 +31,31 @@ public class Main {
           new Compiler().compile(file, optimise, editable);
         }
         else {
-          int index = argz.indexOf("-u") + 1;
-          if (index > argz.size() - 1)
-            throw new IllegalAccessException("Missing target language!");
+          Decompiler decompiler = new Decompiler();
+          int indexLanguage = argz.indexOf("-u") + 1;
+          if (indexLanguage > argz.size() - 1)
+            throw new IllegalArgumentException("Missing target language!");
+          String lang = argz.get(indexLanguage);
 
-          String lang = argz.get(index);
-          new Decompiler().decompile(file, lang);
+          if (argz.contains("-i")) {
+            int indexIndent = argz.indexOf("-i") + 1;
+            if (indexIndent > argz.size() - 1)
+              throw new IllegalArgumentException("Missing indent size!");
+            int indentSize;
+
+            try {
+              indentSize = Integer.parseInt(argz.get(indexIndent));
+              if (indentSize < 0)
+                throw new IllegalArgumentException("Indent size must be a positive integer!");
+              decompiler.decompile(file, lang, indentSize);
+            }
+            catch (NumberFormatException ex) {
+              throw new IllegalArgumentException("Indent size must be an integer!", ex);
+            }
+          }
+          else {
+            decompiler.decompile(file, lang);
+          }
         }
       }
     }

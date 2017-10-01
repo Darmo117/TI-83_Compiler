@@ -11,21 +11,31 @@ import net.darmo_creations.ti83_compiler.exceptions.UnknownTokenException;
 
 public class Decompiler {
   /**
+   * Decompiles the given file with a default indentation of 4.
+   * 
+   * @param path the path to the file
+   * @param language the target language
+   * @throws FileFormatException
+   */
+  public void decompile(String path, String language) throws FileFormatException, UnknownTokenException, IOException {
+    decompile(path, language, BinaryFileParser.DEFAULT_INDENT_SIZE);
+  }
+
+  /**
    * Decompiles the given file.
    * 
    * @param path the path to the file
-   * @param lang the target language
+   * @param language the target language
+   * @param indentSize indentation size
    * @throws FileFormatException
-   * @throws UnknownTokenException
-   * @throws IOException
    */
-  public void decompile(String path, String lang) throws FileFormatException, UnknownTokenException, IOException {
+  public void decompile(String path, String language, int indentSize) throws FileFormatException, UnknownTokenException, IOException {
     File f;
     String progName;
     String[] lines;
 
-    if (!lang.equals("en") && !lang.equals("fr")) {
-      throw new IllegalArgumentException("Unknown language " + lang);
+    if (!language.equals("en") && !language.equals("fr")) {
+      throw new IllegalArgumentException("Unknown language " + language);
     }
 
     f = new File(path);
@@ -35,14 +45,14 @@ public class Decompiler {
     }
 
     try {
-      lines = new BinaryFileParser().parse(Files.readAllBytes(Paths.get(f.getAbsolutePath())), lang);
+      lines = new BinaryFileParser(language, indentSize).parse(Files.readAllBytes(Paths.get(f.getAbsolutePath())));
     }
     catch (IOException ex) {
       throw new IOException("Could not open file.", ex);
     }
     progName = lines[0];
 
-    File source = new File(f.getParent() + File.separator + progName + ".ti83" + lang);
+    File source = new File(f.getParent() + File.separator + progName + ".ti83" + language);
 
     try (PrintWriter pw = new PrintWriter(source.getAbsolutePath(), "UTF-8")) {
       for (int i = 0; i < lines.length; i++) {

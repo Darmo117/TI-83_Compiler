@@ -15,13 +15,17 @@ import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
  * @author Damien Vergnet
  */
 class BinaryFileParser {
-  private static final int INDENT_SIZE = 4;
+  public static final int DEFAULT_INDENT_SIZE = 4;
 
   private final byte[] header;
+  private String language;
+  private int indentSize;
 
-  public BinaryFileParser() {
+  public BinaryFileParser(String language, int indentSize) {
     this.header = new byte[11];
     ArraysUtil.stringCopy(BinaryFile.HEADER, this.header, 0, 11);
+    this.language = language;
+    this.indentSize = indentSize;
   }
 
   /**
@@ -29,12 +33,11 @@ class BinaryFileParser {
    * name.
    * 
    * @param content the content to parse
-   * @param lang the language of the instructions to return
    * @return the program's source code
    * @throws UnknownTokenException if the parser stumbles upon an unknown token
    * @throws FileFormatException if the file is corrupted
    */
-  public String[] parse(byte[] content, String lang) throws UnknownTokenException, FileFormatException {
+  public String[] parse(byte[] content) throws UnknownTokenException, FileFormatException {
     List<String> lines = new ArrayList<>();
 
     try {
@@ -97,7 +100,7 @@ class BinaryFileParser {
           int tokenLength = bytes.length;
           boolean tokenMatches = Arrays.equals(bytes, Arrays.copyOfRange(content, i, i + tokenLength));
 
-          if (tokenMatches && (token.getLanguage() == null || token.getLanguage().equals(lang))) {
+          if (tokenMatches && (token.getLanguage() == null || token.getLanguage().equals(this.language))) {
             // Repeat, While or For detected, indent the next lines.
             if (token.getInstruction().equals("While ") //
                 || token.getInstruction().equals("Repeat ") //
@@ -208,15 +211,15 @@ class BinaryFileParser {
    * Adds an indent level.
    */
   private String addIndent(String indent) {
-    return String.format("%" + INDENT_SIZE + "s", "") + indent;
+    return String.format("%" + this.indentSize + "s", "") + indent;
   }
 
   /**
    * Removes an indent level.
    */
   private String removeIndent(String indent) {
-    if (indent.length() < 4)
+    if (indent.length() < this.indentSize)
       return "";
-    return indent.substring(0, indent.length() - 4);
+    return indent.substring(0, indent.length() - this.indentSize);
   }
 }
