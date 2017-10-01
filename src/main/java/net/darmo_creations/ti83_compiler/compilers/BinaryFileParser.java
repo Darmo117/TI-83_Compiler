@@ -35,17 +35,7 @@ class BinaryFileParser {
    * @throws FileFormatException if the file is corrupted
    */
   public String[] parse(byte[] content, String lang) throws UnknownTokenException, FileFormatException {
-    List<String> lines = new ArrayList<String>();
-    StringBuffer curLine = new StringBuffer();
-    String indentManager = "";
-    // If true, the indentation will be reported to the next line.
-    boolean indentNextLine = false;
-    // True when an If instruction without Then has been encountered.
-    boolean if_ = false;
-    // True when there is a new line after an If instruction.
-    boolean newLine = false;
-    // If true, the indentation will be removed for the next line.
-    boolean removeIndent = false;
+    List<String> lines = new ArrayList<>();
 
     try {
       // Checks the header.
@@ -72,88 +62,90 @@ class BinaryFileParser {
         System.err.println();
       }
 
+      String currentLine = "";
+      String indent = "";
+      boolean increaseIndent = false;
+      boolean inIfWithoutThen = false;
+      boolean newLineAfterIf = false;
+
       for (int i = 0x4A; i < 0x4A + length; i++) {
-        boolean changed = false;
+        boolean found = false;
 
         if (content[i] == 0x3F) {
-          lines.add(indentManager + curLine.toString());
-          if (removeIndent) {
-            indentManager = removeIndent(indentManager);
-            removeIndent = false;
-            newLine = false;
+          lines.add(indent + currentLine);
+
+          if (increaseIndent) {
+            indent = addIndent(indent);
+            increaseIndent = false;
           }
-          if (indentNextLine && !if_) {
-            indentManager = addIndent(indentManager);
-            indentNextLine = false;
+          if (newLineAfterIf) {
+            indent = removeIndent(indent);
+            newLineAfterIf = false;
           }
-          if (if_) {
-            indentManager = addIndent(indentManager);
-            if_ = false;
-            removeIndent = true;
-            newLine = true;
+          if (inIfWithoutThen) {
+            indent = addIndent(indent);
+            inIfWithoutThen = false;
+            newLineAfterIf = true;
           }
-          curLine.delete(0, curLine.length());
-          changed = true;
+          currentLine = "";
+          found = true;
           continue;
         }
 
         for (Token token : Tokens.TOKENS) {
           byte[] bytes = token.getBytes();
-          boolean matches = true;
-          int j;
+          int tokenLength = bytes.length;
+          boolean tokenMatches = Arrays.equals(bytes, Arrays.copyOfRange(content, i, i + tokenLength));
 
-          for (j = 0; j < bytes.length; j++) {
-            if (bytes[j] != content[i + j]) {
-              matches = false;
-              break;
-            }
-          }
-
-          if (matches && (token.getLanguage() == null || token.getLanguage().equals(lang))) {
-            // Repeat, While or For detected, indent the next line.
-            if (Arrays.equals(Tokens.getBytes("Repeat "), token.getBytes()) //
-                || Arrays.equals(Tokens.getBytes("While "), token.getBytes()) //
-                || Arrays.equals(Tokens.getBytes("For("), token.getBytes())) {
-              indentNextLine = true;
+          if (tokenMatches && (token.getLanguage() == null || token.getLanguage().equals(lang))) {
+            // Repeat, While or For detected, indent the next lines.
+            if (token.getInstruction().equals("While ") //
+                || token.getInstruction().equals("Repeat ") //
+                || token.getInstruction().equals("For(")) {
+              increaseIndent = true;
             }
             // If detected.
-            if (Arrays.equals(Tokens.getBytes("If "), token.getBytes())) {
-              if_ = true;
+            else if (token.getInstruction().equals("If ")) {
+              inIfWithoutThen = true;
             }
-            // Then detected. If it is in the same line as an If, indent the next line;
-            // else, remove current indent then indent next line.
-            if (Arrays.equals(Tokens.getBytes("Then"), token.getBytes())) {
-              if (newLine) {
-                indentManager = removeIndent(indentManager);
-                newLine = false;
+            // Then detected. If it is in the same line as an If, increase indent;
+            // else, decrease current indent then re-increase indent.
+            else if (token.getInstruction().equals("Then")) {
+              if (newLineAfterIf) {
+                indent = removeIndent(indent);
+                newLineAfterIf = false;
               }
-              if_ = false;
-              indentNextLine = true;
+              inIfWithoutThen = false;
+              increaseIndent = true;
             }
-            // Else detected. Remove current indent then indent next line.
-            if (Arrays.equals(Tokens.getBytes("Else"), token.getBytes())) {
-              indentManager = removeIndent(indentManager);
-              indentNextLine = true;
+            // Else detected. Decrease current indent then increase indent.
+            else if (token.getInstruction().equals("Else")) {
+              indent = removeIndent(indent);
+              increaseIndent = true;
             }
-            // End detected. Remove current indent.
-            if (Arrays.equals(Tokens.getBytes("End"), token.getBytes())) {
-              indentManager = removeIndent(indentManager);
-              indentNextLine = false;
+            // End detected. Decrease current indent.
+            else if (token.getInstruction().equals("End")) {
+              indent = removeIndent(indent);
+            }
+            // If the instruction after an if is on the same line.
+            // E.g.: 'If B:Disp B'
+            else if (inIfWithoutThen && token.getInstruction().equals(":")) {
+              inIfWithoutThen = false;
             }
 
-            curLine.append(token.getInstruction());
-            changed = true;
-            i += j - 1;
+            currentLine += token.getInstruction();
+            found = true;
+            i += tokenLength - 1;
             break;
           }
         }
 
         if (i == 0x4A + length - 1) {
-          lines.add(curLine.toString());
+          lines.add(currentLine);
         }
 
         // There is one unknown token, abort.
-        if (!changed) {
+        if (!found) {
           throw new UnknownTokenException(content[i]);
         }
       }
@@ -216,7 +208,6 @@ class BinaryFileParser {
    * Adds an indent level.
    */
   private String addIndent(String indent) {
-    // TODO check
     return String.format("%" + INDENT_SIZE + "s", "") + indent;
   }
 
