@@ -9,6 +9,8 @@ import net.darmo_creations.ti83_compiler.compilers.Decompiler;
 
 public class Main {
   public static void main(String[] args) {
+    System.out.println("** TI-83 Compiler/Decompiler v1.2d **");
+
     List<String> argz = Arrays.asList(args);
 
     try {
