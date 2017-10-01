@@ -70,21 +70,19 @@ public class Main {
 
   private static void printUsage(boolean error) {
     try (PrintStream out = error ? System.err : System.out) {
-      out.println("Usage: -f <file> {[-OL]|-u <lang> [-i <indent>]}");
-      out.println("       -h");
-      out.println("Options:");
+      out.println("Usage: java -jar <compiler_name>.jar -f <file> {[-O|-L] | -u <lang> [-i <indent>]}");
       out.println("  -f <file>");
       out.println("\tpath to the file to compile/uncompile");
       out.println("  -O");
       out.println("\toptimise compiled program");
       out.println("  -L");
-      out.println("\tlock program editing from calculator");
+      out.println("\tdisable program editing from calculator");
       out.println("  -u <lang>");
       out.println("\tuncompile the program into the given language (e.g.: en, fr...)");
       out.println("  -i <indent>");
       out.println("\tindent size (default 4)");
       out.println("  -h");
-      out.println("\tshow usage");
+      out.println("\tshow this help");
     }
   }
 }
