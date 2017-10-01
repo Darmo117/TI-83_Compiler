@@ -70,7 +70,7 @@ public class Main {
 
   private static void printUsage(boolean error) {
     try (PrintStream out = error ? System.err : System.out) {
-      out.println("Usage: -f <file> {[-OL]|-u <lang>}");
+      out.println("Usage: -f <file> {[-OL]|-u <lang> [-i <indent>]}");
       out.println("       -h");
       out.println("Options:");
       out.println("  -f <file>");
@@ -81,6 +81,8 @@ public class Main {
       out.println("\tlock program editing from calculator");
       out.println("  -u <lang>");
       out.println("\tuncompile the program into the given language (e.g.: en, fr...)");
+      out.println("  -i <indent>");
+      out.println("\tindent size (default 4)");
       out.println("  -h");
       out.println("\tshow usage");
     }
