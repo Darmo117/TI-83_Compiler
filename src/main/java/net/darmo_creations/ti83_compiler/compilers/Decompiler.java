@@ -40,9 +40,10 @@ public class Decompiler {
 
     f = new File(path);
 
-    if (!f.getName().substring(f.getName().indexOf('.') + 1).toUpperCase().matches("8XP")) {
+    if (!f.getName().substring(f.getName().indexOf('.') + 1).toUpperCase().matches("8XP"))
       throw new FileFormatException("Unsupported file format.");
-    }
+    if (!f.exists())
+      throw new IOException("File does not exist!");
 
     try {
       lines = new BinaryFileParser(language, indentSize).parse(Files.readAllBytes(Paths.get(f.getAbsolutePath())));

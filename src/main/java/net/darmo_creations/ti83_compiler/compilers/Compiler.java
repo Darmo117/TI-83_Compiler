@@ -28,9 +28,10 @@ public class Compiler {
 
     f = new File(path);
 
-    if (!f.getName().substring(f.getName().indexOf('.') + 1).toUpperCase().matches("TI83(EN|FR)?")) {
+    if (!f.getName().substring(f.getName().indexOf('.') + 1).toUpperCase().matches("TI83(EN|FR)?"))
       throw new FileFormatException("Unsupported file format.");
-    }
+    if (!f.exists())
+      throw new IOException("File does not exist!");
 
     progName = f.getName().substring(0, f.getName().indexOf(".")).toUpperCase();
     srcCode = getSourceCode(f);
