@@ -1,5 +1,21 @@
-"Fonction\!="
-"\Fonction!="
-ANUVA()
-\ANUVA()
-\\ANUVA()
+EffEcr
+
+For(I,0,94
+  For(J,0,62
+    If pxl-Test(J,I:Then
+      Pxl-NAff(J,I
+    Else
+      Pxl-Aff(J,I
+    End
+    1->A
+    If B
+      Disp "A:",A
+    C
+  End
+  If A
+  Then
+    Output(1,1,A
+  End
+End
+
+Return
