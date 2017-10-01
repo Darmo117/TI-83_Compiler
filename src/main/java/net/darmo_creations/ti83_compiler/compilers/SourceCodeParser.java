@@ -61,29 +61,38 @@ class SourceCodeParser {
       // Used to show the parse errors.
       final String errorLine = errorSource[i];
       int index = 0;
+      boolean escapeNext = false;
 
+      // Parsing one line
       while (index < line.length()) {
         boolean found = false;
 
-        for (Token token : Tokens.TOKENS) {
-          String instr = token.getInstruction();
+        if (line.charAt(index) == '#') {
+          index = line.length();
+          found = true;
+        }
+        else if (line.charAt(index) == '\\') {
+          escapeNext = true;
+          index++;
+          found = true;
+        }
+        else {
+          // Parsing one token
+          for (Token token : Tokens.TOKENS) {
+            String instr = token.getInstruction();
 
-          if (line.charAt(index) == '#') {
-            line = "";
-            found = true;
-            break;
-          }
+            if (instr.length() > line.length() - index || escapeNext && instr.length() > 1) {
+              continue;
+            }
 
-          if (instr.length() > line.substring(index).length()) {
-            continue;
-          }
+            if (line.substring(index, index + instr.length()).equals(instr)) {
+              tokens.add(token);
 
-          if (line.substring(index, index + instr.length()).equals(instr)) {
-            tokens.add(token);
-
-            found = true;
-            index += instr.length();
-            break;
+              escapeNext = false;
+              found = true;
+              index += instr.length();
+              break;
+            }
           }
         }
 
