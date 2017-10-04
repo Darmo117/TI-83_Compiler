@@ -727,10 +727,8 @@ public final class Tokens {
     tokens.add(new Token("σ", (byte) 0xBB, (byte) 0xCB));
     tokens.add(new Token("τ", (byte) 0xBB, (byte) 0xCC));
     tokens.add(new Token("Í", (byte) 0xBB, (byte) 0xCD));
-    tokens.add(new Token("√(", (byte) 0xBC));
     tokens.add(new Token("sqrt(", "en", (byte) 0xBC));
     tokens.add(new Token("racine(", "fr", (byte) 0xBC));
-    tokens.add(new Token("∛(", (byte) 0xBD));
     tokens.add(new Token("cbrt(", "en", (byte) 0xBD));
     tokens.add(new Token("racine3(", "fr", (byte) 0xBD));
     tokens.add(new Token("ln(", (byte) 0xBE));
@@ -802,8 +800,8 @@ public final class Tokens {
     tokens.add(new Token("Plot3(", "en", (byte) 0xEE));
     tokens.add(new Token("Graph3(", "fr", (byte) 0xEE));
     tokens.add(new Token("^", (byte) 0xF0));
-    tokens.add(new Token("xrt(", "en", (byte) 0xF1));
-    tokens.add(new Token("racinex(", "fr", (byte) 0xF1));
+    tokens.add(new Token("&xrt;", "en", (byte) 0xF1));
+    tokens.add(new Token("&racinex;", "fr", (byte) 0xF1));
     tokens.add(new Token("1-Var Stats ", "en", (byte) 0xF2));
     tokens.add(new Token("Stats 1-Var ", "fr", (byte) 0xF2));
     tokens.add(new Token("2-Var Stats ", "en", (byte) 0xF3));
