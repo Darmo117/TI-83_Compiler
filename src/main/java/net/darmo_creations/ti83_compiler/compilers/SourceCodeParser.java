@@ -114,7 +114,7 @@ class SourceCodeParser {
   private void optimise(List<Token> tokens) {
     boolean inString = false;
     Token closedParenthesis = Tokens.getToken(")").get();
-    Token closedCBrackets = Tokens.getToken("}").get();
+    Token closedBraces = Tokens.getToken("}").get();
     Token quote = Tokens.getToken("\"").get();
     Token arrow = Tokens.getToken("->").get();
     Token columns = Tokens.getToken(":").get();
@@ -128,12 +128,15 @@ class SourceCodeParser {
         Token previous = i > 0 ? tokens.get(i - 1) : null;
         Token token = tokens.get(i);
         Token next = i < tokens.size() - 1 ? tokens.get(i + 1) : null;
-        // #f:0
-        boolean ignoreToken = (inString && token.equals(quote) || !inString && (token.equals(closedParenthesis) || token.equals(closedCBrackets)))
-            && next != null && (next.equals(arrow) || next.equals(Tokens.LINE_END))
-            || !inString && token.equals(closedParenthesis) && next != null && next.equals(columns)
-            || !inString && token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next));
-        // #f:1
+        boolean ignoreToken = (inString && token.equals(quote)
+            || !inString && (token.equals(closedParenthesis) || token.equals(closedBraces))) && next != null
+            && (next.equals(arrow) || next.equals(Tokens.LINE_END));
+
+        if (!ignoreToken)
+          ignoreToken = !inString && (token.equals(closedParenthesis) && next != null && next.equals(columns)
+              || token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next)));
+        if (!inString && (previous != null && Tokens.isNewLine(previous) || next != null && Tokens.isNewLine(next)))
+          ignoreToken = false;
 
         if (ignoreToken) {
           changed = true;

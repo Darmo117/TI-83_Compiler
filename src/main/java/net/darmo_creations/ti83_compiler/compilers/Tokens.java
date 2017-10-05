@@ -870,5 +870,9 @@ public final class Tokens {
     return token.getInstruction().matches("\\d");
   }
 
+  public static boolean isNewLine(Token token) {
+    return LINE_END.equals(token);
+  }
+
   private Tokens() {}
 }
