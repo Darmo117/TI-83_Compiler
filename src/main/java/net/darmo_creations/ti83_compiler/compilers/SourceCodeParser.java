@@ -132,10 +132,9 @@ class SourceCodeParser {
             || !inString && (token.equals(closedParenthesis) || token.equals(closedBraces))) && next != null
             && (next.equals(arrow) || next.equals(Tokens.LINE_END));
 
-        if (!ignoreToken)
-          ignoreToken = !inString && (token.equals(closedParenthesis) && next != null && next.equals(columns)
-              || token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next)));
-        if (!inString && (previous != null && Tokens.isNewLine(previous) || next != null && Tokens.isNewLine(next)))
+        ignoreToken |= !inString && (token.equals(closedParenthesis) && next != null && next.equals(columns)
+            || token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next)));
+        if (!inString && token.equals(star) && (previous != null && Tokens.isNewLine(previous) || next != null && Tokens.isNewLine(next)))
           ignoreToken = false;
 
         if (ignoreToken) {
