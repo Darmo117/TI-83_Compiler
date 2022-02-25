@@ -29,7 +29,7 @@ public class Decompiler {
    * @param indentSize indentation size
    * @throws FileFormatException
    */
-  public void decompile(String path, String language, int indentSize) throws FileFormatException, UnknownTokenException, IOException {
+  public void decompile(String path, String language, int indentSize) throws FileFormatException, IOException {
     File f;
     String progName;
     String[] lines;
@@ -38,7 +38,7 @@ public class Decompiler {
       throw new IllegalArgumentException("Unknown language " + language);
     }
 
-    f = new File(path);
+    f = new File(path).getAbsoluteFile();
 
     if (!f.getName().substring(f.getName().indexOf('.') + 1).toUpperCase().matches("8XP"))
       throw new FileFormatException("Unsupported file format.");

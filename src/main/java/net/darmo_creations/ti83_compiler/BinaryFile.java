@@ -1,10 +1,10 @@
 package net.darmo_creations.ti83_compiler;
 
+import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
 
 /**
  * This class represents a .8xp program file.
@@ -18,14 +18,14 @@ public class BinaryFile {
   private boolean editable;
 
   public static final String FORMAT = "8xp";
-  public static final String HEADER = "**TI83F*\u001a\n\0";
+  public static final String HEADER = "**TI83F*\u001a\n\n";
   public static final String COMMENT = "Created by Java TI-Compiler";
 
   public BinaryFile(String path, String name, byte[] data, boolean editable) {
     this.path = path;
-    setName(name);
-    setData(data);
-    setEditable(editable);
+    this.setName(name);
+    this.setData(data);
+    this.setEditable(editable);
   }
 
   public String getPath() {
@@ -62,7 +62,7 @@ public class BinaryFile {
   /**
    * Changes the program's data.<br />
    * <b>NOTE: tokens' validity is not checked!</b>
-   * 
+   *
    * @param data the program's data
    */
   public void setData(byte[] data) {
@@ -71,7 +71,7 @@ public class BinaryFile {
 
   /**
    * Writes the file.
-   * 
+   *
    * @throws IOException if the file could not be written
    */
   public void writeFile() throws IOException {
@@ -96,7 +96,7 @@ public class BinaryFile {
     header[57] = (byte) (l & 0x00FF);
     header[58] = (byte) ((l & 0xFF00) >> 8);
     // Protection
-    header[59] = (byte) (isEditable() ? 0x05 : 0x06);
+    header[59] = (byte) (this.isEditable() ? 0x05 : 0x06);
     // Program name
     ArraysUtil.stringCopy(this.name, header, 60, 8);
     // More things
@@ -125,7 +125,7 @@ public class BinaryFile {
     content[content.length - 2] = (byte) (l & 0x00FF);
     content[content.length - 1] = (byte) ((l & 0xFF00) >> 8);
 
-    try (FileOutputStream fos = new FileOutputStream(new File(getAbsolutePath()))) {
+    try (FileOutputStream fos = new FileOutputStream(this.getAbsolutePath())) {
       fos.write(content);
     }
   }

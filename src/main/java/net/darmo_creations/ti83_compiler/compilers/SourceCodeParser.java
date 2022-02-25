@@ -1,31 +1,32 @@
 package net.darmo_creations.ti83_compiler.compilers;
 
+import net.darmo_creations.ti83_compiler.exceptions.UnknownInstructionException;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.darmo_creations.ti83_compiler.exceptions.UnknownInstructionException;
 
 class SourceCodeParser {
   /**
    * Parses the given source code then returns the corresponding tokens.
-   * 
-   * @param srcCode the source code
+   *
+   * @param srcCode  the source code
    * @param optimise if true, the compiled program will be optimised
    * @return the tokens
    * @throws UnknownInstructionException
    */
   public byte[] parse(String[] srcCode, boolean optimise) throws UnknownInstructionException {
-    trim(srcCode);
+    this.trim(srcCode);
     // Used to show the parse errors.
     final String[] errorSource = new String[srcCode.length];
     System.arraycopy(srcCode, 0, errorSource, 0, srcCode.length);
 
-    replaceTags(srcCode);
+    this.replaceTags(srcCode);
 
-    List<Token> tokens = extractTokens(srcCode, errorSource);
+    List<Token> tokens = this.extractTokens(srcCode, errorSource);
 
-    if (optimise)
-      optimise(tokens);
+    if (optimise) {
+      this.optimise(tokens);
+    }
 
     List<Byte> bytes = new ArrayList<>();
 
@@ -70,13 +71,11 @@ class SourceCodeParser {
         if (line.charAt(index) == '#') {
           index = line.length();
           found = true;
-        }
-        else if (line.charAt(index) == '\\') {
+        } else if (line.charAt(index) == '\\') {
           escapeNext = true;
           index++;
           found = true;
-        }
-        else {
+        } else {
           // Parsing one token
           for (Token token : Tokens.TOKENS) {
             String instr = token.getInstruction();
@@ -85,7 +84,7 @@ class SourceCodeParser {
               continue;
             }
 
-            if (line.substring(index, index + instr.length()).equals(instr)) {
+            if (line.startsWith(instr, index)) {
               tokens.add(token);
 
               escapeNext = false;
@@ -134,8 +133,9 @@ class SourceCodeParser {
 
         ignoreToken |= !inString && (token.equals(closedParenthesis) && next != null && next.equals(columns)
             || token.equals(star) && (previous != null && !Tokens.isDigit(previous) || next != null && !Tokens.isDigit(next)));
-        if (!inString && token.equals(star) && (previous != null && Tokens.isNewLine(previous) || next != null && Tokens.isNewLine(next)))
+        if (!inString && token.equals(star) && (previous != null && Tokens.isNewLine(previous) || next != null && Tokens.isNewLine(next))) {
           ignoreToken = false;
+        }
 
         if (ignoreToken) {
           changed = true;
@@ -143,10 +143,12 @@ class SourceCodeParser {
           i--;
         }
 
-        if (token.equals(quote))
+        if (token.equals(quote)) {
           inString = !inString;
-        if (token.equals(Tokens.LINE_END) || token.equals(arrow))
+        }
+        if (token.equals(Tokens.LINE_END) || token.equals(arrow)) {
           inString = false;
+        }
       }
     } while (changed);
   }

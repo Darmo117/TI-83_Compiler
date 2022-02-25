@@ -1,13 +1,13 @@
 package net.darmo_creations.ti83_compiler.compilers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.darmo_creations.ti83_compiler.BinaryFile;
 import net.darmo_creations.ti83_compiler.exceptions.FileFormatException;
 import net.darmo_creations.ti83_compiler.exceptions.UnknownTokenException;
 import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class parses a .8xp file into a source code text file.
@@ -18,8 +18,8 @@ class BinaryFileParser {
   public static final int DEFAULT_INDENT_SIZE = 4;
 
   private final byte[] header;
-  private String language;
-  private int indentSize;
+  private final String language;
+  private final int indentSize;
 
   public BinaryFileParser(String language, int indentSize) {
     this.header = new byte[11];
@@ -31,35 +31,34 @@ class BinaryFileParser {
   /**
    * Parses a .8xp file then returns the corresponding source code. The first line is the program's
    * name.
-   * 
+   *
    * @param content the content to parse
    * @return the program's source code
-   * @throws UnknownTokenException if the parser stumbles upon an unknown token
    * @throws FileFormatException if the file is corrupted
    */
-  public String[] parse(byte[] content) throws UnknownTokenException, FileFormatException {
+  public String[] parse(byte[] content) throws FileFormatException {
     List<String> lines = new ArrayList<>();
 
     try {
       // Checks the header.
-      if (!checkHeader(content)) {
+      if (!this.checkHeader(content)) {
         throw new FileFormatException("Invalid header.");
       }
 
-      int length = toInt(content[0x48], content[0x49]);
+      int length = this.toInt(content[0x48], content[0x49]);
 
       // Checks the length.
-      if (toInt(content[0x35], content[0x36]) - 19 != length //
-          || toInt(content[0x39], content[0x3A]) - 2 != length //
-          || toInt(content[0x46], content[0x47]) - 2 != length) {
+      if (this.toInt(content[0x35], content[0x36]) - 19 != length //
+          || this.toInt(content[0x39], content[0x3A]) - 2 != length //
+          || this.toInt(content[0x46], content[0x47]) - 2 != length) {
         throw new FileFormatException("Invalid length.");
       }
 
       // Gets the name.
-      lines.add(getName(content));
+      lines.add(this.getName(content));
 
       // Checksum.
-      if (!checkSum(content)) {
+      if (!this.checkSum(content)) {
         System.err.println("WARNING: invalid checksum, the file may be corrupted.");
         System.err.println("We will still attempt to open it.");
         System.err.println();
@@ -78,20 +77,19 @@ class BinaryFileParser {
           lines.add(indent + currentLine);
 
           if (increaseIndent) {
-            indent = addIndent(indent);
+            indent = this.addIndent(indent);
             increaseIndent = false;
           }
           if (newLineAfterIf) {
-            indent = removeIndent(indent);
+            indent = this.removeIndent(indent);
             newLineAfterIf = false;
           }
           if (inIfWithoutThen) {
-            indent = addIndent(indent);
+            indent = this.addIndent(indent);
             inIfWithoutThen = false;
             newLineAfterIf = true;
           }
           currentLine = "";
-          found = true;
           continue;
         }
 
@@ -115,7 +113,7 @@ class BinaryFileParser {
             // else, decrease current indent then re-increase indent.
             else if (token.getInstruction().equals("Then")) {
               if (newLineAfterIf) {
-                indent = removeIndent(indent);
+                indent = this.removeIndent(indent);
                 newLineAfterIf = false;
               }
               inIfWithoutThen = false;
@@ -123,12 +121,12 @@ class BinaryFileParser {
             }
             // Else detected. Decrease current indent then increase indent.
             else if (token.getInstruction().equals("Else")) {
-              indent = removeIndent(indent);
+              indent = this.removeIndent(indent);
               increaseIndent = true;
             }
             // End detected. Decrease current indent.
             else if (token.getInstruction().equals("End")) {
-              indent = removeIndent(indent);
+              indent = this.removeIndent(indent);
             }
             // If the instruction after an if is on the same line.
             // E.g.: 'If B:Disp B'
@@ -153,10 +151,9 @@ class BinaryFileParser {
         }
       }
 
-      return lines.toArray(new String[lines.size()]);
-    }
-    catch (Exception ex) {
-      throw new FileFormatException("Corrupted file.", ex);
+      return lines.toArray(new String[0]);
+    } catch (Exception ex) {
+      throw new FileFormatException("Corrupted file: " + ex.getMessage(), ex);
     }
   }
 
@@ -165,9 +162,7 @@ class BinaryFileParser {
    */
   private boolean checkHeader(final byte[] bytes) {
     byte[] header = new byte[11];
-
     System.arraycopy(bytes, 0, header, 0, 11);
-
     return Arrays.equals(header, this.header);
   }
 
@@ -175,13 +170,13 @@ class BinaryFileParser {
    * Returns the program's name.
    */
   private String getName(byte[] bytes) {
-    String name = "";
+    StringBuilder name = new StringBuilder();
 
     for (int i = 0x3C; i < 0x3C + 8 && bytes[i] != 0; i++) {
-      name += (bytes[i] == 0x5B) ? 'θ' : (char) bytes[i];
+      name.append((bytes[i] == 0x5B) ? 'θ' : (char) bytes[i]);
     }
 
-    return name;
+    return name.toString();
   }
 
   /**
@@ -194,7 +189,7 @@ class BinaryFileParser {
       sum += (bytes[i] < 0) ? bytes[i] + 256 : bytes[i];
     }
 
-    return (sum & 0xFFFF) == toInt(bytes[bytes.length - 2], bytes[bytes.length - 1]);
+    return (sum & 0xFFFF) == this.toInt(bytes[bytes.length - 2], bytes[bytes.length - 1]);
   }
 
   /**
@@ -218,8 +213,9 @@ class BinaryFileParser {
    * Removes an indent level.
    */
   private String removeIndent(String indent) {
-    if (indent.length() < this.indentSize)
+    if (indent.length() < this.indentSize) {
       return "";
+    }
     return indent.substring(0, indent.length() - this.indentSize);
   }
 }
