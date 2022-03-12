@@ -1,85 +1,88 @@
 package net.darmo_creations.ti83_compiler;
 
-import net.darmo_creations.ti83_compiler.compilers.Compiler;
-import net.darmo_creations.ti83_compiler.compilers.Decompiler;
+import net.darmo_creations.ti83_compiler.compiler.Compiler;
+import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 
-import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.Callable;
 
-public class Main {
-  public static void main(String[] args) {
-    System.out.println("** TI-83 Compiler/Decompiler v1.2 **");
+@Command(name = "ti83_compiler", version = Compiler.VERSION, mixinStandardHelpOptions = true,
+    description = "Compiles/Decompiles TI-83 program files.")
+public class Main implements Callable<Integer> {
+  @Parameters(index = "0", description = "The file to compile/decompile.")
+  private String file;
 
-    List<String> argz = Arrays.asList(args);
+  /**
+   * Main options group. Needed to make both subgroups mutually exclusive.
+   */
+  @ArgGroup
+  private Groups options;
 
-    try {
-      if (argz.size() == 1 && argz.get(0).equals("-h")) {
-        printUsage(false);
-      } else {
-        if (!argz.contains("-f") || argz.indexOf("-f") == argz.size() - 1) {
-          throw new IllegalArgumentException("No file specified!");
-        }
+  /**
+   * Options of each subgroup are not mutually exclusive in their respective group.
+   */
+  private static class Groups {
+    @ArgGroup(exclusive = false, heading = "Compiling options%n")
+    CompilingOptionsGroup compilingOptions;
 
-        String file = argz.get(argz.indexOf("-f") + 1);
-        boolean uncompile = argz.contains("-u");
-
-        if (!uncompile) {
-          boolean optimise = argz.contains("-O");
-          boolean editable = !argz.contains("-L");
-          new Compiler().compile(file, optimise, editable);
-        } else {
-          Decompiler decompiler = new Decompiler();
-          int indexLanguage = argz.indexOf("-u") + 1;
-          if (indexLanguage > argz.size() - 1) {
-            throw new IllegalArgumentException("Missing target language!");
-          }
-          String lang = argz.get(indexLanguage);
-
-          if (argz.contains("-i")) {
-            int indexIndent = argz.indexOf("-i") + 1;
-            if (indexIndent > argz.size() - 1) {
-              throw new IllegalArgumentException("Missing indent size!");
-            }
-            int indentSize;
-
-            try {
-              indentSize = Integer.parseInt(argz.get(indexIndent));
-              if (indentSize < 0) {
-                throw new IllegalArgumentException("Indent size must be a positive integer!");
-              }
-              decompiler.decompile(file, lang, indentSize);
-            } catch (NumberFormatException ex) {
-              throw new IllegalArgumentException("Indent size must be an integer!", ex);
-            }
-          } else {
-            decompiler.decompile(file, lang);
-          }
-        }
-      }
-    } catch (IllegalArgumentException ex) {
-      System.err.println(ex.getMessage());
-      printUsage(true);
-    } catch (Exception ex) {
-      System.err.println(ex.getMessage());
-    }
+    @ArgGroup(exclusive = false, heading = "Decompiling options%n")
+    DecompilingOptionsGroup decompilingOptions;
   }
 
-  private static void printUsage(boolean error) {
-    try (PrintStream out = error ? System.err : System.out) {
-      out.println("Usage: java -jar <compiler_name>.jar -f <file> {[-O|-L] | -u <lang> [-i <indent>]}");
-      out.println("  -f <file>");
-      out.println("\tpath to the file to compile/uncompile");
-      out.println("  -O");
-      out.println("\toptimise compiled program");
-      out.println("  -L");
-      out.println("\tdisable program editing from calculator");
-      out.println("  -u <lang>");
-      out.println("\tuncompile the program into the given language (e.g.: en, fr...)");
-      out.println("  -i <indent>");
-      out.println("\tindent size (default 4)");
-      out.println("  -h");
-      out.println("\tshow this help");
+  /**
+   * Compiling options.
+   */
+  private static class CompilingOptionsGroup {
+    @SuppressWarnings("unused") // Not actually used in the code but necessary to create the command line option
+    @Option(names = {"-c", "--compile"}, required = true,
+        description = "Compile the file. The language to use is given by the file’s extension.")
+    boolean compile;
+
+    @Option(names = {"-o", "--optimize"}, description = "Try to optimize the compiled code.")
+    boolean optimize;
+
+    @Option(names = {"-L", "--lock"}, description = "Disable edition of the compiled program from calculators.")
+    boolean lock;
+  }
+
+  /**
+   * Decompiling options.
+   */
+  private static class DecompilingOptionsGroup {
+    @Option(names = {"-d", "--decompile"}, required = true,
+        description = "Decompile the file.")
+    boolean decompile;
+
+    @Option(names = {"-l", "--lang", "--language"}, arity = "1", paramLabel = "language", required = true,
+        description = "The language to use for the generated sources.")
+    String langCode;
+
+    @Option(names = {"-i", "--ident"}, arity = "1", paramLabel = "amount", defaultValue = "2",
+        description = "Number of spaces to use for a single line indent (default: 2).")
+    int indent;
+  }
+
+  @Override
+  public Integer call() {
+    System.out.printf("** TI-83 Compiler/Decompiler v%s **%n", Compiler.VERSION);
+    try {
+      if (this.options.decompilingOptions.decompile) {
+        Compiler.decompile(this.file, this.options.decompilingOptions.langCode, this.options.decompilingOptions.indent);
+      } else {
+        Compiler.compile(this.file, this.options.compilingOptions.optimize, !this.options.compilingOptions.lock);
+      }
+    } catch (Exception ex) {
+      System.err.println(ex.getMessage());
+      return 1;
     }
+    return 0;
+  }
+
+  public static void main(String... args) {
+    int exitCode = new CommandLine(new Main()).execute(args);
+    System.exit(exitCode);
   }
 }

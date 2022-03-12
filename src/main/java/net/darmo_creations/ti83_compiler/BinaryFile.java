@@ -1,5 +1,6 @@
 package net.darmo_creations.ti83_compiler;
 
+import net.darmo_creations.ti83_compiler.compiler.Compiler;
 import net.darmo_creations.ti83_compiler.utils.ArraysUtil;
 
 import java.io.File;
@@ -12,67 +13,65 @@ import java.io.IOException;
  * @author Damien Vergnet
  */
 public class BinaryFile {
-  private String path;
-  private String name;
-  private byte[] data;
-  private boolean editable;
-
-  public static final String FORMAT = "8xp";
+  public static final String EXTENSION = "8xp";
   public static final String HEADER = "**TI83F*\u001a\n\n";
-  public static final String COMMENT = "Created by Java TI-Compiler";
+  public static final String COMMENT = "Created by Java TI-Compiler v" + Compiler.VERSION;
 
-  public BinaryFile(String path, String name, byte[] data, boolean editable) {
+  private final String path;
+  private final String name;
+  private final byte[] data;
+  private final boolean editable;
+
+  /**
+   * Create a new .8xp file.
+   *
+   * @param path     File’s path.
+   * @param name     File’s name without the extension.
+   * @param data     File’s data. Tokens validity is not checked.
+   * @param editable Whether the resulting file should be editable from calculators.
+   */
+  public BinaryFile(final String path, final String name, final byte[] data, final boolean editable) {
     this.path = path;
-    this.setName(name);
-    this.setData(data);
-    this.setEditable(editable);
-  }
-
-  public String getPath() {
-    return this.path;
-  }
-
-  public void setPath(String path) {
-    this.path = path;
-  }
-
-  public String getAbsolutePath() {
-    return this.path + File.separator + this.name + "." + FORMAT;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public boolean isEditable() {
-    return this.editable;
-  }
-
-  public void setEditable(boolean editable) {
-    this.editable = editable;
-  }
-
-  public void setName(String name) {
     if (!name.matches("[A-Zθ][A-Zθ0-9]{0,7}")) {
       throw new IllegalArgumentException("invalid program name");
     }
     this.name = name;
-  }
-
-  /**
-   * Changes the program's data.<br />
-   * <b>NOTE: tokens' validity is not checked!</b>
-   *
-   * @param data the program's data
-   */
-  public void setData(byte[] data) {
     this.data = data;
+    this.editable = editable;
   }
 
   /**
-   * Writes the file.
+   * Return the full path of this file (path + name + extension).
+   */
+  public String getFullPath() {
+    return this.path + File.separator + this.name + "." + EXTENSION;
+  }
+
+  /**
+   * Return this file’s path.
+   */
+  public String getPath() {
+    return this.path;
+  }
+
+  /**
+   * Return this file’s name without the extension.
+   */
+  public String getName() {
+    return this.name;
+  }
+
+  /**
+   * Return true if this file will be editable from calculators, false otherwise.
+   */
+  public boolean isEditable() {
+    return this.editable;
+  }
+
+  /**
+   * Write the file to disk.
    *
-   * @throws IOException if the file could not be written
+   * @throws IOException If the file could not be written.
    */
   public void writeFile() throws IOException {
     byte[] header = new byte[74];
@@ -125,7 +124,7 @@ public class BinaryFile {
     content[content.length - 2] = (byte) (l & 0x00FF);
     content[content.length - 1] = (byte) ((l & 0xFF00) >> 8);
 
-    try (FileOutputStream fos = new FileOutputStream(this.getAbsolutePath())) {
+    try (FileOutputStream fos = new FileOutputStream(this.getFullPath())) {
       fos.write(content);
     }
   }
