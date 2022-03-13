@@ -191,11 +191,8 @@ class SourceCodeParser {
    */
   private void replaceAliases(String[] srcCode) {
     for (int i = 0; i < srcCode.length; i++) {
-      for (Map.Entry<LocalizedAlias, String> entry : Tokens.ALIASES.entrySet()) {
-        LocalizedAlias alias = entry.getKey();
-        if (alias.isForLanguage(this.language)) {
-          srcCode[i] = srcCode[i].replaceAll("&" + alias.getAlias() + ";", entry.getValue());
-        }
+      for (Map.Entry<String, String> entry : Tokens.ALIASES.entrySet()) {
+        srcCode[i] = srcCode[i].replaceAll("&" + entry.getKey() + ";", entry.getValue());
       }
     }
   }

@@ -9,185 +9,20 @@ import java.util.*;
  */
 public final class Tokens {
   /**
-   * A map containing the regexes for the special characters codes.
-   */
-  public static final Map<LocalizedAlias, String> ALIASES;
-  /**
    * A list containing all tokens.
    */
   public static final List<Token> TOKENS;
+  /**
+   * A map containing the regexes for the special characters codes.
+   */
+  public static final Map<String, String> ALIASES;
 
   public static final Token LINE_END = new Token((byte) 0x3F).instruction("\n");
 
   static {
-    Map<LocalizedAlias, String> aliasesMap = new LinkedHashMap<>();
-    aliasesMap.put(new LocalizedAlias("E"), "ᴇ");
-    aliasesMap.put(new LocalizedAlias("T"), "ᵀ");
-    aliasesMap.put(new LocalizedAlias("L"), "ʟ");
-    aliasesMap.put(new LocalizedAlias("F"), "\uD835\uDE75");
-    aliasesMap.put(new LocalizedAlias("exp"), "\uD835\uDC52");
-    aliasesMap.put(new LocalizedAlias("imag"), "\uD835\uDC56");
-    aliasesMap.put(new LocalizedAlias("N"), "\uD835\uDC0D");
-    aliasesMap.put(new LocalizedAlias("n"), "\uD835\uDC5B");
-
-    aliasesMap.put(new LocalizedAlias("vara"), "\uD835\uDDBA");
-    aliasesMap.put(new LocalizedAlias("varb"), "\uD835\uDDBB");
-    aliasesMap.put(new LocalizedAlias("varc"), "\uD835\uDDBC");
-    aliasesMap.put(new LocalizedAlias("vard"), "\uD835\uDDBD");
-    aliasesMap.put(new LocalizedAlias("vare"), "\uD835\uDDBE");
-    aliasesMap.put(new LocalizedAlias("varn"), "\uD835\uDDC7");
-    aliasesMap.put(new LocalizedAlias("varp"), "\uD835\uDDC9");
-    aliasesMap.put(new LocalizedAlias("varr"), "\uD835\uDDCB");
-    aliasesMap.put(new LocalizedAlias("vars"), "\uD835\uDDCC");
-    aliasesMap.put(new LocalizedAlias("vart"), "\uD835\uDDCD");
-    aliasesMap.put(new LocalizedAlias("varu"), "\uD835\uDDCE");
-    aliasesMap.put(new LocalizedAlias("varv"), "\uD835\uDDCF");
-    aliasesMap.put(new LocalizedAlias("varw"), "\uD835\uDDD0");
-    aliasesMap.put(new LocalizedAlias("varz"), "\uD835\uDDD3");
-
-    aliasesMap.put(new LocalizedAlias("alpha"), "α");
-    aliasesMap.put(new LocalizedAlias("beta", Language.ENGLISH), "β");
-    aliasesMap.put(new LocalizedAlias("bêta", Language.FRENCH), "β");
-    aliasesMap.put(new LocalizedAlias("gamma"), "γ");
-    aliasesMap.put(new LocalizedAlias("Delta"), "Δ");
-    aliasesMap.put(new LocalizedAlias("delta"), "δ");
-    aliasesMap.put(new LocalizedAlias("epsilon"), "ε");
-    aliasesMap.put(new LocalizedAlias("theta", Language.ENGLISH), "θ");
-    aliasesMap.put(new LocalizedAlias("thêta", Language.FRENCH), "θ");
-    aliasesMap.put(new LocalizedAlias("lambda"), "λ");
-    aliasesMap.put(new LocalizedAlias("mu"), "μ");
-    aliasesMap.put(new LocalizedAlias("pi"), "π");
-    aliasesMap.put(new LocalizedAlias("rho", Language.ENGLISH), "ρ");
-    aliasesMap.put(new LocalizedAlias("rhô", Language.FRENCH), "ρ");
-    aliasesMap.put(new LocalizedAlias("Sigma"), "Σ");
-    aliasesMap.put(new LocalizedAlias("sigma"), "σ");
-    aliasesMap.put(new LocalizedAlias("tau"), "τ");
-    aliasesMap.put(new LocalizedAlias("phi"), "φ");
-    aliasesMap.put(new LocalizedAlias("chi"), "χ");
-    aliasesMap.put(new LocalizedAlias("Omega", Language.ENGLISH), "Ω");
-    aliasesMap.put(new LocalizedAlias("Oméga", Language.FRENCH), "Ω");
-
-    aliasesMap.put(new LocalizedAlias("Aacute", Language.ENGLISH), "Á");
-    aliasesMap.put(new LocalizedAlias("Aaigu", Language.FRENCH), "Á");
-    aliasesMap.put(new LocalizedAlias("Agrave"), "À");
-    aliasesMap.put(new LocalizedAlias("Acirc"), "Â");
-    aliasesMap.put(new LocalizedAlias("Adiaeresis", Language.ENGLISH), "Ä");
-    aliasesMap.put(new LocalizedAlias("Atréma", Language.FRENCH), "Ä");
-    aliasesMap.put(new LocalizedAlias("aacute", Language.ENGLISH), "á");
-    aliasesMap.put(new LocalizedAlias("aaigu", Language.FRENCH), "á");
-    aliasesMap.put(new LocalizedAlias("agrave"), "à");
-    aliasesMap.put(new LocalizedAlias("acirc"), "â");
-    aliasesMap.put(new LocalizedAlias("adiaeresis", Language.ENGLISH), "ä");
-    aliasesMap.put(new LocalizedAlias("atréma", Language.FRENCH), "ä");
-    aliasesMap.put(new LocalizedAlias("Ccedilla", Language.ENGLISH), "Ç");
-    aliasesMap.put(new LocalizedAlias("Ccédille", Language.FRENCH), "Ç");
-    aliasesMap.put(new LocalizedAlias("ccedilla", Language.ENGLISH), "ç");
-    aliasesMap.put(new LocalizedAlias("ccédille", Language.FRENCH), "ç");
-    aliasesMap.put(new LocalizedAlias("Eacute", Language.ENGLISH), "É");
-    aliasesMap.put(new LocalizedAlias("Eaigu", Language.FRENCH), "É");
-    aliasesMap.put(new LocalizedAlias("Egrave"), "È");
-    aliasesMap.put(new LocalizedAlias("Ecirc"), "Ê");
-    aliasesMap.put(new LocalizedAlias("Ediaeresis", Language.ENGLISH), "Ë");
-    aliasesMap.put(new LocalizedAlias("Etréma", Language.FRENCH), "Ë");
-    aliasesMap.put(new LocalizedAlias("eacute", Language.ENGLISH), "é");
-    aliasesMap.put(new LocalizedAlias("eaigu", Language.FRENCH), "é");
-    aliasesMap.put(new LocalizedAlias("egrave"), "è");
-    aliasesMap.put(new LocalizedAlias("ecirc"), "ê");
-    aliasesMap.put(new LocalizedAlias("ediaeresis", Language.ENGLISH), "ë");
-    aliasesMap.put(new LocalizedAlias("etréma", Language.FRENCH), "ë");
-    aliasesMap.put(new LocalizedAlias("Iacute", Language.ENGLISH), "Í");
-    aliasesMap.put(new LocalizedAlias("Iaigu", Language.FRENCH), "Í");
-    aliasesMap.put(new LocalizedAlias("Igrave"), "Ì");
-    aliasesMap.put(new LocalizedAlias("Icirc"), "Î");
-    aliasesMap.put(new LocalizedAlias("Idiaeresis", Language.ENGLISH), "Ï");
-    aliasesMap.put(new LocalizedAlias("Itréma", Language.FRENCH), "Ï");
-    aliasesMap.put(new LocalizedAlias("iacute", Language.ENGLISH), "í");
-    aliasesMap.put(new LocalizedAlias("iaigu", Language.FRENCH), "í");
-    aliasesMap.put(new LocalizedAlias("igrave"), "ì");
-    aliasesMap.put(new LocalizedAlias("icirc"), "î");
-    aliasesMap.put(new LocalizedAlias("idiaeresis", Language.ENGLISH), "ï");
-    aliasesMap.put(new LocalizedAlias("itréma", Language.FRENCH), "ï");
-    aliasesMap.put(new LocalizedAlias("Ntilde"), "Ñ");
-    aliasesMap.put(new LocalizedAlias("ntilde"), "ñ");
-    aliasesMap.put(new LocalizedAlias("Oacute", Language.ENGLISH), "Ó");
-    aliasesMap.put(new LocalizedAlias("Oaigu", Language.FRENCH), "Ó");
-    aliasesMap.put(new LocalizedAlias("Ograve"), "Ò");
-    aliasesMap.put(new LocalizedAlias("Ocirc"), "Ô");
-    aliasesMap.put(new LocalizedAlias("Odiaeresis", Language.ENGLISH), "Ö");
-    aliasesMap.put(new LocalizedAlias("Otréma", Language.FRENCH), "Ö");
-    aliasesMap.put(new LocalizedAlias("oacute", Language.ENGLISH), "ó");
-    aliasesMap.put(new LocalizedAlias("oaigu", Language.FRENCH), "ó");
-    aliasesMap.put(new LocalizedAlias("ograve"), "ò");
-    aliasesMap.put(new LocalizedAlias("ocirc"), "ô");
-    aliasesMap.put(new LocalizedAlias("odiaeresis", Language.ENGLISH), "ö");
-    aliasesMap.put(new LocalizedAlias("otréma", Language.FRENCH), "ö");
-    aliasesMap.put(new LocalizedAlias("pcirc"), "p̂");
-    aliasesMap.put(new LocalizedAlias("Uacute", Language.ENGLISH), "Ú");
-    aliasesMap.put(new LocalizedAlias("Uaigu", Language.FRENCH), "Ú");
-    aliasesMap.put(new LocalizedAlias("Ugrave"), "Ù");
-    aliasesMap.put(new LocalizedAlias("Ucirc"), "Û");
-    aliasesMap.put(new LocalizedAlias("Udiaeresis", Language.ENGLISH), "Ü");
-    aliasesMap.put(new LocalizedAlias("Utréma", Language.FRENCH), "Ü");
-    aliasesMap.put(new LocalizedAlias("uacute", Language.ENGLISH), "ú");
-    aliasesMap.put(new LocalizedAlias("uaigu", Language.FRENCH), "ú");
-    aliasesMap.put(new LocalizedAlias("ugrave"), "ù");
-    aliasesMap.put(new LocalizedAlias("ucirc"), "û");
-    aliasesMap.put(new LocalizedAlias("udiaeresis", Language.ENGLISH), "ü");
-    aliasesMap.put(new LocalizedAlias("utréma", Language.FRENCH), "ü");
-    aliasesMap.put(new LocalizedAlias("xbar", Language.ENGLISH), "x̄");
-    aliasesMap.put(new LocalizedAlias("xbarre", Language.FRENCH), "x̄");
-    aliasesMap.put(new LocalizedAlias("ybar", Language.ENGLISH), "ȳ");
-    aliasesMap.put(new LocalizedAlias("ybarre", Language.FRENCH), "ȳ");
-    aliasesMap.put(new LocalizedAlias("ss"), "ß");
-
-    aliasesMap.put(new LocalizedAlias("acute", Language.ENGLISH), "´");
-    aliasesMap.put(new LocalizedAlias("aigu", Language.FRENCH), "´");
-    aliasesMap.put(new LocalizedAlias("grave"), "`");
-    aliasesMap.put(new LocalizedAlias("diaeresis", Language.ENGLISH), "¨");
-    aliasesMap.put(new LocalizedAlias("tréma", Language.FRENCH), "¨");
-    aliasesMap.put(new LocalizedAlias("invertedqmark", Language.ENGLISH), "¿");
-    aliasesMap.put(new LocalizedAlias("pinterinversé", Language.FRENCH), "¿");
-    aliasesMap.put(new LocalizedAlias("invertedexclp", Language.ENGLISH), "¡");
-    aliasesMap.put(new LocalizedAlias("pexclinversé", Language.FRENCH), "¡");
-
-    aliasesMap.put(new LocalizedAlias("larrow", Language.ENGLISH), "←");
-    aliasesMap.put(new LocalizedAlias("flècheg", Language.FRENCH), "←");
-    aliasesMap.put(new LocalizedAlias("rarrow", Language.ENGLISH), "→");
-    aliasesMap.put(new LocalizedAlias("flèched", Language.FRENCH), "→");
-    aliasesMap.put(new LocalizedAlias("uarrow", Language.ENGLISH), "↑");
-    aliasesMap.put(new LocalizedAlias("flècheh", Language.FRENCH), "↑");
-    aliasesMap.put(new LocalizedAlias("darrow", Language.ENGLISH), "↓");
-    aliasesMap.put(new LocalizedAlias("flècheb", Language.FRENCH), "↓");
-    aliasesMap.put(new LocalizedAlias("buarrow", Language.ENGLISH), "⬆");
-    aliasesMap.put(new LocalizedAlias("flèchehg", Language.FRENCH), "⬆");
-    aliasesMap.put(new LocalizedAlias("bdarrow", Language.ENGLISH), "⬇");
-    aliasesMap.put(new LocalizedAlias("flèchebg", Language.FRENCH), "⬇");
-
-    aliasesMap.put(new LocalizedAlias("square", Language.ENGLISH), "◻");
-    aliasesMap.put(new LocalizedAlias("carré", Language.FRENCH), "◻");
-    aliasesMap.put(new LocalizedAlias("cross", Language.ENGLISH), "✛");
-    aliasesMap.put(new LocalizedAlias("croix", Language.FRENCH), "✛");
-    aliasesMap.put(new LocalizedAlias("dot", Language.ENGLISH), "·");
-    aliasesMap.put(new LocalizedAlias("point", Language.FRENCH), "·");
-
-    aliasesMap.put(new LocalizedAlias("int"), "∫");
-    aliasesMap.put(new LocalizedAlias("angle"), "∠");
-    aliasesMap.put(new LocalizedAlias("sqrt", Language.ENGLISH), "√");
-    aliasesMap.put(new LocalizedAlias("racine", Language.FRENCH), "√");
-    aliasesMap.put(new LocalizedAlias("cbrt", Language.ENGLISH), "∛");
-    aliasesMap.put(new LocalizedAlias("racine3", Language.FRENCH), "∛");
-    aliasesMap.put(new LocalizedAlias("times", Language.ENGLISH), "×");
-    aliasesMap.put(new LocalizedAlias("fois", Language.FRENCH), "×");
-
-    for (int i = 0; i < 10; i++) {
-      String c = "" + (char) ('₀' + i);
-      aliasesMap.put(new LocalizedAlias("sub" + i, Language.ENGLISH), c);
-      aliasesMap.put(new LocalizedAlias("indice" + i, Language.FRENCH), c);
-    }
-    aliasesMap.put(new LocalizedAlias("sub10", Language.ENGLISH), "₁₀");
-    aliasesMap.put(new LocalizedAlias("indice10", Language.FRENCH), "₁₀");
-
-    ALIASES = Collections.unmodifiableMap(aliasesMap);
+    /*
+     * Tokens
+     */
 
     List<Token> tokens = new ArrayList<>();
     // 0x0#
@@ -202,9 +37,7 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x07).instruction("]"));
     tokens.add(new Token((byte) 0x08).instruction("{"));
     tokens.add(new Token((byte) 0x09).instruction("}"));
-    tokens.add(new Token((byte) 0x0A) // TODO find character
-        .instruction("&rexpon;", Language.ENGLISH)
-        .instruction("&rexpos;", Language.FRENCH));
+    tokens.add(new Token((byte) 0x0A).instruction("&rexpon;"));// TODO find character
     tokens.add(new Token((byte) 0x0B).instruction("°"));
     tokens.add(new Token((byte) 0x0C).instruction("⁻¹"));
     tokens.add(new Token((byte) 0x0D).instruction("²"));
@@ -1159,21 +992,15 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0xA5).instruction("λ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA6).instruction("μ")); // Greek letter mu
     tokens.add(new Token((byte) 0xBB, (byte) 0xA6).instruction("µ")); // Micro sign
-    tokens.add(new Token((byte) 0xBB, (byte) 0xA7)
-        .instruction("&letterpi;", Language.ENGLISH)
-        .instruction("&lettrepi;", Language.FRENCH));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xA7).instruction("&letterpi;"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA8).instruction("ρ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA9).instruction("Σ"));
     // 0xBB 0xAA unused
     tokens.add(new Token((byte) 0xBB, (byte) 0xAB).instruction("φ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xAC).instruction("Ω"));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xAD)
-        .instruction("&letterpcirc;", Language.ENGLISH)
-        .instruction("&lettrepcirc;", Language.FRENCH));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xAD).instruction("&letterpcirc;"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xAE).instruction("χ"));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xAF)
-        .instruction("&letterF;", Language.ENGLISH)
-        .instruction("&lettreF;", Language.FRENCH));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xAF).instruction("&letterF;"));
 
     // 0xBB 0xB#
     for (int i = 0; i < 11; i++) {
@@ -1207,9 +1034,7 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0xDB).instruction("…"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xDC).instruction("∠"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xDD).instruction("ß"));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xDE) // TODO find character
-        .instruction("&xexpon;", Language.ENGLISH)
-        .instruction("&xexpos;", Language.FRENCH));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xDE).instruction("&xexpon;"));// TODO find character
     tokens.add(new Token((byte) 0xBB, (byte) 0xDF).instruction("&T_;")); // TODO find character
 
     // 0xBB 0xE#
@@ -1229,9 +1054,7 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0xF2).instruction("⬆")); // Bold upwards arrow
     tokens.add(new Token((byte) 0xBB, (byte) 0xF3).instruction("⬇")); // Bold downwards arrow
     tokens.add(new Token((byte) 0xBB, (byte) 0xF4).instruction("√"));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xF5)
-        .instruction("&invertedequal;", Language.ENGLISH)
-        .instruction("&égalinversé;", Language.FRENCH));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xF5).instruction("&invertedequal;"));
     // 0xBB 0xF6 to 0xBB 0xFF unused
 
     // 0xB#
@@ -1338,9 +1161,7 @@ public final class Tokens {
 
     // 0xF#
     tokens.add(new Token((byte) 0xF0).instruction("^"));
-    tokens.add(new Token((byte) 0xF1)
-        .instruction("&xrt;", Language.ENGLISH)
-        .instruction("&racinex;", Language.FRENCH));
+    tokens.add(new Token((byte) 0xF1).instruction("&xrt;"));
     tokens.add(new Token((byte) 0xF2)
         .instruction("1-Var Stats ", Language.ENGLISH)
         .instruction("Stats 1-Var ", Language.FRENCH));
@@ -1383,6 +1204,142 @@ public final class Tokens {
         .instruction("RegLin(ax+b) ", Language.FRENCH));
 
     TOKENS = tokens;
+
+    /*
+     * Aliases
+     */
+
+    Map<String, String> aliasesMap = new LinkedHashMap<>();
+    // Misc. letter symbols
+    aliasesMap.put("E", "ᴇ");
+    aliasesMap.put("T", "ᵀ");
+    aliasesMap.put("L", "ʟ");
+    aliasesMap.put("F", "\uD835\uDE75");
+    aliasesMap.put("exp", "\uD835\uDC52");
+    aliasesMap.put("imag", "\uD835\uDC56");
+    aliasesMap.put("N", "\uD835\uDC0D");
+    aliasesMap.put("n", "\uD835\uDC5B");
+
+    // Variables
+    aliasesMap.put("vara", "\uD835\uDDBA");
+    aliasesMap.put("varb", "\uD835\uDDBB");
+    aliasesMap.put("varc", "\uD835\uDDBC");
+    aliasesMap.put("vard", "\uD835\uDDBD");
+    aliasesMap.put("vare", "\uD835\uDDBE");
+    aliasesMap.put("varn", "\uD835\uDDC7");
+    aliasesMap.put("varp", "\uD835\uDDC9");
+    aliasesMap.put("varr", "\uD835\uDDCB");
+    aliasesMap.put("vars", "\uD835\uDDCC");
+    aliasesMap.put("vart", "\uD835\uDDCD");
+    aliasesMap.put("varu", "\uD835\uDDCE");
+    aliasesMap.put("varv", "\uD835\uDDCF");
+    aliasesMap.put("varw", "\uD835\uDDD0");
+    aliasesMap.put("varz", "\uD835\uDDD3");
+
+    // Greek letters
+    aliasesMap.put("alpha", "α");
+    aliasesMap.put("beta", "β");
+    aliasesMap.put("gamma", "γ");
+    aliasesMap.put("Delta", "Δ");
+    aliasesMap.put("delta", "δ");
+    aliasesMap.put("epsilon", "ε");
+    aliasesMap.put("theta", "θ");
+    aliasesMap.put("lambda", "λ");
+    aliasesMap.put("mu", "μ");
+    aliasesMap.put("pi", "π");
+    aliasesMap.put("rho", "ρ");
+    aliasesMap.put("Sigma", "Σ");
+    aliasesMap.put("sigma", "σ");
+    aliasesMap.put("tau", "τ");
+    aliasesMap.put("phi", "φ");
+    aliasesMap.put("chi", "χ");
+    aliasesMap.put("Omega", "Ω");
+
+    // Letters with diacritics and additional latin letters
+    aliasesMap.put("Aacute", "Á");
+    aliasesMap.put("Agrave", "À");
+    aliasesMap.put("Acirc", "Â");
+    aliasesMap.put("Adiaeresis", "Ä");
+    aliasesMap.put("aacute", "á");
+    aliasesMap.put("agrave", "à");
+    aliasesMap.put("acirc", "â");
+    aliasesMap.put("adiaeresis", "ä");
+    aliasesMap.put("Ccedilla", "Ç");
+    aliasesMap.put("ccedilla", "ç");
+    aliasesMap.put("Eacute", "É");
+    aliasesMap.put("Egrave", "È");
+    aliasesMap.put("Ecirc", "Ê");
+    aliasesMap.put("Ediaeresis", "Ë");
+    aliasesMap.put("eacute", "é");
+    aliasesMap.put("egrave", "è");
+    aliasesMap.put("ecirc", "ê");
+    aliasesMap.put("ediaeresis", "ë");
+    aliasesMap.put("Iacute", "Í");
+    aliasesMap.put("Igrave", "Ì");
+    aliasesMap.put("Icirc", "Î");
+    aliasesMap.put("Idiaeresis", "Ï");
+    aliasesMap.put("iacute", "í");
+    aliasesMap.put("igrave", "ì");
+    aliasesMap.put("icirc", "î");
+    aliasesMap.put("idiaeresis", "ï");
+    aliasesMap.put("Ntilde", "Ñ");
+    aliasesMap.put("ntilde", "ñ");
+    aliasesMap.put("Oacute", "Ó");
+    aliasesMap.put("Ograve", "Ò");
+    aliasesMap.put("Ocirc", "Ô");
+    aliasesMap.put("Odiaeresis", "Ö");
+    aliasesMap.put("oacute", "ó");
+    aliasesMap.put("ograve", "ò");
+    aliasesMap.put("ocirc", "ô");
+    aliasesMap.put("odiaeresis", "ö");
+    aliasesMap.put("pcirc", "p̂");
+    aliasesMap.put("Uacute", "Ú");
+    aliasesMap.put("Ugrave", "Ù");
+    aliasesMap.put("Ucirc", "Û");
+    aliasesMap.put("Udiaeresis", "Ü");
+    aliasesMap.put("uacute", "ú");
+    aliasesMap.put("ugrave", "ù");
+    aliasesMap.put("ucirc", "û");
+    aliasesMap.put("udiaeresis", "ü");
+    aliasesMap.put("xbar", "x̄");
+    aliasesMap.put("ybar", "ȳ");
+    aliasesMap.put("ss", "ß");
+
+    // Diacritics and punctuation
+    aliasesMap.put("acute", "´");
+    aliasesMap.put("grave", "`");
+    aliasesMap.put("diaeresis", "¨");
+    aliasesMap.put("invertedqmark", "¿");
+    aliasesMap.put("invertedexclp", "¡");
+
+    // Arrows
+    aliasesMap.put("larrow", "←");
+    aliasesMap.put("rarrow", "→");
+    aliasesMap.put("uarrow", "↑");
+    aliasesMap.put("darrow", "↓");
+    aliasesMap.put("buarrow", "⬆");
+    aliasesMap.put("bdarrow", "⬇");
+
+    // Plot markers
+    aliasesMap.put("square", "◻");
+    aliasesMap.put("cross", "✛");
+    aliasesMap.put("dot", "·");
+
+    // Misc. math symbols
+    aliasesMap.put("int", "∫");
+    aliasesMap.put("angle", "∠");
+    aliasesMap.put("sqrt", "√");
+    aliasesMap.put("cbrt", "∛");
+    aliasesMap.put("times", "×");
+
+    // Subscripted numbers
+    for (int i = 0; i < 10; i++) {
+      String c = "" + (char) ('₀' + i);
+      aliasesMap.put("sub" + i, c);
+    }
+    aliasesMap.put("sub10", "₁₀");
+
+    ALIASES = Collections.unmodifiableMap(aliasesMap);
   }
 
   /**
