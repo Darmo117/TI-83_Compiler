@@ -48,20 +48,6 @@ public class BinaryFile {
   }
 
   /**
-   * Return this file’s path.
-   */
-  public String getPath() {
-    return this.path;
-  }
-
-  /**
-   * Return this file’s name without the extension.
-   */
-  public String getName() {
-    return this.name;
-  }
-
-  /**
    * Return true if this file will be editable from calculators, false otherwise.
    */
   public boolean isEditable() {
@@ -75,7 +61,6 @@ public class BinaryFile {
    */
   public void writeFile() throws IOException {
     byte[] header = new byte[74];
-    int l;
 
     // File type
     ArraysUtil.stringCopy(HEADER, header, 0, 11);
@@ -84,16 +69,16 @@ public class BinaryFile {
     // Comment delimiter
     header[52] = 0x00;
     // Data length + 19 (little-endian)
-    l = this.data.length + 19;
-    header[53] = (byte) (l & 0x00FF);
-    header[54] = (byte) ((l & 0xFF00) >> 8);
+    int dataLength19 = this.data.length + 19;
+    header[53] = (byte) (dataLength19 & 0x00FF);
+    header[54] = (byte) ((dataLength19 & 0xFF00) >> 8);
     // Things
     header[55] = 0x0D;
     header[56] = 0x00;
     // Data length + 2 (little-endian)
-    l = this.data.length + 2;
-    header[57] = (byte) (l & 0x00FF);
-    header[58] = (byte) ((l & 0xFF00) >> 8);
+    int dataLength2 = this.data.length + 2;
+    header[57] = (byte) (dataLength2 & 0x00FF);
+    header[58] = (byte) ((dataLength2 & 0xFF00) >> 8);
     // Protection
     header[59] = (byte) (this.isEditable() ? 0x05 : 0x06);
     // Program name
@@ -102,27 +87,25 @@ public class BinaryFile {
     header[68] = 0x00;
     header[69] = 0x00;
     // Data length + 2 (little-endian)
-    header[70] = (byte) (l & 0x00FF);
-    header[71] = (byte) ((l & 0xFF00) >> 8);
+    header[70] = (byte) (dataLength2 & 0x00FF);
+    header[71] = (byte) ((dataLength2 & 0xFF00) >> 8);
     // Data length (little-endian)
-    l = this.data.length;
-    header[72] = (byte) (l & 0x00FF);
-    header[73] = (byte) ((l & 0xFF00) >> 8);
+    header[72] = (byte) (this.data.length & 0x00FF);
+    header[73] = (byte) ((this.data.length & 0xFF00) >> 8);
 
     byte[] content = new byte[header.length + this.data.length + 2];
 
-    // Header and program data insertion.
+    // Header and program data insertion
     ArraysUtil.arrayCopy(header, content, 0);
     ArraysUtil.arrayCopy(this.data, content, header.length);
 
     // Checksum (little-endian)
-    l = 0;
+    int checkSum = 0;
     for (int i = 0x37; i < content.length - 2; i++) {
-      l += (content[i] < 0) ? content[i] + 256 : content[i];
+      checkSum += (content[i] < 0) ? content[i] + 256 : content[i];
     }
-
-    content[content.length - 2] = (byte) (l & 0x00FF);
-    content[content.length - 1] = (byte) ((l & 0xFF00) >> 8);
+    content[content.length - 2] = (byte) (checkSum & 0x00FF);
+    content[content.length - 1] = (byte) ((checkSum & 0xFF00) >> 8);
 
     try (FileOutputStream fos = new FileOutputStream(this.getFullPath())) {
       fos.write(content);
