@@ -36,7 +36,7 @@ public class Main implements Callable<Integer> {
    * Compiling options.
    */
   private static class CompilingOptionsGroup {
-    @SuppressWarnings("unused") // Not actually used in the code but necessary to create the command line option
+    @SuppressWarnings("unused") // Not actually used in the code but necessary for the group
     @Option(names = {"-c", "--compile"}, required = true,
         description = "Compile the file. The language to use is given by the file’s extension.")
     boolean compile;
@@ -52,8 +52,8 @@ public class Main implements Callable<Integer> {
    * Decompiling options.
    */
   private static class DecompilingOptionsGroup {
-    @Option(names = {"-d", "--decompile"}, required = true,
-        description = "Decompile the file.")
+    @SuppressWarnings("unused") // Not actually used in the code but necessary for the group
+    @Option(names = {"-d", "--decompile"}, required = true, description = "Decompile the file.")
     boolean decompile;
 
     @Option(names = {"-l", "--lang", "--language"}, arity = "1", paramLabel = "language", required = true,
@@ -69,7 +69,7 @@ public class Main implements Callable<Integer> {
   public Integer call() {
     System.out.printf("** TI-83 Compiler/Decompiler v%s **%n", Compiler.VERSION);
     try {
-      if (this.options.decompilingOptions.decompile) {
+      if (this.options.decompilingOptions != null) {
         Compiler.decompile(this.file, this.options.decompilingOptions.langCode, this.options.decompilingOptions.indent);
       } else {
         Compiler.compile(this.file, this.options.compilingOptions.optimize, !this.options.compilingOptions.lock);
@@ -81,7 +81,7 @@ public class Main implements Callable<Integer> {
     return 0;
   }
 
-  public static void main(String... args) {
+  public static void main(String[] args) {
     int exitCode = new CommandLine(new Main()).execute(args);
     System.exit(exitCode);
   }
