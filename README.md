@@ -1,6 +1,10 @@
-# TI-83 Compiler
+# TI-83+ Compiler
 
-A compiler/decompiler for TI-83 programs.
+A compiler/decompiler for TI-83+ programs.
+
+## Requirements
+- Java 8 or higher (was only tested with this version)
+- *That’s it!*
 
 ## Features
 
@@ -15,10 +19,10 @@ A compiler/decompiler for TI-83 programs.
 
 *Source files’ extension must be one of the following: .ti83en, .ti83fr*
 
-`java -jar TI-83_compiler-<version>.jar <file> -c [[-o] [-l]]`
+`java -jar TI-83_compiler-<version>.jar <file> -c [[-o] [-L]]`
 
-- `<file>` (required) path to the file to compile
-- `-c` (required) compile the file
+- `<file>` (required) path to the source file to compile
+- `-c` (required) option compile a file
 - `-o` (optional) try to optimize the compiled program
 - `-L` (optional) lock editing from calculators
 
@@ -28,8 +32,8 @@ A compiler/decompiler for TI-83 programs.
 
 `java -jar TI-83_compiler-<version>.jar <file> -d -l=<lang> [-i=<indent>]`
 
-- `<file>` (required) path to the file to compile
-- `-d` (required) decompile the file
+- `<file>` (required) path to the file binary to decompile
+- `-d` (required) option decompile a file
 - `-l=<lang>` (required) language for the decompiled source file (`en` or `fr`)
 - `-i=<indent>` (optional) indent size (number of spaces, default: 2)
 
@@ -46,3 +50,7 @@ Shows compiler’s version.
 ## Documentation
 
 See the [wiki](https://github.com/Darmo117/TI-83_Compiler/wiki).
+
+## Sources and reference
+
+Token codes from [TI-Basic Developer wiki](http://tibasicdev.wikidot.com/tokens).
