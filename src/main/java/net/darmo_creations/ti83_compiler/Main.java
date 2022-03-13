@@ -36,7 +36,7 @@ public class Main implements Callable<Integer> {
    * Compiling options.
    */
   private static class CompilingOptionsGroup {
-    @SuppressWarnings("unused") // Not actually used in the code but necessary for the group
+    @SuppressWarnings("unused") // Not actually used in the code but necessary to activate the group explicitly
     @Option(names = {"-c", "--compile"}, required = true,
         description = "Compile the file. The language to use is given by the file’s extension.")
     boolean compile;
@@ -52,7 +52,7 @@ public class Main implements Callable<Integer> {
    * Decompiling options.
    */
   private static class DecompilingOptionsGroup {
-    @SuppressWarnings("unused") // Not actually used in the code but necessary for the group
+    @SuppressWarnings("unused") // Not actually used in the code but necessary to activate the group explicitly
     @Option(names = {"-d", "--decompile"}, required = true, description = "Decompile the file.")
     boolean decompile;
 
@@ -60,8 +60,9 @@ public class Main implements Callable<Integer> {
         description = "The language to use for the generated sources.")
     String langCode;
 
-    @Option(names = {"-i", "--ident"}, arity = "1", paramLabel = "amount", defaultValue = "2",
-        description = "Number of spaces to use for a single line indent (default: 2).")
+    @Option(names = {"-i", "--ident"}, arity = "1", paramLabel = "amount",
+        defaultValue = "" + Compiler.DEFAULT_INDENT_SIZE,
+        description = "Number of spaces to use for a single line indent (default: " + Compiler.DEFAULT_INDENT_SIZE + ").")
     int indent;
   }
 
