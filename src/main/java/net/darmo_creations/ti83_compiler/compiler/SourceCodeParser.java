@@ -72,12 +72,12 @@ class SourceCodeParser {
 
     for (int i = 0; i < srcCode.length; i++) {
       String line = srcCode[i];
+
+      line = line.replaceAll("(?<!\\\\)((\\\\{2})*)\\^\\(_?-1\\)", "$1⁻¹")
+          .replaceAll("(?<!\\\\)((\\\\{2})*)\\^\\(2\\)", "$1²")
+          .replaceAll("(?<!\\\\)((\\\\{2})*)\\^\\(3\\)", "$1³");
+
       int lineLength = line.length();
-
-      line = line.replaceAll("(^|[^\\\\])\\^\\(_?-1\\)", "$1⁻¹");
-      line = line.replaceAll("(^|[^\\\\])\\^\\(2\\)", "$1²");
-      line = line.replaceAll("(^|[^\\\\])\\^\\(3\\)", "$1³");
-
       final String errorLine = srcCode[i];
       int index = 0;
       boolean escapeNext = false;
@@ -194,7 +194,7 @@ class SourceCodeParser {
       for (Map.Entry<LocalizedAlias, String> entry : Tokens.ALIASES.entrySet()) {
         LocalizedAlias alias = entry.getKey();
         if (alias.isForLanguage(this.language)) {
-          srcCode[i] = srcCode[i].replaceAll("(^|[^\\\\])&(" + alias.getAlias() + ");", "$1" + entry.getValue());
+          srcCode[i] = srcCode[i].replaceAll("&" + alias.getAlias() + ";", entry.getValue());
         }
       }
     }
