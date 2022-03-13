@@ -85,7 +85,7 @@ class SourceCodeParser {
       while (index < lineLength) {
         if (!escapeNext && line.charAt(index) == '#') {
           index = lineLength;
-        } else if (line.charAt(index) == '\\') {
+        } else if (line.charAt(index) == '\\' && !escapeNext) {
           escapeNext = true;
           index++;
         } else {

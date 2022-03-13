@@ -21,12 +21,34 @@ public final class Tokens {
 
   static {
     Map<LocalizedAlias, String> aliasesMap = new LinkedHashMap<>();
+    aliasesMap.put(new LocalizedAlias("E"), "ᴇ");
+    aliasesMap.put(new LocalizedAlias("T"), "ᵀ");
     aliasesMap.put(new LocalizedAlias("L"), "ʟ");
-    aliasesMap.put(new LocalizedAlias("expon", Language.ENGLISH), "ᴇ");
-    aliasesMap.put(new LocalizedAlias("expos", Language.FRENCH), "ᴇ");
+    aliasesMap.put(new LocalizedAlias("F"), "\uD835\uDE75");
+    aliasesMap.put(new LocalizedAlias("exp"), "\uD835\uDC52");
+    aliasesMap.put(new LocalizedAlias("imag"), "\uD835\uDC56");
+    aliasesMap.put(new LocalizedAlias("N"), "\uD835\uDC0D");
+    aliasesMap.put(new LocalizedAlias("n"), "\uD835\uDC5B");
+
+    aliasesMap.put(new LocalizedAlias("vara"), "\uD835\uDDBA");
+    aliasesMap.put(new LocalizedAlias("varb"), "\uD835\uDDBB");
+    aliasesMap.put(new LocalizedAlias("varc"), "\uD835\uDDBC");
+    aliasesMap.put(new LocalizedAlias("vard"), "\uD835\uDDBD");
+    aliasesMap.put(new LocalizedAlias("vare"), "\uD835\uDDBE");
+    aliasesMap.put(new LocalizedAlias("varn"), "\uD835\uDDC7");
+    aliasesMap.put(new LocalizedAlias("varp"), "\uD835\uDDC9");
+    aliasesMap.put(new LocalizedAlias("varr"), "\uD835\uDDCB");
+    aliasesMap.put(new LocalizedAlias("vars"), "\uD835\uDDCC");
+    aliasesMap.put(new LocalizedAlias("vart"), "\uD835\uDDCD");
+    aliasesMap.put(new LocalizedAlias("varu"), "\uD835\uDDCE");
+    aliasesMap.put(new LocalizedAlias("varv"), "\uD835\uDDCF");
+    aliasesMap.put(new LocalizedAlias("varw"), "\uD835\uDDD0");
+    aliasesMap.put(new LocalizedAlias("varz"), "\uD835\uDDD3");
+
     aliasesMap.put(new LocalizedAlias("alpha"), "α");
     aliasesMap.put(new LocalizedAlias("beta", Language.ENGLISH), "β");
     aliasesMap.put(new LocalizedAlias("bêta", Language.FRENCH), "β");
+    aliasesMap.put(new LocalizedAlias("gamma"), "γ");
     aliasesMap.put(new LocalizedAlias("Delta"), "Δ");
     aliasesMap.put(new LocalizedAlias("delta"), "δ");
     aliasesMap.put(new LocalizedAlias("epsilon"), "ε");
@@ -44,15 +66,90 @@ public final class Tokens {
     aliasesMap.put(new LocalizedAlias("chi"), "χ");
     aliasesMap.put(new LocalizedAlias("Omega", Language.ENGLISH), "Ω");
     aliasesMap.put(new LocalizedAlias("Oméga", Language.FRENCH), "Ω");
-    aliasesMap.put(new LocalizedAlias("digamma"), "Ϝ");
-    aliasesMap.put(new LocalizedAlias("F"), "Ϝ");
-    aliasesMap.put(new LocalizedAlias("point", Language.ENGLISH), "·");
-    aliasesMap.put(new LocalizedAlias("dot", Language.FRENCH), "·");
+
+    aliasesMap.put(new LocalizedAlias("Aacute", Language.ENGLISH), "Á");
+    aliasesMap.put(new LocalizedAlias("Aaigu", Language.FRENCH), "Á");
+    aliasesMap.put(new LocalizedAlias("Agrave"), "À");
+    aliasesMap.put(new LocalizedAlias("Acirc"), "Â");
+    aliasesMap.put(new LocalizedAlias("Adiaeresis", Language.ENGLISH), "Ä");
+    aliasesMap.put(new LocalizedAlias("Atréma", Language.FRENCH), "Ä");
+    aliasesMap.put(new LocalizedAlias("aacute", Language.ENGLISH), "á");
+    aliasesMap.put(new LocalizedAlias("aaigu", Language.FRENCH), "á");
+    aliasesMap.put(new LocalizedAlias("agrave"), "à");
+    aliasesMap.put(new LocalizedAlias("acirc"), "â");
+    aliasesMap.put(new LocalizedAlias("adiaeresis", Language.ENGLISH), "ä");
+    aliasesMap.put(new LocalizedAlias("atréma", Language.FRENCH), "ä");
+    aliasesMap.put(new LocalizedAlias("Ccedilla", Language.ENGLISH), "Ç");
+    aliasesMap.put(new LocalizedAlias("Ccédille", Language.FRENCH), "Ç");
+    aliasesMap.put(new LocalizedAlias("ccedilla", Language.ENGLISH), "ç");
+    aliasesMap.put(new LocalizedAlias("ccédille", Language.FRENCH), "ç");
+    aliasesMap.put(new LocalizedAlias("Eacute", Language.ENGLISH), "É");
+    aliasesMap.put(new LocalizedAlias("Eaigu", Language.FRENCH), "É");
+    aliasesMap.put(new LocalizedAlias("Egrave"), "È");
+    aliasesMap.put(new LocalizedAlias("Ecirc"), "Ê");
+    aliasesMap.put(new LocalizedAlias("Ediaeresis", Language.ENGLISH), "Ë");
+    aliasesMap.put(new LocalizedAlias("Etréma", Language.FRENCH), "Ë");
+    aliasesMap.put(new LocalizedAlias("eacute", Language.ENGLISH), "é");
+    aliasesMap.put(new LocalizedAlias("eaigu", Language.FRENCH), "é");
+    aliasesMap.put(new LocalizedAlias("egrave"), "è");
+    aliasesMap.put(new LocalizedAlias("ecirc"), "ê");
+    aliasesMap.put(new LocalizedAlias("ediaeresis", Language.ENGLISH), "ë");
+    aliasesMap.put(new LocalizedAlias("etréma", Language.FRENCH), "ë");
+    aliasesMap.put(new LocalizedAlias("Iacute", Language.ENGLISH), "Í");
+    aliasesMap.put(new LocalizedAlias("Iaigu", Language.FRENCH), "Í");
+    aliasesMap.put(new LocalizedAlias("Igrave"), "Ì");
+    aliasesMap.put(new LocalizedAlias("Icirc"), "Î");
+    aliasesMap.put(new LocalizedAlias("Idiaeresis", Language.ENGLISH), "Ï");
+    aliasesMap.put(new LocalizedAlias("Itréma", Language.FRENCH), "Ï");
+    aliasesMap.put(new LocalizedAlias("iacute", Language.ENGLISH), "í");
+    aliasesMap.put(new LocalizedAlias("iaigu", Language.FRENCH), "í");
+    aliasesMap.put(new LocalizedAlias("igrave"), "ì");
+    aliasesMap.put(new LocalizedAlias("icirc"), "î");
+    aliasesMap.put(new LocalizedAlias("idiaeresis", Language.ENGLISH), "ï");
+    aliasesMap.put(new LocalizedAlias("itréma", Language.FRENCH), "ï");
+    aliasesMap.put(new LocalizedAlias("Ntilde"), "Ñ");
+    aliasesMap.put(new LocalizedAlias("ntilde"), "ñ");
+    aliasesMap.put(new LocalizedAlias("Oacute", Language.ENGLISH), "Ó");
+    aliasesMap.put(new LocalizedAlias("Oaigu", Language.FRENCH), "Ó");
+    aliasesMap.put(new LocalizedAlias("Ograve"), "Ò");
+    aliasesMap.put(new LocalizedAlias("Ocirc"), "Ô");
+    aliasesMap.put(new LocalizedAlias("Odiaeresis", Language.ENGLISH), "Ö");
+    aliasesMap.put(new LocalizedAlias("Otréma", Language.FRENCH), "Ö");
+    aliasesMap.put(new LocalizedAlias("oacute", Language.ENGLISH), "ó");
+    aliasesMap.put(new LocalizedAlias("oaigu", Language.FRENCH), "ó");
+    aliasesMap.put(new LocalizedAlias("ograve"), "ò");
+    aliasesMap.put(new LocalizedAlias("ocirc"), "ô");
+    aliasesMap.put(new LocalizedAlias("odiaeresis", Language.ENGLISH), "ö");
+    aliasesMap.put(new LocalizedAlias("otréma", Language.FRENCH), "ö");
     aliasesMap.put(new LocalizedAlias("pcirc"), "p̂");
+    aliasesMap.put(new LocalizedAlias("Uacute", Language.ENGLISH), "Ú");
+    aliasesMap.put(new LocalizedAlias("Uaigu", Language.FRENCH), "Ú");
+    aliasesMap.put(new LocalizedAlias("Ugrave"), "Ù");
+    aliasesMap.put(new LocalizedAlias("Ucirc"), "Û");
+    aliasesMap.put(new LocalizedAlias("Udiaeresis", Language.ENGLISH), "Ü");
+    aliasesMap.put(new LocalizedAlias("Utréma", Language.FRENCH), "Ü");
+    aliasesMap.put(new LocalizedAlias("uacute", Language.ENGLISH), "ú");
+    aliasesMap.put(new LocalizedAlias("uaigu", Language.FRENCH), "ú");
+    aliasesMap.put(new LocalizedAlias("ugrave"), "ù");
+    aliasesMap.put(new LocalizedAlias("ucirc"), "û");
+    aliasesMap.put(new LocalizedAlias("udiaeresis", Language.ENGLISH), "ü");
+    aliasesMap.put(new LocalizedAlias("utréma", Language.FRENCH), "ü");
     aliasesMap.put(new LocalizedAlias("xbar", Language.ENGLISH), "x̄");
     aliasesMap.put(new LocalizedAlias("xbarre", Language.FRENCH), "x̄");
     aliasesMap.put(new LocalizedAlias("ybar", Language.ENGLISH), "ȳ");
     aliasesMap.put(new LocalizedAlias("ybarre", Language.FRENCH), "ȳ");
+    aliasesMap.put(new LocalizedAlias("ss"), "ß");
+
+    aliasesMap.put(new LocalizedAlias("acute", Language.ENGLISH), "´");
+    aliasesMap.put(new LocalizedAlias("aigu", Language.FRENCH), "´");
+    aliasesMap.put(new LocalizedAlias("grave"), "`");
+    aliasesMap.put(new LocalizedAlias("diaeresis", Language.ENGLISH), "¨");
+    aliasesMap.put(new LocalizedAlias("tréma", Language.FRENCH), "¨");
+    aliasesMap.put(new LocalizedAlias("invertedqmark", Language.ENGLISH), "¿");
+    aliasesMap.put(new LocalizedAlias("pinterinversé", Language.FRENCH), "¿");
+    aliasesMap.put(new LocalizedAlias("invertedexclp", Language.ENGLISH), "¡");
+    aliasesMap.put(new LocalizedAlias("pexclinversé", Language.FRENCH), "¡");
+
     aliasesMap.put(new LocalizedAlias("larrow", Language.ENGLISH), "←");
     aliasesMap.put(new LocalizedAlias("flècheg", Language.FRENCH), "←");
     aliasesMap.put(new LocalizedAlias("rarrow", Language.ENGLISH), "→");
@@ -61,21 +158,39 @@ public final class Tokens {
     aliasesMap.put(new LocalizedAlias("flècheh", Language.FRENCH), "↑");
     aliasesMap.put(new LocalizedAlias("darrow", Language.ENGLISH), "↓");
     aliasesMap.put(new LocalizedAlias("flècheb", Language.FRENCH), "↓");
+    aliasesMap.put(new LocalizedAlias("buarrow", Language.ENGLISH), "⬆");
+    aliasesMap.put(new LocalizedAlias("flèchehg", Language.FRENCH), "⬆");
+    aliasesMap.put(new LocalizedAlias("bdarrow", Language.ENGLISH), "⬇");
+    aliasesMap.put(new LocalizedAlias("flèchebg", Language.FRENCH), "⬇");
+
+    aliasesMap.put(new LocalizedAlias("square", Language.ENGLISH), "◻");
+    aliasesMap.put(new LocalizedAlias("carré", Language.FRENCH), "◻");
+    aliasesMap.put(new LocalizedAlias("cross", Language.ENGLISH), "✛");
+    aliasesMap.put(new LocalizedAlias("croix", Language.FRENCH), "✛");
+    aliasesMap.put(new LocalizedAlias("dot", Language.ENGLISH), "·");
+    aliasesMap.put(new LocalizedAlias("point", Language.FRENCH), "·");
+
     aliasesMap.put(new LocalizedAlias("int"), "∫");
     aliasesMap.put(new LocalizedAlias("angle"), "∠");
-    aliasesMap.put(new LocalizedAlias("bolduarrow", Language.ENGLISH), "⬆");
-    aliasesMap.put(new LocalizedAlias("flèchehg", Language.FRENCH), "⬆");
-    aliasesMap.put(new LocalizedAlias("bolddarrow", Language.ENGLISH), "⬇");
-    aliasesMap.put(new LocalizedAlias("flèchebg", Language.FRENCH), "⬇");
     aliasesMap.put(new LocalizedAlias("sqrt", Language.ENGLISH), "√");
     aliasesMap.put(new LocalizedAlias("racine", Language.FRENCH), "√");
     aliasesMap.put(new LocalizedAlias("cbrt", Language.ENGLISH), "∛");
     aliasesMap.put(new LocalizedAlias("racine3", Language.FRENCH), "∛");
     aliasesMap.put(new LocalizedAlias("times", Language.ENGLISH), "×");
     aliasesMap.put(new LocalizedAlias("fois", Language.FRENCH), "×");
+
+    for (int i = 0; i < 10; i++) {
+      String c = "" + (char) ('₀' + i);
+      aliasesMap.put(new LocalizedAlias("sub" + i, Language.ENGLISH), c);
+      aliasesMap.put(new LocalizedAlias("indice" + i, Language.FRENCH), c);
+    }
+    aliasesMap.put(new LocalizedAlias("sub10", Language.ENGLISH), "₁₀");
+    aliasesMap.put(new LocalizedAlias("indice10", Language.FRENCH), "₁₀");
+
     ALIASES = Collections.unmodifiableMap(aliasesMap);
 
     List<Token> tokens = new ArrayList<>();
+    // 0x0#
     tokens.add(new Token((byte) 0x01).instruction(">DMS"));
     tokens.add(new Token((byte) 0x02).instruction(">Dec"));
     tokens.add(new Token((byte) 0x03).instruction(">Frac"));
@@ -87,16 +202,16 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x07).instruction("]"));
     tokens.add(new Token((byte) 0x08).instruction("{"));
     tokens.add(new Token((byte) 0x09).instruction("}"));
-    tokens.add(new Token((byte) 0x0A)
+    tokens.add(new Token((byte) 0x0A) // TODO find character
         .instruction("&rexpon;", Language.ENGLISH)
         .instruction("&rexpos;", Language.FRENCH));
     tokens.add(new Token((byte) 0x0B).instruction("°"));
     tokens.add(new Token((byte) 0x0C).instruction("⁻¹"));
     tokens.add(new Token((byte) 0x0D).instruction("²"));
-    tokens.add(new Token((byte) 0x0E)
-        .instruction("&transpose;", Language.ENGLISH)
-        .instruction("&transposée;", Language.FRENCH));
+    tokens.add(new Token((byte) 0x0E).instruction("ᵀ"));
     tokens.add(new Token((byte) 0x0F).instruction("³"));
+
+    // 0x1#
     tokens.add(new Token((byte) 0x10).instruction("("));
     tokens.add(new Token((byte) 0x11).instruction(")"));
     tokens.add(new Token((byte) 0x12)
@@ -127,6 +242,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x1F)
         .instruction("median(", Language.ENGLISH)
         .instruction("médiane(", Language.FRENCH));
+
+    // 0x2#
     tokens.add(new Token((byte) 0x20)
         .instruction("randM(", Language.ENGLISH)
         .instruction("matAléat(", Language.FRENCH));
@@ -145,6 +262,7 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x25)
         .instruction("nDeriv(", Language.ENGLISH)
         .instruction("nbreDériv(", Language.FRENCH));
+    // 0x26 unused
     tokens.add(new Token((byte) 0x27)
         .instruction("fMin(", Language.ENGLISH)
         .instruction("xfMin(", Language.FRENCH));
@@ -154,7 +272,7 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x29).instruction(" "));
     tokens.add(new Token((byte) 0x2A).instruction("\""));
     tokens.add(new Token((byte) 0x2B).instruction(","));
-    tokens.add(new Token((byte) 0x2C).instruction("&imag;"));
+    tokens.add(new Token((byte) 0x2C).instruction("\uD835\uDC56"));
     tokens.add(new Token((byte) 0x2D).instruction("!"));
     tokens.add(new Token((byte) 0x2E)
         .instruction("CubicReg", Language.ENGLISH)
@@ -162,6 +280,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x2F)
         .instruction("QuartReg", Language.ENGLISH)
         .instruction("RegQuatre", Language.FRENCH));
+
+    // 0x3#
     for (int i = 0; i < 10; i++) {
       tokens.add(new Token((byte) (0x30 + i)).instruction("" + i));
     }
@@ -174,6 +294,8 @@ public final class Tokens {
         .instruction(" xor ", Language.ENGLISH)
         .instruction(" ouExcl ", Language.FRENCH));
     tokens.add(new Token((byte) 0x3E).instruction(":"));
+
+    // 0x4# / 0x5#
     tokens.add(new Token((byte) 0x40)
         .instruction(" and ", Language.ENGLISH)
         .instruction(" et ", Language.FRENCH));
@@ -181,16 +303,24 @@ public final class Tokens {
       tokens.add(new Token((byte) (0x41 + i)).instruction("" + (char) ('A' + i)));
     }
     tokens.add(new Token((byte) 0x5B).instruction("θ"));
+
+    // 0x5C 0x0#
     for (int i = 0; i < 10; i++) {
       tokens.add(new Token((byte) 0x5C, (byte) i).instruction("[" + (char) ('A' + i) + "]"));
     }
+
+    // 0x5D 0x0#
     for (int i = 0; i < 6; i++) {
       tokens.add(new Token((byte) 0x5D, (byte) i).instruction("L" + (i + 1)));
     }
+
+    // 0x5E 0x1#
     for (int i = 0; i < 9; i++) {
       tokens.add(new Token((byte) 0x5E, (byte) (0x10 + i)).instruction("Y" + (i + 1)));
     }
     tokens.add(new Token((byte) 0x5E, (byte) 0x19).instruction("Y0"));
+
+    // 0x5E 0x2#
     int j = 0;
     for (int i = 0; i < 12; i++) {
       if (i % 2 == 0) {
@@ -200,13 +330,20 @@ public final class Tokens {
         tokens.add(new Token((byte) 0x5E, (byte) (0x20 + i)).instruction("Y" + j + "T"));
       }
     }
+
+    // 0x5E 0x4#
     for (int i = 0; i < 6; i++) {
       tokens.add(new Token((byte) 0x5E, (byte) (0x40 + i)).instruction("r" + (i + 1)));
     }
-    tokens.add(new Token((byte) 0x5E, (byte) 0x80).instruction("&varu;"));
-    tokens.add(new Token((byte) 0x5E, (byte) 0x81).instruction("&varv;"));
-    tokens.add(new Token((byte) 0x5E, (byte) 0x82).instruction("&varw;"));
+
+    // 0x5E 0x8#
+    tokens.add(new Token((byte) 0x5E, (byte) 0x80).instruction("\uD835\uDDCE"));
+    tokens.add(new Token((byte) 0x5E, (byte) 0x81).instruction("\uD835\uDDCF"));
+    tokens.add(new Token((byte) 0x5E, (byte) 0x82).instruction("\uD835\uDDD0"));
+
     tokens.add(new Token((byte) 0x5F).instruction("prgm"));
+
+    // 0x60 0x0#
     for (int i = 0; i < 9; i++) {
       tokens.add(new Token((byte) 0x60, (byte) i)
           .instruction("Pic" + (i + 1), Language.ENGLISH)
@@ -215,6 +352,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x60, (byte) 0x09)
         .instruction("Pic0", Language.ENGLISH)
         .instruction("Img0", Language.FRENCH));
+
+    // 0x61 0x0#
     for (int i = 0; i < 9; i++) {
       tokens.add(new Token((byte) 0x61, (byte) i)
           .instruction("GDB" + (i + 1), Language.ENGLISH)
@@ -223,13 +362,15 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x61, (byte) 0x09)
         .instruction("GDB0", Language.ENGLISH)
         .instruction("BDG0", Language.FRENCH));
+
+    // 0x62 0x0#
     tokens.add(new Token((byte) 0x62, (byte) 0x01)
         .instruction("RegEq", Language.ENGLISH)
         .instruction("EqReg", Language.FRENCH));
-    tokens.add(new Token((byte) 0x62, (byte) 0x02).instruction("&varn;"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x02).instruction("\uD835\uDDC7"));
     tokens.add(new Token((byte) 0x62, (byte) 0x03).instruction("x̄"));
-    tokens.add(new Token((byte) 0x62, (byte) 0x05).instruction("Σx²"));
     tokens.add(new Token((byte) 0x62, (byte) 0x04).instruction("Σx"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x05).instruction("Σx²"));
     tokens.add(new Token((byte) 0x62, (byte) 0x06).instruction("Sx"));
     tokens.add(new Token((byte) 0x62, (byte) 0x07).instruction("σx"));
     tokens.add(new Token((byte) 0x62, (byte) 0x08).instruction("minX"));
@@ -240,26 +381,30 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x62, (byte) 0x0E).instruction("Σy²"));
     tokens.add(new Token((byte) 0x62, (byte) 0x0D).instruction("Σy"));
     tokens.add(new Token((byte) 0x62, (byte) 0x0F).instruction("Sy"));
+
+    // 0x62 0x1#
     tokens.add(new Token((byte) 0x62, (byte) 0x10).instruction("σy"));
     tokens.add(new Token((byte) 0x62, (byte) 0x11).instruction("Σxy"));
-    tokens.add(new Token((byte) 0x62, (byte) 0x12).instruction("&varr;"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x12).instruction("\uD835\uDDCB"));
     tokens.add(new Token((byte) 0x62, (byte) 0x13).instruction("Med"));
     tokens.add(new Token((byte) 0x62, (byte) 0x14).instruction("Q1"));
     tokens.add(new Token((byte) 0x62, (byte) 0x15).instruction("Q3"));
     for (int i = 0; i < 5; i++) {
-      tokens.add(new Token((byte) 0x62, (byte) (0x16 + i)).instruction("&var" + (char) ('a' + i) + ";"));
+      tokens.add(new Token((byte) 0x62, (byte) (0x16 + i)).instruction("\uD835" + (char) ('\uDDBA' + i)));
     }
     for (int i = 0; i < 3; i++) {
       tokens.add(new Token((byte) 0x62, (byte) (0x1B + i)).instruction("x" + (i + 1)));
       tokens.add(new Token((byte) 0x62, (byte) (0x1E + i)).instruction("y" + (i + 1)));
     }
-    tokens.add(new Token((byte) 0x62, (byte) 0x21).instruction("&nital;"));
-    tokens.add(new Token((byte) 0x62, (byte) 0x22).instruction("&varp;"));
-    tokens.add(new Token((byte) 0x62, (byte) 0x23).instruction("&varz;"));
-    tokens.add(new Token((byte) 0x62, (byte) 0x24).instruction("&vart;"));
+
+    // 0x62 0x20
+    tokens.add(new Token((byte) 0x62, (byte) 0x21).instruction("\uD835\uDC5B"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x22).instruction("\uD835\uDDC9"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x23).instruction("\uD835\uDDD3"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x24).instruction("\uD835\uDDCD"));
     tokens.add(new Token((byte) 0x62, (byte) 0x25).instruction("χ²"));
-    tokens.add(new Token((byte) 0x62, (byte) 0x26).instruction("Ϝ"));
-    tokens.add(new Token((byte) 0x62, (byte) 0x27).instruction("df"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x26).instruction("\uD835\uDE75"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x27).instruction("&vardf;")); // TODO find character
     tokens.add(new Token((byte) 0x62, (byte) 0x28).instruction("p̂"));
     tokens.add(new Token((byte) 0x62, (byte) 0x29).instruction("p̂1"));
     tokens.add(new Token((byte) 0x62, (byte) 0x2A).instruction("p̂2"));
@@ -268,6 +413,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x62, (byte) 0x2D).instruction("n1"));
     tokens.add(new Token((byte) 0x62, (byte) 0x2E).instruction("x̄2"));
     tokens.add(new Token((byte) 0x62, (byte) 0x2F).instruction("Sx2"));
+
+    // 0x62 0x3#
     tokens.add(new Token((byte) 0x62, (byte) 0x30).instruction("n2"));
     tokens.add(new Token((byte) 0x62, (byte) 0x31).instruction("Sxp"));
     tokens.add(new Token((byte) 0x62, (byte) 0x32)
@@ -276,9 +423,23 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x62, (byte) 0x33)
         .instruction("upper", Language.ENGLISH)
         .instruction("sup", Language.FRENCH));
-    tokens.add(new Token((byte) 0x62, (byte) 0x34).instruction("&vars;"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x34).instruction("\uD835\uDDCC"));
     tokens.add(new Token((byte) 0x62, (byte) 0x35).instruction("r²"));
     tokens.add(new Token((byte) 0x62, (byte) 0x36).instruction("R²"));
+    tokens.add(new Token((byte) 0x62, (byte) 0x37)
+        .instruction("Factor df")); // TODO find equivalent in French
+    tokens.add(new Token((byte) 0x62, (byte) 0x38)
+        .instruction("Factor SS")); // TODO find equivalent in French
+    tokens.add(new Token((byte) 0x62, (byte) 0x39)
+        .instruction("Factor MS")); // TODO find equivalent in French
+    tokens.add(new Token((byte) 0x62, (byte) 0x3A)
+        .instruction("Error df")); // TODO find equivalent in French
+    tokens.add(new Token((byte) 0x62, (byte) 0x3B)
+        .instruction("Error SS")); // TODO find equivalent in French
+    tokens.add(new Token((byte) 0x62, (byte) 0x3C)
+        .instruction("Error MS")); // TODO find equivalent in French
+
+    // 0x63 0x0#
     tokens.add(new Token((byte) 0x63, (byte) 0x00)
         .instruction("ZXscl", Language.ENGLISH)
         .instruction("ZXpas", Language.FRENCH));
@@ -293,6 +454,8 @@ public final class Tokens {
         .instruction("Ygrad", Language.FRENCH));
     tokens.add(new Token((byte) 0x63, (byte) 0x04).instruction("u(nMin)"));
     tokens.add(new Token((byte) 0x63, (byte) 0x05).instruction("v(nMin)"));
+    tokens.add(new Token((byte) 0x63, (byte) 0x06).instruction("u(n-1)"));
+    tokens.add(new Token((byte) 0x63, (byte) 0x07).instruction("v(n-1)"));
     tokens.add(new Token((byte) 0x63, (byte) 0x08).instruction("Zu(nMin)"));
     tokens.add(new Token((byte) 0x63, (byte) 0x09).instruction("Zv(nMin)"));
     tokens.add(new Token((byte) 0x63, (byte) 0x0A).instruction("Xmin"));
@@ -301,6 +464,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x63, (byte) 0x0D).instruction("Ymax"));
     tokens.add(new Token((byte) 0x63, (byte) 0x0E).instruction("Tmin"));
     tokens.add(new Token((byte) 0x63, (byte) 0x0F).instruction("Tmax"));
+
+    // 0x63 0x1#
     tokens.add(new Token((byte) 0x63, (byte) 0x10).instruction("θmin"));
     tokens.add(new Token((byte) 0x63, (byte) 0x11).instruction("θmax"));
     tokens.add(new Token((byte) 0x63, (byte) 0x12).instruction("ZXmin"));
@@ -323,6 +488,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x63, (byte) 0x1D).instruction("nMax"));
     tokens.add(new Token((byte) 0x63, (byte) 0x1E).instruction("ZnMax"));
     tokens.add(new Token((byte) 0x63, (byte) 0x1F).instruction("nMin"));
+
+    // 0x63 0x2#
     tokens.add(new Token((byte) 0x63, (byte) 0x20).instruction("ZnMin"));
     tokens.add(new Token((byte) 0x63, (byte) 0x21)
         .instruction("ΔTbl", Language.ENGLISH)
@@ -350,7 +517,7 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x63, (byte) 0x2A)
         .instruction("TblInput", Language.ENGLISH)
         .instruction("EntréeTbl", Language.FRENCH));
-    tokens.add(new Token((byte) 0x63, (byte) 0x2B).instruction("&N;"));
+    tokens.add(new Token((byte) 0x63, (byte) 0x2B).instruction("\uD835\uDC0D"));
     tokens.add(new Token((byte) 0x63, (byte) 0x2C).instruction("I%"));
     tokens.add(new Token((byte) 0x63, (byte) 0x2D)
         .instruction("PV", Language.ENGLISH)
@@ -359,6 +526,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x63, (byte) 0x2F)
         .instruction("FV", Language.ENGLISH)
         .instruction("ValAcq", Language.FRENCH));
+
+    // 0x63 0x3#
     tokens.add(new Token((byte) 0x63, (byte) 0x30)
         .instruction("P/Y", Language.ENGLISH)
         .instruction("Ech/An", Language.FRENCH));
@@ -375,6 +544,11 @@ public final class Tokens {
         .instruction("ZGraphPas", Language.FRENCH));
     tokens.add(new Token((byte) 0x63, (byte) 0x36).instruction("Xres"));
     tokens.add(new Token((byte) 0x63, (byte) 0x37).instruction("ZXres"));
+    tokens.add(new Token((byte) 0x63, (byte) 0x38)
+        .instruction("TraceStep", Language.ENGLISH)
+        .instruction("TracePas", Language.FRENCH));
+
+    // 0x6#
     tokens.add(new Token((byte) 0x64).instruction("Radian"));
     tokens.add(new Token((byte) 0x65)
         .instruction("Degree", Language.ENGLISH)
@@ -396,6 +570,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x6E).instruction(">="));
     tokens.add(new Token((byte) 0x6F).instruction("≠"));
     tokens.add(new Token((byte) 0x6F).instruction("!="));
+
+    // 0x7#
     tokens.add(new Token((byte) 0x70).instruction("+"));
     tokens.add(new Token((byte) 0x71).instruction("-"));
     tokens.add(new Token((byte) 0x72)
@@ -430,6 +606,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x7D)
         .instruction("DependAsk", Language.ENGLISH)
         .instruction("CalculsDem", Language.FRENCH));
+
+    // 0x7E 0x0#
     tokens.add(new Token((byte) 0x7E, (byte) 0x00)
         .instruction("Sequential", Language.ENGLISH)
         .instruction("Séquentiel", Language.FRENCH));
@@ -476,15 +654,16 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x7E, (byte) 0x0F)
         .instruction("Time", Language.ENGLISH)
         .instruction("f(n)", Language.FRENCH));
+
+    // 0x7E 0x1#
     tokens.add(new Token((byte) 0x7E, (byte) 0x10).instruction("uvAxes"));
     tokens.add(new Token((byte) 0x7E, (byte) 0x11).instruction("vwAxes"));
     tokens.add(new Token((byte) 0x7E, (byte) 0x12).instruction("uwAxes"));
-    tokens.add(new Token((byte) 0x7F)
-        .instruction("&square;", Language.ENGLISH)
-        .instruction("&carré;", Language.FRENCH));
-    tokens.add(new Token((byte) 0x80)
-        .instruction("&cross;", Language.ENGLISH)
-        .instruction("&croix;", Language.FRENCH));
+
+    tokens.add(new Token((byte) 0x7F).instruction("◻"));
+
+    // 0x8#
+    tokens.add(new Token((byte) 0x80).instruction("✛"));
     tokens.add(new Token((byte) 0x81).instruction("·"));
     tokens.add(new Token((byte) 0x82).instruction("*"));
     tokens.add(new Token((byte) 0x83).instruction("/"));
@@ -516,6 +695,8 @@ public final class Tokens {
         .instruction("ZDecimal", Language.ENGLISH)
         .instruction("ZDécimal", Language.FRENCH));
     tokens.add(new Token((byte) 0x8F).instruction("ZoomStat"));
+
+    // 0x9#
     tokens.add(new Token((byte) 0x90)
         .instruction("ZoomRcl", Language.ENGLISH)
         .instruction("ZoomRpl", Language.FRENCH));
@@ -564,6 +745,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0x9F)
         .instruction("Pt-Off(", Language.ENGLISH)
         .instruction("Pt-NAff(", Language.FRENCH));
+
+    // 0xA#
     tokens.add(new Token((byte) 0xA0).instruction("Pt-Change("));
     tokens.add(new Token((byte) 0xA1)
         .instruction("Pxl-On(", Language.ENGLISH)
@@ -590,6 +773,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xA9)
         .instruction("DrawF ", Language.ENGLISH)
         .instruction("DessFonct ", Language.FRENCH));
+
+    // 0xAA 0x0#
     for (int i = 0; i < 9; i++) {
       tokens.add(new Token((byte) 0xAA, (byte) i)
           .instruction("Str" + (i + 1), Language.ENGLISH)
@@ -598,6 +783,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xAA, (byte) 0x09)
         .instruction("Str0", Language.ENGLISH)
         .instruction("Chaîne0", Language.FRENCH));
+
+    // 0xA#
     tokens.add(new Token((byte) 0xAB)
         .instruction("rand", Language.ENGLISH)
         .instruction("NbrAléat", Language.FRENCH));
@@ -607,6 +794,8 @@ public final class Tokens {
         .instruction("codeTouch(", Language.FRENCH));
     tokens.add(new Token((byte) 0xAE).instruction("'"));
     tokens.add(new Token((byte) 0xAF).instruction("?"));
+
+    // 0xB#
     tokens.add(new Token((byte) 0xB0).instruction("_-"));
     tokens.add(new Token((byte) 0xB1)
         .instruction("int(", Language.ENGLISH)
@@ -674,6 +863,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0x0F)
         .instruction("inString(", Language.ENGLISH)
         .instruction("carChaîne(", Language.FRENCH));
+
+    // 0xBB 0x1#
     tokens.add(new Token((byte) 0xBB, (byte) 0x10)
         .instruction("normalcdf(", Language.ENGLISH)
         .instruction("normalFRép(", Language.FRENCH));
@@ -687,8 +878,8 @@ public final class Tokens {
         .instruction("χ²cdf(", Language.ENGLISH)
         .instruction("χ²FRép(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x14)
-        .instruction("Ϝcdf(", Language.ENGLISH)
-        .instruction("ϜFRép(", Language.FRENCH));
+        .instruction("Fcdf(", Language.ENGLISH)
+        .instruction("FFRép(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x15)
         .instruction("binompdf(", Language.ENGLISH)
         .instruction("binomFdp(", Language.FRENCH));
@@ -717,8 +908,8 @@ public final class Tokens {
         .instruction("χ²pdf(", Language.ENGLISH)
         .instruction("χ²Fdp(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x1E)
-        .instruction("Ϝpdf(", Language.ENGLISH)
-        .instruction("ϜFdp(", Language.FRENCH));
+        .instruction("Fpdf(", Language.ENGLISH)
+        .instruction("FFdp(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x1F)
         .instruction("randNorm(", Language.ENGLISH)
         .instruction("normAléat(", Language.FRENCH));
@@ -746,7 +937,8 @@ public final class Tokens {
         .instruction("angle(", Language.ENGLISH)
         .instruction("argument(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x29)
-        .instruction("cumSum(", Language.ENGLISH).instruction("somCum(", Language.FRENCH));
+        .instruction("cumSum(", Language.ENGLISH)
+        .instruction("somCum(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x2A).instruction("expr("));
     tokens.add(new Token((byte) 0xBB, (byte) 0x2B)
         .instruction("length(", Language.ENGLISH)
@@ -761,10 +953,12 @@ public final class Tokens {
         .instruction("rref(", Language.ENGLISH)
         .instruction("Gauss-Jordan(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x2F).instruction(">Rect"));
+
+    // 0xBB 0x3#
     tokens.add(new Token((byte) 0xBB, (byte) 0x30)
         .instruction(">Polar", Language.ENGLISH)
         .instruction(">Polaire", Language.FRENCH));
-    tokens.add(new Token((byte) 0xBB, (byte) 0x31).instruction("&exp;"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0x31).instruction("\uD835\uDC52"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x32)
         .instruction("SinReg ", Language.ENGLISH)
         .instruction("RegSin ", Language.FRENCH));
@@ -784,8 +978,8 @@ public final class Tokens {
         .instruction("Shadeχ²(", Language.ENGLISH)
         .instruction("Ombreχ²(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x38)
-        .instruction("ShadeϜ(", Language.ENGLISH)
-        .instruction("OmbreϜ(", Language.FRENCH));
+        .instruction("ShadeF(", Language.ENGLISH)
+        .instruction("OmbreF(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x39)
         .instruction("Matr>list(", Language.ENGLISH)
         .instruction("Matr>liste(", Language.FRENCH));
@@ -799,6 +993,8 @@ public final class Tokens {
         .instruction("2-CompZTest(", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x3E).instruction("1-PropZTest("));
     tokens.add(new Token((byte) 0xBB, (byte) 0x3F).instruction("2-PropZTest("));
+
+    // 0xBB 0x4#
     tokens.add(new Token((byte) 0xBB, (byte) 0x40).instruction("χ²-Test("));
     tokens.add(new Token((byte) 0xBB, (byte) 0x41)
         .instruction("ZInterval ", Language.ENGLISH)
@@ -835,6 +1031,8 @@ public final class Tokens {
         .instruction("Réel", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0x4E).instruction("re^θi"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x4F).instruction("a+bi"));
+
+    // 0xBB 0x5#
     tokens.add(new Token((byte) 0xBB, (byte) 0x50)
         .instruction("ExprOn", Language.ENGLISH)
         .instruction("ExprAff", Language.FRENCH));
@@ -871,6 +1069,16 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0x5B)
         .instruction("NormProbPlot", Language.ENGLISH)
         .instruction("GraphProbNorm", Language.FRENCH));
+    // 0xBB 0x5C unused
+    // 0xBB 0x5D unused
+    // 0xBB 0x5E unused
+    // 0xBB 0x5F unused
+
+    // 0xBB 0x6#
+    // 0xBB 0x60 unused
+    // 0xBB 0x61 unused
+    // 0xBB 0x62 unused
+    // 0xBB 0x63 unused
     tokens.add(new Token((byte) 0xBB, (byte) 0x64).instruction("G-T"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x65)
         .instruction("ZoomFit", Language.ENGLISH)
@@ -890,6 +1098,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0x6C).instruction("AsmPrgm "));
     tokens.add(new Token((byte) 0xBB, (byte) 0x6E).instruction("Á"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x6F).instruction("À"));
+
+    // 0xBB 0x7#
     tokens.add(new Token((byte) 0xBB, (byte) 0x70).instruction("Â"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x71).instruction("Ä"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x72).instruction("á"));
@@ -921,6 +1131,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0x8D).instruction("ö"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x8E).instruction("Ú"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x8F).instruction("Ù"));
+
+    // 0xBB 0x9#
     tokens.add(new Token((byte) 0xBB, (byte) 0x90).instruction("Û"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x91).instruction("Ü"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x92).instruction("ú"));
@@ -931,26 +1143,44 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0x97).instruction("ç"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x98).instruction("Ñ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x99).instruction("ñ"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0x9A).instruction("´"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0x9B).instruction("`"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0x9C).instruction("¨"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x9D).instruction("¿"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x9E).instruction("¡"));
     tokens.add(new Token((byte) 0xBB, (byte) 0x9F).instruction("α"));
+
+    // 0xBB 0xA#
     tokens.add(new Token((byte) 0xBB, (byte) 0xA0).instruction("β"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xA1).instruction("γ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA2).instruction("Δ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA3).instruction("δ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA4).instruction("ε"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA5).instruction("λ"));
-    // Mu greek letter
-    tokens.add(new Token((byte) 0xBB, (byte) 0xA6).instruction("μ"));
-    // Micro sign
-    tokens.add(new Token((byte) 0xBB, (byte) 0xA6).instruction("µ"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xA6).instruction("μ")); // Greek letter mu
+    tokens.add(new Token((byte) 0xBB, (byte) 0xA6).instruction("µ")); // Micro sign
+    tokens.add(new Token((byte) 0xBB, (byte) 0xA7)
+        .instruction("&letterpi;", Language.ENGLISH)
+        .instruction("&lettrepi;", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA8).instruction("ρ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xA9).instruction("Σ"));
+    // 0xBB 0xAA unused
     tokens.add(new Token((byte) 0xBB, (byte) 0xAB).instruction("φ"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xAC).instruction("Ω"));
-    // Two loops because there’s a gap between 'k' and 'l' codes.
+    tokens.add(new Token((byte) 0xBB, (byte) 0xAD)
+        .instruction("&letterpcirc;", Language.ENGLISH)
+        .instruction("&lettrepcirc;", Language.FRENCH));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xAE).instruction("χ"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xAF)
+        .instruction("&letterF;", Language.ENGLISH)
+        .instruction("&lettreF;", Language.FRENCH));
+
+    // 0xBB 0xB#
     for (int i = 0; i < 11; i++) {
       tokens.add(new Token((byte) 0xBB, (byte) (0xB0 + i)).instruction("" + (char) ('a' + i)));
     }
+    // 0xBB 0xBB unused
+    // 0xBB 0xB# / 0xBB 0xC#
     for (int i = 0; i < 15; i++) {
       tokens.add(new Token((byte) 0xBB, (byte) (0xBC + i)).instruction("" + (char) ('l' + i)));
     }
@@ -961,11 +1191,14 @@ public final class Tokens {
         .instruction("GarbageCollect", Language.ENGLISH)
         .instruction("RéorganiserMém", Language.FRENCH));
     tokens.add(new Token((byte) 0xBB, (byte) 0xCF).instruction("~"));
+
+    // 0xBB 0xD#
+    // 0xBB 0xD0 reserved
     tokens.add(new Token((byte) 0xBB, (byte) 0xD1).instruction("@"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xD2).instruction("#"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xD3).instruction("$"));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xD4).instruction("&"));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xD5).instruction("`"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xD4).instruction("&amp;"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xD5).instruction("&grave2;"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xD6).instruction(";"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xD7).instruction("\\"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xD8).instruction("|"));
@@ -974,17 +1207,23 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0xDB).instruction("…"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xDC).instruction("∠"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xDD).instruction("ß"));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xDE)
+    tokens.add(new Token((byte) 0xBB, (byte) 0xDE) // TODO find character
         .instruction("&xexpon;", Language.ENGLISH)
         .instruction("&xexpos;", Language.FRENCH));
-    tokens.add(new Token((byte) 0xBB, (byte) 0xDF).instruction("&T;"));
-    for (int i = 0; i < 11; i++) {
-      tokens.add(new Token((byte) 0xBB, (byte) (0xE0 + i)).instruction("&sub" + i + ";"));
+    tokens.add(new Token((byte) 0xBB, (byte) 0xDF).instruction("&T_;")); // TODO find character
+
+    // 0xBB 0xE#
+    for (int i = 0; i < 10; i++) {
+      tokens.add(new Token((byte) 0xBB, (byte) (0xE0 + i)).instruction("" + (char) ('₀' + i)));
     }
+    tokens.add(new Token((byte) 0xBB, (byte) 0xEA).instruction("₁₀"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xEB).instruction("←"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xEC).instruction("→"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xED).instruction("↑"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xEE).instruction("↓"));
+    // 0xBB 0xEF unused
+
+    // 0xBB 0xF#
     tokens.add(new Token((byte) 0xBB, (byte) 0xF0).instruction("×"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xF1).instruction("∫"));
     tokens.add(new Token((byte) 0xBB, (byte) 0xF2).instruction("⬆")); // Bold upwards arrow
@@ -993,6 +1232,9 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xBB, (byte) 0xF5)
         .instruction("&invertedequal;", Language.ENGLISH)
         .instruction("&égalinversé;", Language.FRENCH));
+    // 0xBB 0xF6 to 0xBB 0xFF unused
+
+    // 0xB#
     tokens.add(new Token((byte) 0xBC).instruction("√("));
     tokens.add(new Token((byte) 0xBD).instruction("∛("));
     tokens.add(new Token((byte) 0xBE).instruction("ln("));
@@ -1015,22 +1257,24 @@ public final class Tokens {
         .instruction("sinh(", Language.ENGLISH)
         .instruction("sh(", Language.FRENCH));
     tokens.add(new Token((byte) 0xC9)
-        .instruction("Arcsinh(", Language.ENGLISH)
+        .instruction("sinh-1(", Language.ENGLISH)
         .instruction("Argsh(", Language.FRENCH));
     tokens.add(new Token((byte) 0xCA)
         .instruction("cosh(", Language.ENGLISH)
         .instruction("ch(", Language.FRENCH));
     tokens.add(new Token((byte) 0xCB)
-        .instruction("Arccosh(", Language.ENGLISH)
+        .instruction("cosh-1(", Language.ENGLISH)
         .instruction("Argch(", Language.FRENCH));
     tokens.add(new Token((byte) 0xCC)
         .instruction("tanh(", Language.ENGLISH)
         .instruction("th(", Language.FRENCH));
     tokens.add(new Token((byte) 0xCD)
-        .instruction("Arctanh(", Language.ENGLISH)
+        .instruction("tanh-1(", Language.ENGLISH)
         .instruction("Argth(", Language.FRENCH));
     tokens.add(new Token((byte) 0xCE).instruction("If "));
     tokens.add(new Token((byte) 0xCF).instruction("Then"));
+
+    // 0xD#
     tokens.add(new Token((byte) 0xD0).instruction("Else"));
     tokens.add(new Token((byte) 0xD1).instruction("While "));
     tokens.add(new Token((byte) 0xD2).instruction("Repeat "));
@@ -1049,6 +1293,8 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xDF)
         .instruction("DispGraph", Language.ENGLISH)
         .instruction("AffGraph", Language.FRENCH));
+
+    // 0xE#
     tokens.add(new Token((byte) 0xE0).instruction("Output("));
     tokens.add(new Token((byte) 0xE1)
         .instruction("ClrHome", Language.ENGLISH)
@@ -1088,6 +1334,9 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xEE)
         .instruction("Plot3(", Language.ENGLISH)
         .instruction("Graph3(", Language.FRENCH));
+    // 0xEF 0x## TI-84+ tokens
+
+    // 0xF#
     tokens.add(new Token((byte) 0xF0).instruction("^"));
     tokens.add(new Token((byte) 0xF1)
         .instruction("&xrt;", Language.ENGLISH)
@@ -1113,7 +1362,7 @@ public final class Tokens {
     tokens.add(new Token((byte) 0xF8).instruction("Med-Med"));
     tokens.add(new Token((byte) 0xF9)
         .instruction("QuadReg ", Language.ENGLISH)
-        .instruction("RegQuad", Language.FRENCH));
+        .instruction("RegQuad ", Language.FRENCH));
     tokens.add(new Token((byte) 0xFA)
         .instruction("ClrList ", Language.ENGLISH)
         .instruction("EffListe ", Language.FRENCH));
